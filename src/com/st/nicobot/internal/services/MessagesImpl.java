@@ -11,7 +11,7 @@ import com.st.nicobot.services.Messages;
 
 /**
  * Une classe qui va contenir les differents messages / commandes auxquels notre cher 
- * nicobot reagir.
+ * nicobot va reagir.
  * 
  * @author Julien
  *
