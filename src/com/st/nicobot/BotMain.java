@@ -11,7 +11,7 @@ public class BotMain {
 		//moar logs
 		bot.setVerbose(true);
 		
-		bot.connect("irc.quakenet.org");
+		bot.connect("nl.quakenet.org");
 		bot.joinChannel("#zqsd");
 	}
 
