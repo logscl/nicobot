@@ -14,7 +14,10 @@ import org.jibble.pircbot.PircBot;
 public class NicoBot extends PircBot {
 	
 	// les messages que nicobot écoute
-	private Map<String, String> reacts = new HashMap<String, String>(); 
+	private Map<String, String> reacts = new HashMap<String, String>();
+	
+	// les messages que nicobot va tenter de chercher dans des phrases
+	private Map<String, String> reactsRgx = new HashMap<String, String>();
 
 	public NicoBot() {
 		this.setName("nicobot");
@@ -33,6 +36,17 @@ public class NicoBot extends PircBot {
 			toSend = toSend.replaceAll("%p", sender);
 			toSend = toSend.replaceAll("%c", channel);
 			sendMessage(channel, toSend);
+			return;
+		}
+		
+		for(String key: reactsRgx.keySet()) {
+			if(rawMessage.contains(key)) {
+				String msg = reactsRgx.get(key);
+				msg = msg.replaceAll("%p", sender);
+				msg = msg.replaceAll("%c", channel);
+				sendMessage(channel, msg);
+				return;
+			}
 		}
 		
 		// pour refresh les messages sans reboot le bot
@@ -50,6 +64,8 @@ public class NicoBot extends PircBot {
 		reacts.put("nicontroleur", "ONE THIRTY TWO ONE THIRTY TWO.... REPONDEZ ONE THIRTY TWO !!! Papaaaaaaaaa~");
 		reacts.put("rien", "Baaaam ! T'es deg ?");
 		reacts.put("(=^;^=) pika pi", "Toi aussi tu joues à Pokemon ?");
+		reacts.put("psp", "Enkuler de rire !");
+		reacts.put("pic", "or it didn't happen");
 		
 		/* dangerous !
 		reacts.put("boom", "omg");
@@ -57,6 +73,13 @@ public class NicoBot extends PircBot {
 		reacts.put("omg", "wtf");
 		reacts.put("bbq", "omg");
 		*/
+		
+		reactsRgx.put("grand", "CMB !");
+		reactsRgx.put("petit", "CMB !");
+		reactsRgx.put("cham", "Y'a de ces CHA-MELLES ici ! :D");
+		reactsRgx.put("gamin", "Hein fieu");
+		reactsRgx.put("hey", "Hey Hey !");
+		reactsRgx.put("secret", "J'ai un terrible secret aussi...");
 	}
 	
 	@Override
