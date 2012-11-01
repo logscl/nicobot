@@ -3,8 +3,6 @@
  */
 package com.st.nicobot.services;
 
-import java.util.Set;
-
 import com.st.nicobot.cmd.NiCommand;
 
 /**
@@ -13,7 +11,6 @@ import com.st.nicobot.cmd.NiCommand;
  */
 public interface Commands {
 
-	public Set<String> getCommands();
-	public NiCommand getCommand(String commandName);
+	public NiCommand getFirstLink();
 	
 }

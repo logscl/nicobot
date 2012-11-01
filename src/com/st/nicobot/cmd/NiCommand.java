@@ -10,22 +10,38 @@ import com.st.nicobot.NicoBot;
  * @author Julien
  *
  */
-public interface NiCommand {
+public abstract class NiCommand {
 
+	protected NiCommand nextCommand;
+	
 	/**
 	 * Retourne la chaine de caractere à partir de laquelle nico doit etre commandé
 	 */
-	public String getCommandName();
+	public abstract String getCommandName();
 
 	/**
 	 * Retourne une description pour la commande
 	 * @return
 	 */
-	public String getDescription();
+	public abstract String getDescription();
 	
 	/**
 	 * Code à executer par la commande
 	 */
-	public void handle(NicoBot nicobot);
+	protected abstract void doCommand(NicoBot nicobot, String command, Option opts);
+	
+	public void setNext(NiCommand niCommand){
+		nextCommand = niCommand;
+	}
+	
+	public void handle(NicoBot nicobot, String command, Option opts) {
+		if (command.startsWith(getCommandName())){
+			this.doCommand(nicobot, command, opts);
+		}
+
+		if (nextCommand != null) {
+			nextCommand.handle(nicobot, command, opts);
+		}
+	}
 	
 }

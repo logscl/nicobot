@@ -1,7 +1,9 @@
 package com.st.nicobot;
 
+import org.jibble.pircbot.Colors;
+
 import com.st.nicobot.bot.AbstractPircBot;
-import com.st.nicobot.cmd.NiCommand;
+import com.st.nicobot.cmd.Option;
 import com.st.nicobot.internal.services.CommandsImpl;
 import com.st.nicobot.internal.services.MessagesImpl;
 import com.st.nicobot.services.Commands;
@@ -27,11 +29,12 @@ public class NicoBot extends AbstractPircBot {
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		super.onMessage(channel, sender, login, hostname, message);
 		
+		message = Colors.removeFormattingAndColors(message);
 		String msg = null;
 		
-		if (commands.getCommands().contains(message)) {
-			NiCommand niCommand = commands.getCommand(message);
-			niCommand.handle(this);
+		if (message.startsWith("!nico")){
+			String cmd = message.substring("!nico ".length());
+			commands.getFirstLink().handle(this, cmd, new Option(channel, sender));
 		}
 		else if (messages.getSentences().contains(message)){
 			msg = messages.getSentence(message);
@@ -45,7 +48,7 @@ public class NicoBot extends AbstractPircBot {
 				}
 			}
 		}
-		
+			
 		if (msg != null) {
 			sendMessage(channel, msg);
 		}
@@ -63,11 +66,14 @@ public class NicoBot extends AbstractPircBot {
 	}
 	
 	@Override
-	protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, 
-			String channel) {
+	protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel) {
+		String[] strings = channel.split(" ");
+		channel = strings[3];
+//		System.out.println(channel);
+		
 		joinChannel(channel);
 		String msg = messages.getOtherMessage("onInvite");
-		sendMessage(channel, formatMessage(msg, targetNick, null));
+		sendAction(channel, formatMessage(msg, sourceNick, null));
 	}
 	
 	@Override

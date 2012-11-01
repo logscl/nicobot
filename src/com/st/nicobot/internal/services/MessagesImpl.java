@@ -73,7 +73,10 @@ public class MessagesImpl implements Messages {
 		otherMessages = new HashMap<String, String>();
 		otherMessages.put("onKick", 	"Merci pour le kick, %p...");
 		otherMessages.put("onJoin", 	"Yo les gars! Saluez %p !");
-		otherMessages.put("onInvite", 	"/me remercie %p");
+		otherMessages.put("onInvite", 	"remercie %p");
+		otherMessages.put("onLeave", 	"A plus les nb's !");
+		otherMessages.put("leaveReason","rien.");
+		otherMessages.put("helpHeader",	"Liste des commandes que nicobot connait :");
 	}
 	
 	@Override

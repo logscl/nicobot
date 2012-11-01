@@ -3,12 +3,10 @@
  */
 package com.st.nicobot.internal.services;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
+import com.st.nicobot.cmd.Help;
 import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.cmd.ReloadMessage;
+import com.st.nicobot.cmd.StopNicoBot;
 import com.st.nicobot.services.Commands;
 
 /**
@@ -17,7 +15,7 @@ import com.st.nicobot.services.Commands;
  */
 public class CommandsImpl implements Commands {
 
-	private Map<String, NiCommand> niCommands;
+	private NiCommand firstLink;
 
 	private static CommandsImpl instance;
 	
@@ -33,20 +31,20 @@ public class CommandsImpl implements Commands {
 	}
 	
 	public void init() {
-		niCommands = new HashMap<String, NiCommand>();
+		NiCommand cmd1, cmd2, cmd3;
+		cmd1 = new ReloadMessage();
+		cmd2 = new StopNicoBot();
+		cmd3 = new Help();
 		
-		NiCommand reloadCmd = new ReloadMessage();
+		cmd1.setNext(cmd2);
+		cmd2.setNext(cmd3);
 		
-		niCommands.put(reloadCmd.getCommandName(), reloadCmd);
+		firstLink = cmd1;
 	}
 	
 	@Override
-	public Set<String> getCommands() {
-		return niCommands.keySet();
+	public NiCommand getFirstLink() {
+		return firstLink;
 	}
 	
-	@Override
-	public NiCommand getCommand(String commandName) {
-		return niCommands.get(commandName);
-	}
 }
