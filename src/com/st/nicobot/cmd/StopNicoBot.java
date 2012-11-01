@@ -27,10 +27,12 @@ public class StopNicoBot extends NiCommand {
 	}
 
 	@Override
-	protected void doCommand(NicoBot nicobot, String message, Option opts) {
+	protected void doCommand(NicoBot nicobot, String message, String[] args, Option opts) {
 		System.out.println("Stoping nicobot ...");
 		nicobot.sendRawLine("PRIVMSG " + opts.channel + " :" + MessagesImpl.getInstance().getOtherMessage("onLeave"));
 		nicobot.partChannel(opts.channel, MessagesImpl.getInstance().getOtherMessage("leaveReason"));
+		
+		nicobot.disconnect();
 	}
 
 }

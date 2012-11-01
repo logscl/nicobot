@@ -13,7 +13,7 @@ import com.st.nicobot.internal.services.MessagesImpl;
 public class ReloadMessage extends NiCommand {
 
 	private static final String COMMAND = "refresh";
-	private static final String DESC = "Redémarre les différents services de nicobot.";
+	private static final String DESC = "Redémarre les différents messages de nicobot.";
 	
 	
 	public ReloadMessage() {	}
@@ -29,7 +29,7 @@ public class ReloadMessage extends NiCommand {
 	}
 	
 	@Override
-	public void doCommand(NicoBot nicobot, String message, Option opts) {
+	public void doCommand(NicoBot nicobot, String message, String[] args, Option opts) {
 		System.out.println("Start reloading messages");
 		MessagesImpl.getInstance().init();
 	}

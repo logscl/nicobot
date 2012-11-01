@@ -28,7 +28,7 @@ public class Help extends NiCommand {
 	}
 
 	@Override
-	protected void doCommand(NicoBot nicobot, String command, Option opts) {
+	protected void doCommand(NicoBot nicobot, String command, String[] args, Option opts) {
 		Commands commandsChain = CommandsImpl.getInstance();
 		NiCommand cmd = commandsChain.getFirstLink();
 		
