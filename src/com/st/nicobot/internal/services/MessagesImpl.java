@@ -63,12 +63,12 @@ public class MessagesImpl implements Messages {
 		*/
 		
 		reactsRgx = new HashMap<String, String>();
-		reactsRgx.put("grand", 	"CMB !");
-		reactsRgx.put("petit", 	"CMB !");
-		reactsRgx.put("cham", 	"Y'a de ces CHA-MELLES ici ! :D");
-		reactsRgx.put("gamin", 	"Hein fieu");
-		reactsRgx.put("hey", 	"Hey Hey !");
-		reactsRgx.put("secret",	"J'ai un terrible secret aussi...");
+		reactsRgx.put("grand", 		"CMB !");
+		reactsRgx.put("petit", 		"CMB ! ... euh ... merde.");
+		reactsRgx.put("cham", 		"Y'a de ces CHA-MELLES ici ! :D");
+		reactsRgx.put("gamin", 		"Hein fieu");
+		reactsRgx.put("hey", 		"Hey Hey !");
+		reactsRgx.put("secret",		"J'ai un terrible secret aussi...");
 		
 		otherMessages = new HashMap<String, String>();
 		otherMessages.put("onKick", 	"Merci pour le kick, %p...");
@@ -77,6 +77,11 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("onLeave", 	"A plus les nb's !");
 		otherMessages.put("leaveReason","rien.");
 		otherMessages.put("helpHeader",	"Liste des commandes que nicobot connait :");
+		otherMessages.put("inviteNo",	"LOL ? T'as cru ? Va t'faire refaire, ALIEN !");
+		otherMessages.put("riverside",	"Riverside mothefoker");
+		otherMessages.put("velo",		"On m'a volé mon vélooooo !!! Qui m'a volé mon vélooooo ???");
+		otherMessages.put("topside",	"TOPSIDE COMIC TROIS CENT QUATRE VING QUATORZE");
+		otherMessages.put("biatch",		"Ouais BIATCH !");
 	}
 	
 	@Override

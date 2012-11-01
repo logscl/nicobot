@@ -3,11 +3,13 @@ package com.st.nicobot;
 import org.jibble.pircbot.Colors;
 
 import com.st.nicobot.bot.AbstractPircBot;
-import com.st.nicobot.cmd.Option;
+import com.st.nicobot.internal.services.BehaviorsServiceImpl;
 import com.st.nicobot.internal.services.CommandsImpl;
 import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.services.Commands;
 import com.st.nicobot.services.Messages;
+import com.st.nicobot.utils.Option;
 
 /**
  * Je me suis basé la dessus !
@@ -21,6 +23,8 @@ public class NicoBot extends AbstractPircBot {
 															//un service/whatever qui gere tt les autres services
 	private Commands commands = CommandsImpl.getInstance();
 	
+	private BehaviorsService behaviors = BehaviorsServiceImpl.getInstance();
+	
 	public NicoBot() {
 		this.setName("nicobot");
 	}
@@ -30,27 +34,29 @@ public class NicoBot extends AbstractPircBot {
 		super.onMessage(channel, sender, login, hostname, message);
 		
 		message = Colors.removeFormattingAndColors(message);
-		String msg = null;
+		String response = null;
 		
 		if (message.startsWith("!nico")){
 			String cmd = message.substring("!nico ".length());
-			commands.getFirstLink().handle(this, cmd, new Option(channel, sender));
+			commands.getFirstLink().handle(this, cmd, new Option(channel, sender, message));
 		}
 		else if (messages.getSentences().contains(message)){
-			msg = messages.getSentence(message);
-			msg = formatMessage(msg, sender, channel);
+			response = messages.getSentence(message);
 		}
 		else {
 			for(String key: messages.getSentenceFragments()) {
 				if(message.contains(key)) {
-					msg = messages.getSentenceFragment(key);
-					msg = formatMessage(msg, sender, channel);
+					response = messages.getSentenceFragment(key);
 				}
 			}
 		}
 			
-		if (msg != null) {
-			sendMessage(channel, msg);
+		if (response != null) {
+			response = formatMessage(response, sender, channel);
+			sendMessage(channel, response);
+		}
+		else {
+			behaviors.randomBehave(this, new Option(channel, sender, message));
 		}
 	}
 	
@@ -71,9 +77,14 @@ public class NicoBot extends AbstractPircBot {
 		channel = strings[3];
 //		System.out.println(channel);
 		
-		joinChannel(channel);
-		String msg = messages.getOtherMessage("onInvite");
-		sendAction(channel, formatMessage(msg, sourceNick, null));
+		if (channel.startsWith("#zqsd")){
+			joinChannel(channel);
+			String msg = messages.getOtherMessage("onInvite");
+			sendAction(channel, formatMessage(msg, sourceNick, null));
+		}
+		else {
+			sendMessage(sourceNick, messages.getOtherMessage("inviteNo"));
+		}
 	}
 	
 	@Override

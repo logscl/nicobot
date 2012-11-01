@@ -5,7 +5,10 @@ package com.st.nicobot.cmd;
 
 import java.util.Arrays;
 
+import sun.net.dns.ResolverConfiguration.Options;
+
 import com.st.nicobot.NicoBot;
+import com.st.nicobot.utils.Option;
 
 /**
  * 

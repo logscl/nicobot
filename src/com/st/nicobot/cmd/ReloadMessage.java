@@ -5,6 +5,7 @@ package com.st.nicobot.cmd;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.utils.Option;
 
 /**
  * @author Julien
