@@ -85,7 +85,7 @@ public class NicoBot extends AbstractPircBot {
 			sendAction(channel, formatMessage(msg, sourceNick, null));
 		}
 		else {
-			sendMessage(sourceNick, messages.getOtherMessage("inviteNo"));
+			sendNotice(sourceNick, messages.getOtherMessage("inviteNo"));
 		}
 	}
 	

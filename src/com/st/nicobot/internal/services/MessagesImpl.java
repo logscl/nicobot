@@ -64,7 +64,9 @@ public class MessagesImpl implements Messages {
 		
 		reactsRgx = new HashMap<String, String>();
 		reactsRgx.put("grand", 		"CMB !");
+		reactsRgx.put(" long ", 	"CMB !");
 		reactsRgx.put("petit", 		"CMB ! ... euh ... merde.");
+		reactsRgx.put("court", 		"CTB ! Hahahaha... J'me marre.");
 		reactsRgx.put("cham", 		"Y'a de ces CHA-MELLES ici ! :D");
 		reactsRgx.put("gamin", 		"Hein fieu");
 		reactsRgx.put("hey", 		"Hey Hey !");
