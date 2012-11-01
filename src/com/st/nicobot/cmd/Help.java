@@ -33,10 +33,10 @@ public class Help extends NiCommand {
 		Commands commandsChain = CommandsImpl.getInstance();
 		NiCommand cmd = commandsChain.getFirstLink();
 		
-		nicobot.sendMessage(opts.sender, MessagesImpl.getInstance().getOtherMessage("helpHeader"));
+		nicobot.sendNotice(opts.sender, MessagesImpl.getInstance().getOtherMessage("helpHeader"));
 		
 		while (cmd != null) {
-			nicobot.sendMessage(opts.sender, "    - " + cmd.getCommandName() + " : " + cmd.getDescription());
+			nicobot.sendNotice(opts.sender, "    - " + cmd.getCommandName() + " : " + cmd.getDescription());
 			cmd = cmd.nextCommand;
 		}
 	}		

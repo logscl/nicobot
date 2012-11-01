@@ -58,20 +58,19 @@ public abstract class NiCommand {
 	 * <p>Si non, alors on passe le relais au maillon suivant ({@link NiCommand#nextCommand})</p>
 	 * @param nicobot
 	 * 		TEH nicobot
-	 * @param rawCommand
+	 * @param command
 	 * 		La commande "brute" (sans le !nico mais avec les arguments)
 	 * @param opts
 	 * 		Les options {@link Options}
 	 */
-	public void handle(NicoBot nicobot, String rawCommand, Option opts) {
+	public void handle(NicoBot nicobot, String command, String[] arguments, Option opts) {
 		
-		if (rawCommand.startsWith(getCommandName())){
-			String[] explodedCommand = rawCommand.split(" ");
-			this.doCommand(nicobot, explodedCommand[0], getArgs(explodedCommand), opts);
+		if (command.startsWith(getCommandName())){
+			this.doCommand(nicobot, command, arguments, opts);
 		}
 
 		if (nextCommand != null) {
-			nextCommand.handle(nicobot, rawCommand, opts);
+			nextCommand.handle(nicobot, command, arguments, opts);
 		}
 	}
 	

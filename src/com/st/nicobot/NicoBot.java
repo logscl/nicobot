@@ -1,5 +1,7 @@
 package com.st.nicobot;
 
+import java.util.Arrays;
+
 import org.jibble.pircbot.Colors;
 
 import com.st.nicobot.bot.AbstractPircBot;
@@ -29,6 +31,10 @@ public class NicoBot extends AbstractPircBot {
 		this.setName("nicobot");
 	}
 	
+	public NicoBot(String nick) {
+		this.setName(nick);
+	}
+	
 	@Override
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		super.onMessage(channel, sender, login, hostname, message);
@@ -36,11 +42,7 @@ public class NicoBot extends AbstractPircBot {
 		message = Colors.removeFormattingAndColors(message);
 		String response = null;
 		
-		if (message.startsWith("!nico")){
-			String cmd = message.substring("!nico ".length());
-			commands.getFirstLink().handle(this, cmd, new Option(channel, sender, message));
-		}
-		else if (messages.getSentences().contains(message)){
+		if (messages.getSentences().contains(message)){
 			response = messages.getSentence(message);
 		}
 		else {
@@ -105,5 +107,34 @@ public class NicoBot extends AbstractPircBot {
 		message = message.replaceAll("%c", channel);
 		
 		return message;
+	}
+	
+	@Override
+	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
+		super.onPrivateMessage(sender, login, hostname, message);
+		
+		message = Colors.removeFormattingAndColors(message);
+		
+		/* Gestion des commandes à nicobot
+		 * Nicobot ne réagira aux commandes qu'en pv. Une commande bien formée :
+		 * 
+		 * #chan command args 
+		 * DONC arguments :
+		 * 0 -> !nico, pour bien balancer une nicommande
+		 * 1 -> non du chan, avec son cardinal (de richelieu lolilol)
+		 * 2 -> la nicommande (halp,...)
+		 * 3 -> les arguments de la nicommande
+		 */
+		String[] arguments = message.split(" ");
+		String[] commandArgs = Arrays.asList(arguments).subList(3, arguments.length).toArray(new String[0]);
+		
+		if (arguments[0].equals("!nico")){
+			if(arguments.length >= 2 && arguments[1].startsWith("#")) {
+				commands.getFirstLink().handle(this, arguments[2], commandArgs, new Option(arguments[1], sender, message));
+			} else {
+				sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"!nico #lechan lacommande [les params]\"");
+			}
+		}
+		// fin gestion des commandes
 	}
 }

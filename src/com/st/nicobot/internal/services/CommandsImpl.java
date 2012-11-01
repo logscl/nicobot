@@ -3,10 +3,7 @@
  */
 package com.st.nicobot.internal.services;
 
-import com.st.nicobot.cmd.Help;
 import com.st.nicobot.cmd.NiCommand;
-import com.st.nicobot.cmd.ReloadMessage;
-import com.st.nicobot.cmd.StopNicoBot;
 import com.st.nicobot.services.Commands;
 
 /**
@@ -18,6 +15,15 @@ public class CommandsImpl implements Commands {
 	private NiCommand firstLink;
 
 	private static CommandsImpl instance;
+	
+	private static String commandsPackage = "com.st.nicobot.cmd.";
+	
+	/**
+	 * v1 : pas d'auto-discovery des classes (sans Spring, c'est chiant).
+	 * TODO v2 : prendre toutes les classes du package dans commandsPackage
+	 * et instancier celles qui extends NiCommand
+	 */
+	private static String[] commandsClasses = {"Help", "ReloadMessage", "StopNicoBot", "Say"};
 	
 	private CommandsImpl() {	}
 	
@@ -31,15 +37,23 @@ public class CommandsImpl implements Commands {
 	}
 	
 	public void init() {
-		NiCommand cmd1, cmd2, cmd3;
-		cmd1 = new ReloadMessage();
-		cmd2 = new StopNicoBot();
-		cmd3 = new Help();
-		
-		cmd1.setNext(cmd2);
-		cmd2.setNext(cmd3);
-		
-		firstLink = cmd1;
+		NiCommand previous = null;
+		for(String clazz : commandsClasses) {
+			try {
+				NiCommand c = (NiCommand)Class.forName(commandsPackage+clazz).newInstance();
+				if(firstLink == null) {
+					firstLink = c;
+				}
+				if(previous == null) {
+					previous = c;
+				} else {
+					previous.setNext(c);
+					previous = c;
+				}
+			} catch (Exception e) {
+				System.out.println("Impossibler d'instancier la classe "+clazz+", exception : "+e.getMessage());
+			}
+		}
 	}
 	
 	@Override
