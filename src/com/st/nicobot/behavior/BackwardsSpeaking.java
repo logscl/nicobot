@@ -23,13 +23,7 @@ public class BackwardsSpeaking implements NiConduct {
 	}
 	
 	protected String reverseString(String string) {
-		StringBuilder newString = new StringBuilder();
-		
-		for (int i = string.length()-1; i >= 0; i--) {
-			newString.append(string.charAt(i));
-		}
-		
-		return newString.toString();
+		return new StringBuilder(string).reverse().toString();
 	}
 
 }

@@ -118,22 +118,19 @@ public class NicoBot extends AbstractPircBot {
 		/* Gestion des commandes à nicobot
 		 * Nicobot ne réagira aux commandes qu'en pv. Une commande bien formée :
 		 * 
-		 * #chan command args 
+		 * command #chan args 
 		 * DONC arguments :
-		 * 0 -> !nico, pour bien balancer une nicommande
+		 * 0 -> la nicommande (halp,...)
 		 * 1 -> non du chan, avec son cardinal (de richelieu lolilol)
-		 * 2 -> la nicommande (halp,...)
-		 * 3 -> les arguments de la nicommande
+		 * 2 -> les arguments de la nicommande
 		 */
 		String[] arguments = message.split(" ");
-		String[] commandArgs = Arrays.asList(arguments).subList(3, arguments.length).toArray(new String[0]);
-		
-		if (arguments[0].equals("!nico")){
-			if(arguments.length >= 2 && arguments[1].startsWith("#")) {
-				commands.getFirstLink().handle(this, arguments[2], commandArgs, new Option(arguments[1], sender, message));
-			} else {
-				sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"!nico #lechan lacommande [les params]\"");
-			}
+		System.out.println(arguments);
+		if(arguments.length > 1 && arguments[1].startsWith("#")) {
+			String[] commandArgs = Arrays.asList(arguments).subList(2, arguments.length).toArray(new String[0]);
+			commands.getFirstLink().handle(this, arguments[0], commandArgs, new Option(arguments[1], sender, message));
+		} else {
+			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"lacommande #lechan [les params]\"");
 		}
 		// fin gestion des commandes
 	}

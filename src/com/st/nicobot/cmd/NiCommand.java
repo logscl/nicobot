@@ -59,7 +59,9 @@ public abstract class NiCommand {
 	 * @param nicobot
 	 * 		TEH nicobot
 	 * @param command
-	 * 		La commande "brute" (sans le !nico mais avec les arguments)
+	 * 		La commande "brute" seule
+	 * @param
+	 * 		Les arguments de la commande (sans le nom du chan, ni la commande)
 	 * @param opts
 	 * 		Les options {@link Options}
 	 */

@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.st.nicobot.NicoBot;
-import com.st.nicobot.behavior.BackwardsSpeaking;
 import com.st.nicobot.behavior.NiConduct;
-import com.st.nicobot.behavior.RandomTalk;
 import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.utils.Option;
 
@@ -28,6 +26,15 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 	
 	private static BehaviorsService instance;
 	
+	private static String behaviorsPackage = "com.st.nicobot.behavior.";
+	
+	/**
+	 * v1 : pas d'auto-discovery des classes (sans Spring, c'est chiant).
+	 * TODO v2 : prendre toutes les classes du package dans behaviorsPackage
+	 * et instancier celles qui extends NiConduct
+	 */
+	private static String[] behaviorsClasses = {"BackwardsSpeaking", "RandomTalk"};
+	
 	private BehaviorsServiceImpl() { }
 	
 	public static BehaviorsService getInstance() {
@@ -44,8 +51,14 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 		
 		behaviors = new ArrayList<NiConduct>();
 		
-		behaviors.add(new RandomTalk());
-		behaviors.add(new BackwardsSpeaking());
+		for(String clazz : behaviorsClasses) {
+			try {
+				NiConduct c = (NiConduct)Class.forName(behaviorsPackage+clazz).newInstance();
+				behaviors.add(c);
+			} catch (Exception e) {
+				System.out.println("Impossibler d'instancier la classe "+clazz+", exception : "+e.getMessage());
+			}
+		}
 	}
 	
 	@Override
