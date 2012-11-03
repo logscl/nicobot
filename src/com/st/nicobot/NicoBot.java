@@ -111,8 +111,6 @@ public class NicoBot extends AbstractPircBot {
 	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
 		super.onPrivateMessage(sender, login, hostname, message);
 		
-		message = Colors.removeFormattingAndColors(message);
-		
 		/* Gestion des commandes à nicobot
 		 * Nicobot ne réagira aux commandes qu'en pv. Une commande bien formée :
 		 * 
@@ -133,7 +131,7 @@ public class NicoBot extends AbstractPircBot {
 				commandArgs = NiCommand.getArgs(commandsString);
 			}
 			
-			commands.getFirstLink().handle(this, arguments[0], commandArgs, new Option(arguments[1], sender, message));
+			commands.getFirstLink().handle(this, Colors.removeFormattingAndColors(arguments[0]), commandArgs, new Option(arguments[1], sender, message));
 		} else {
 			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"<commande> <#channel> [params]\"");
 		}

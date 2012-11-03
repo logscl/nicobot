@@ -6,6 +6,8 @@ package com.st.nicobot.cmd;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jibble.pircbot.Colors;
+
 import sun.net.dns.ResolverConfiguration.Options;
 
 import com.st.nicobot.NicoBot;
@@ -74,7 +76,7 @@ public abstract class NiCommand {
 	public void handle(NicoBot nicobot, String command, String[] arguments, Option opts) {
 		
 		if (command.startsWith(getCommandName())){
-			this.doCommand(nicobot, command, arguments, opts);
+			this.doCommand(nicobot, command, removeFormattingAndColors(arguments), opts);
 		}
 
 		if (nextCommand != null) {
@@ -110,6 +112,19 @@ public abstract class NiCommand {
 		
 		return explodedArgs;
 		
+	}
+	
+	/**
+	 * Supprime le formatage et la couleur pour chaque argument de la commande
+	 * @param args
+	 * 		Le tableau contenant les arguments
+	 */
+	protected String[] removeFormattingAndColors(String[] args) {
+		for(int i = 0; args!= null && i < args.length; i++) {
+			args[i] = Colors.removeFormattingAndColors(args[i]);
+		}
+		
+		return args;
 	}
 	
 }
