@@ -14,6 +14,7 @@ import com.st.nicobot.utils.Option;
 public class ReloadMessage extends NiCommand {
 
 	private static final String COMMAND = "refresh";
+	private static final String FORMAT = "refresh <#channel>";
 	private static final String DESC = "Redémarre les différents messages de nicobot.";
 	
 	
@@ -27,6 +28,11 @@ public class ReloadMessage extends NiCommand {
 	@Override
 	public String getDescription() {
 		return DESC;
+	}
+	
+	@Override
+	public String getFormat() {
+		return FORMAT;
 	}
 	
 	@Override

@@ -14,6 +14,7 @@ import com.st.nicobot.utils.Option;
 public class StopNicoBot extends NiCommand {
 
 	private static final String CMD = "stop";
+	private static final String FORMAT = "stop <#channel>";
 	private static final String DESC = "Force nicobot a s'éteindre";
 	
 	
@@ -25,6 +26,11 @@ public class StopNicoBot extends NiCommand {
 	@Override
 	public String getDescription() {
 		return DESC;
+	}
+	
+	@Override
+	public String getFormat() {
+		return FORMAT;
 	}
 
 	@Override

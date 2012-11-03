@@ -15,17 +15,23 @@ import com.st.nicobot.utils.Option;
  */
 public class Help extends NiCommand {
 
-	private static final String CMD = "help";
+	private static final String COMMAND = "help";
+	private static final String FORMAT = "help <#channel>";
 	private static final String DESC = "Retourne la liste des commandes disponibles.";
 			
 	@Override
 	public String getCommandName() {
-		return CMD;
+		return COMMAND;
 	}
 
 	@Override
 	public String getDescription() {
 		return DESC;
+	}
+	
+	@Override
+	public String getFormat() {
+		return FORMAT;
 	}
 
 	@Override

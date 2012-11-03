@@ -1,10 +1,9 @@
 package com.st.nicobot;
 
-import java.util.Arrays;
-
 import org.jibble.pircbot.Colors;
 
 import com.st.nicobot.bot.AbstractPircBot;
+import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.internal.services.BehaviorsServiceImpl;
 import com.st.nicobot.internal.services.CommandsImpl;
 import com.st.nicobot.internal.services.MessagesImpl;
@@ -126,11 +125,15 @@ public class NicoBot extends AbstractPircBot {
 		String[] arguments = message.split(" ");
 		
 		if(arguments.length > 1 && arguments[1].startsWith("#")) {
-			String[] commandArgs = Arrays.copyOfRange(arguments, 2, arguments.length);
+			// on extrait de la chaine uniquement la partie contenant les arguments
+			String commandsString = message.substring(message.indexOf(arguments[2]));	
+			String[] commandArgs = NiCommand.getArgs(commandsString);
+			
 			commands.getFirstLink().handle(this, arguments[0], commandArgs, new Option(arguments[1], sender, message));
 		} else {
-			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"lacommande #lechan [les params]\"");
+			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"<commande> <#channel> [params]\"");
 		}
 		// fin gestion des commandes
 	}
+	
 }

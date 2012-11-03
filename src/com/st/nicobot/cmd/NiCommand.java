@@ -3,7 +3,8 @@
  */
 package com.st.nicobot.cmd;
 
-import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import sun.net.dns.ResolverConfiguration.Options;
 
@@ -30,6 +31,11 @@ public abstract class NiCommand {
 	 * @return
 	 */
 	public abstract String getDescription();
+	
+	/*
+	 * Retourne le format de la commande
+	 */
+	public abstract String getFormat();
 
 	/**
 	 * Code à executer par la commande
@@ -76,14 +82,34 @@ public abstract class NiCommand {
 		}
 	}
 	
-	protected String[] getArgs(String[] explodedCommand) {
-		String[] args = null;
-
-		if (explodedCommand.length > 1) {
-			args = Arrays.copyOfRange(explodedCommand, 1, explodedCommand.length);
+	/** Regex pour trouver une chaine de caractere encadrée par " " */
+	private static final Pattern REGEX_FIND_STRING = Pattern.compile("\"(.)*\"");
+	private static final String REPlACE_VALUE = "inputString";
+	
+	public static String[] getArgs(String arguments) {
+		Matcher matcher = REGEX_FIND_STRING.matcher(arguments);
+		
+		String inputString = null;
+		
+		if (matcher.find()) {
+			inputString = matcher.group();
+			arguments = matcher.replaceFirst(REPlACE_VALUE);
 		}
 		
-		return args;
+		String[] explodedArgs = arguments.split(" ");
+		boolean needToContinue = true;
+		
+		for (int i = 0; i < explodedArgs.length && needToContinue; i++) {
+			if (explodedArgs[i].equals(REPlACE_VALUE)) {
+				
+				// on vire le " en debut et en fin de chaine
+				explodedArgs[i] = inputString.substring(1, inputString.length()-1);
+				needToContinue = false;
+			}
+		}
+		
+		return explodedArgs;
+		
 	}
 	
 }
