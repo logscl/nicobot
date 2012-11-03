@@ -124,10 +124,14 @@ public class NicoBot extends AbstractPircBot {
 		 */
 		String[] arguments = message.split(" ");
 		
-		if(arguments.length > 1 && arguments[1].startsWith("#")) {
-			// on extrait de la chaine uniquement la partie contenant les arguments
-			String commandsString = message.substring(message.indexOf(arguments[2]));	
-			String[] commandArgs = NiCommand.getArgs(commandsString);
+		if(arguments.length >= 2 && arguments[1].startsWith("#")) {
+			String[] commandArgs = null;
+			
+			if(arguments.length > 2) {
+				// on extrait de la chaine uniquement la partie contenant les arguments
+				String commandsString = message.substring(message.indexOf(arguments[2]));	
+				commandArgs = NiCommand.getArgs(commandsString);
+			}
 			
 			commands.getFirstLink().handle(this, arguments[0], commandArgs, new Option(arguments[1], sender, message));
 		} else {
