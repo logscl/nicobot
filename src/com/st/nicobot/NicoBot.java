@@ -77,7 +77,6 @@ public class NicoBot extends AbstractPircBot {
 	protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel) {
 		String[] strings = channel.split(" ");
 		channel = strings[3];
-//		System.out.println(channel);
 		
 		if (channel.startsWith("#zqsd")){
 			joinChannel(channel);
@@ -125,9 +124,9 @@ public class NicoBot extends AbstractPircBot {
 		 * 2 -> les arguments de la nicommande
 		 */
 		String[] arguments = message.split(" ");
-		System.out.println(arguments);
+		
 		if(arguments.length > 1 && arguments[1].startsWith("#")) {
-			String[] commandArgs = Arrays.asList(arguments).subList(2, arguments.length).toArray(new String[0]);
+			String[] commandArgs = Arrays.copyOfRange(arguments, 2, arguments.length);
 			commands.getFirstLink().handle(this, arguments[0], commandArgs, new Option(arguments[1], sender, message));
 		} else {
 			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"lacommande #lechan [les params]\"");
