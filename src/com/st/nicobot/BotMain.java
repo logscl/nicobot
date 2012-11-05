@@ -6,7 +6,7 @@ public class BotMain {
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception {
-		NicoBot bot = new NicoBot("N1C0-B0T");
+		NicoBot bot = new NicoBot("nicobot");
 		
 		//moar logs
 		bot.setVerbose(true);

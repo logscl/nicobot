@@ -84,6 +84,7 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("velo",		"On m'a volé mon vélooooo !!! Qui m'a volé mon vélooooo ???");
 		otherMessages.put("topside",	"TOPSIDE COMIC TROIS CENT QUATRE VING QUATORZE");
 		otherMessages.put("biatch",		"Ouais BIATCH !");
+		otherMessages.put("ensomme",	"En somme.");
 	}
 	
 	@Override

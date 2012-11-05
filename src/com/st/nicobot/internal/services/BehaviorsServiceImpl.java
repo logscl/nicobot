@@ -6,6 +6,14 @@ package com.st.nicobot.internal.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.behavior.NiConduct;
@@ -26,14 +34,7 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 	
 	private static BehaviorsService instance;
 	
-	private static String behaviorsPackage = "com.st.nicobot.behavior.";
-	
-	/**
-	 * v1 : pas d'auto-discovery des classes (sans Spring, c'est chiant).
-	 * TODO v2 : prendre toutes les classes du package dans behaviorsPackage
-	 * et instancier celles qui extends NiConduct
-	 */
-	private static String[] behaviorsClasses = {"BackwardsSpeaking", "RandomTalk"};
+	private static String behaviorsPackage = "com.st.nicobot.behavior";
 	
 	private BehaviorsServiceImpl() { }
 	
@@ -48,12 +49,18 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 	
 	public void init() {
 		random = com.st.nicobot.utils.Random.getInstance();
-		
 		behaviors = new ArrayList<NiConduct>();
 		
-		for(String clazz : behaviorsClasses) {
+		Reflections reflex = new Reflections(new ConfigurationBuilder()
+	        .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(behaviorsPackage)))
+	        .setUrls(ClasspathHelper.forPackage(behaviorsPackage))
+	        .setScanners(new SubTypesScanner(), new ResourcesScanner()));
+		
+		Set<Class<? extends NiConduct>> classes = reflex.getSubTypesOf(NiConduct.class);
+		
+		for(Class<? extends NiConduct> clazz : classes) {
 			try {
-				NiConduct c = (NiConduct)Class.forName(behaviorsPackage+clazz).newInstance();
+				NiConduct c = (NiConduct)clazz.newInstance();
 				behaviors.add(c);
 			} catch (Exception e) {
 				System.out.println("Impossibler d'instancier la classe "+clazz+", exception : "+e.getMessage());

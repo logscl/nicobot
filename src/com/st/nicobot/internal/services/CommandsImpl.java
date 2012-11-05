@@ -3,6 +3,15 @@
  */
 package com.st.nicobot.internal.services;
 
+import java.util.Set;
+
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
+
 import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.services.Commands;
 
@@ -16,14 +25,7 @@ public class CommandsImpl implements Commands {
 
 	private static CommandsImpl instance;
 	
-	private static String commandsPackage = "com.st.nicobot.cmd.";
-	
-	/**
-	 * v1 : pas d'auto-discovery des classes (sans Spring, c'est chiant).
-	 * TODO v2 : prendre toutes les classes du package dans commandsPackage
-	 * et instancier celles qui extends NiCommand
-	 */
-	private static String[] commandsClasses = {"Help", "ReloadMessage", "StopNicoBot", "Say"};
+	private static String commandsPackage = "com.st.nicobot.cmd";
 	
 	private CommandsImpl() {	}
 	
@@ -38,9 +40,17 @@ public class CommandsImpl implements Commands {
 	
 	public void init() {
 		NiCommand previous = null;
-		for(String clazz : commandsClasses) {
+		
+		Reflections reflex = new Reflections(new ConfigurationBuilder()
+	        .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(commandsPackage)))
+	        .setUrls(ClasspathHelper.forPackage(commandsPackage))
+	        .setScanners(new SubTypesScanner(), new ResourcesScanner()));
+		
+		Set<Class<? extends NiCommand>> classes = reflex.getSubTypesOf(NiCommand.class);
+		
+		for(Class<? extends NiCommand> clazz : classes) {
 			try {
-				NiCommand c = (NiCommand)Class.forName(commandsPackage+clazz).newInstance();
+				NiCommand c = (NiCommand)clazz.newInstance();
 				if(firstLink == null) {
 					firstLink = c;
 				}
