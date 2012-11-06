@@ -126,5 +126,4 @@ public abstract class NiCommand {
 		
 		return args;
 	}
-	
 }

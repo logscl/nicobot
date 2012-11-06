@@ -111,31 +111,23 @@ public class NicoBot extends AbstractPircBot {
 	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
 		super.onPrivateMessage(sender, login, hostname, message);
 		
-		/* Gestion des commandes à nicobot
-		 * Nicobot ne réagira aux commandes qu'en pv. Une commande bien formée :
-		 * 
-		 * command #chan args 
-		 * DONC arguments :
-		 * 0 -> la nicommande (halp,...)
-		 * 1 -> non du chan, avec son cardinal (de richelieu lolilol)
-		 * 2 -> les arguments de la nicommande
-		 */
-		String[] arguments = message.split(" ");
+		//on extrait <cmd> <reste>
+		String[] arguments = message.split(" ");		
 		
-		if(arguments.length >= 2 && arguments[1].startsWith("#")) {
+		if(arguments.length >= 1) {
 			String[] commandArgs = null;
 			
-			if(arguments.length > 2) {
+			if(arguments.length > 1) {
 				// on extrait de la chaine uniquement la partie contenant les arguments
-				String commandsString = message.substring(message.indexOf(arguments[2]));	
+				String commandsString = message.substring(message.indexOf(arguments[1]));	
 				commandArgs = NiCommand.getArgs(commandsString);
 			}
 			
-			commands.getFirstLink().handle(this, Colors.removeFormattingAndColors(arguments[0]), commandArgs, new Option(arguments[1], sender, message));
+			commands.getFirstLink().handle(
+					this, Colors.removeFormattingAndColors(arguments[0]), 
+					commandArgs, new Option(null, sender, message));
 		} else {
-			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"<commande> <#channel> [params]\"");
+			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"<commande> [params]\"");
 		}
-		// fin gestion des commandes
 	}
-	
 }
