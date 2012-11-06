@@ -71,12 +71,16 @@ public class MessagesImpl implements Messages {
 		reactsRgx.put("gamin", 		"Hein fieu");
 		reactsRgx.put("hey", 		"Hey Hey !");
 		reactsRgx.put("secret",		"J'ai un terrible secret aussi...");
+		reactsRgx.put("nico",		"Nico ... avec un N majuscule ...Tu es né idiot, tu vas mourir idiot !");
 		
 		otherMessages = new HashMap<String, String>();
 		otherMessages.put("onKick", 	"Merci pour le kick, %p...");
 		otherMessages.put("onJoin", 	"Yo les gars! Saluez %p !");
+		otherMessages.put("onSelfJoin",	"Yo les gars! Ovation pour %p ! Woup Woup !!");
 		otherMessages.put("onInvite", 	"remercie %p");
 		otherMessages.put("onLeave", 	"A plus les nb's !");
+		otherMessages.put("onPart", 	"Casse toi, aller ... j'veux plus jamais t'voir !");
+		
 		otherMessages.put("leaveReason","rien.");
 		otherMessages.put("helpHeader",	"Liste des commandes que nicobot connait :");
 		otherMessages.put("inviteNo",	"LOL ? T'as cru ? Va t'faire refaire, ALIEN !");
