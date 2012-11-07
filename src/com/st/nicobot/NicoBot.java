@@ -86,6 +86,11 @@ public class NicoBot extends AbstractPircBot {
 	@Override
 	protected void onJoin(String channel, String sender, String login, String hostname) {
 		String msg = messages.getOtherMessage("onJoin");
+		
+		if (sender.equals(this.getNick())) {
+			msg = messages.getOtherMessage("onSelfJoin");
+		}
+		
 		sendMessage(channel, formatMessage(msg, sender, null));
 	}
 	
@@ -126,4 +131,14 @@ public class NicoBot extends AbstractPircBot {
 			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"<commande> [params]\"");
 		}
 	}
+	
+	@Override
+	protected void onPart(String channel, String sender, String login, String hostname) {
+		super.onPart(channel, sender, login, hostname);
+		
+		if (! sender.equals(this.getNick())) {
+			sendMessage(channel, messages.getOtherMessage("onPart"));
+		}
+	}
+	
 }
