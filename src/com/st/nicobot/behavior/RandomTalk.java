@@ -45,6 +45,9 @@ public class RandomTalk implements NiConduct {
 			case 4 :
 				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.ENSOMME.name().toLowerCase());
 				break;
+			case 5 :
+				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.NICONTROLEUR.name().toLowerCase());
+				break;
 		}
 		
 		return msg;
@@ -55,7 +58,8 @@ public class RandomTalk implements NiConduct {
 		VELO,
 		TOPSIDE,
 		BIATCH,
-		ENSOMME
+		ENSOMME,
+		NICONTROLEUR
 	}
 	
 	public static void main(String[] args) {
