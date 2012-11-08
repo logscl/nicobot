@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="archiveJar">
+
+	<property name="jarName" value="nicobot.jar"/>
+	
+	<property name="srcDir" 		value="src"/>
+	<property name="resourcesDir" 	value="resources"/>
+	<property name="buildDir"		value="bin"/>
+	
+	<property name="target"			value="1.6"/>
+	
+	<path id="nicobotClassPath">
+		<fileset dir="${resourcesDir}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="compile" depends="clean,init" description="Compile sources">
+		<echo>Compiling sources at ${srcDir} to ${buildDir}</echo>
+		
+		<javac destdir="${buildDir}" source="${target}" target="${target}">
+			<compilerarg value="-Xlint:unchecked"/>
+            <src path="${srcDir}"/>
+            <classpath refid="nicobotClassPath" />
+		</javac>
+	</target>
+	
+	<target name="archiveJar" depends="compile">
+		<jar destfile="${buildDir}/${jarName}" basedir="${buildDir}">
+			<fileset dir="${resourcesDir}">
+				<include name="*.jar"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="clean">
+		<echo>Cleaning ${buildDir} dir.</echo>
+		
+		<delete dir="${buildDir}" />
+	</target>
+	
+	<target name="init">
+		<echo>Preparing ${buildDir} dir.</echo>
+		<mkdir dir="${buildDir}"/>
+	</target>
+	
+</project>

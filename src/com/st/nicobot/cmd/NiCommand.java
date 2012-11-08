@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 
 import org.jibble.pircbot.Colors;
 
-import sun.net.dns.ResolverConfiguration.Options;
-
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.utils.Option;
 
@@ -71,7 +69,7 @@ public abstract class NiCommand {
 	 * @param
 	 * 		Les arguments de la commande (sans le nom du chan, ni la commande)
 	 * @param opts
-	 * 		Les options {@link Options}
+	 * 		Les options {@link Option}
 	 */
 	public void handle(NicoBot nicobot, String command, String[] arguments, Option opts) {
 		
