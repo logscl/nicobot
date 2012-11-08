@@ -79,15 +79,15 @@ public class MessagesImpl implements Messages {
 		reactions.put("(?i).*petit.*",					"CMB ! ... euh ... merde.");
 		reactions.put("(?i).*court.*",					"CTB ! Hahahaha... J'me marre.");
 		reactions.put("(?i).*cham.*",					"Y'a de ces CHA-MELLES ici ! :D");
-		reactsRgx.put(".* nico.*",							"Nico ... avec un N majuscule ...Tu es né idiot, tu vas mourir idiot !");
+		reactions.put(".* nico.*",						"Nico ... avec un N majuscule ...Tu es né idiot, tu vas mourir idiot !");
 		
 		otherMessages = new HashMap<String, String>();
 		otherMessages.put("onKick", 		"Merci pour le kick, %p...");
 		otherMessages.put("onJoin", 		"Yo les gars! Saluez %p !");
-		otherMessages.put("onSelfJoin",	"Yo les gars! Ovation pour %p ! Woup Woup !!");
+		otherMessages.put("onSelfJoin",		"Yo les gars! Ovation pour %p ! Woup Woup !!");
 		otherMessages.put("onInvite", 		"remercie %p");
 		otherMessages.put("onLeave", 		"A plus les nb's !");
-		otherMessages.put("onPart", 	"Casse toi, aller ... j'veux plus jamais t'voir !");
+		otherMessages.put("onPart", 		"Casse toi, aller ... j'veux plus jamais t'voir !");
 		
 		otherMessages.put("leaveReason",	"rien.");
 		otherMessages.put("helpHeader",		"Liste des commandes que nicobot connait :");
