@@ -7,9 +7,11 @@ import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.internal.services.BehaviorsServiceImpl;
 import com.st.nicobot.internal.services.CommandsImpl;
 import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.internal.services.SchedulerServiceImpl;
 import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.services.Commands;
 import com.st.nicobot.services.Messages;
+import com.st.nicobot.services.SchedulerService;
 import com.st.nicobot.utils.Option;
 
 /**
@@ -25,6 +27,8 @@ public class NicoBot extends AbstractPircBot {
 	private Commands commands = CommandsImpl.getInstance();
 	
 	private BehaviorsService behaviors = BehaviorsServiceImpl.getInstance();
+	
+	private SchedulerService schedulerService = SchedulerServiceImpl.getInstance();
 	
 	public NicoBot() {
 		this("nicobot");
@@ -140,6 +144,13 @@ public class NicoBot extends AbstractPircBot {
 		if (! sender.equals(this.getNick())) {
 			sendMessage(channel, messages.getOtherMessage("onPart"));
 		}
+	}
+	
+	@Override
+	protected void onConnect() {
+		super.onConnect();
+		
+		schedulerService.startScheduler();
 	}
 	
 }
