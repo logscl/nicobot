@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 
  */
 package com.st.nicobot.utils;
