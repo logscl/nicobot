@@ -1,4 +1,4 @@
-package com.st.nicobot;
+﻿package com.st.nicobot;
 
 import org.jibble.pircbot.Colors;
 
@@ -27,7 +27,7 @@ public class NicoBot extends AbstractPircBot {
 	private BehaviorsService behaviors = BehaviorsServiceImpl.getInstance();
 	
 	public NicoBot() {
-		this.setName("nicobot");
+		this("nicobot");
 	}
 	
 	public NicoBot(String nick) {

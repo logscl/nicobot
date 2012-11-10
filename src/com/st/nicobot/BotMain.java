@@ -1,4 +1,4 @@
-package com.st.nicobot;
+﻿package com.st.nicobot;
 
 public class BotMain {
 

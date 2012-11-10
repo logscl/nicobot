@@ -1,4 +1,4 @@
-package com.st.nicobot.cmd;
+﻿package com.st.nicobot.cmd;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
