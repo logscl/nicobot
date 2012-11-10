@@ -11,7 +11,7 @@ import com.st.nicobot.job.task.Task;
  * @author Julien
  *
  */
-public class AbstractJob implements Job {
+public abstract class AbstractJob implements Job {
 
 	protected boolean startAtCreation;
 	protected long delay;

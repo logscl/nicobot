@@ -6,18 +6,11 @@ package com.st.nicobot.internal.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.behavior.NiConduct;
 import com.st.nicobot.services.BehaviorsService;
+import com.st.nicobot.utils.ClassLoader;
 import com.st.nicobot.utils.Option;
 
 /**
@@ -34,8 +27,6 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 	
 	private static BehaviorsService instance;
 	
-	private static String behaviorsPackage = "com.st.nicobot.behavior";
-	
 	private BehaviorsServiceImpl() { }
 	
 	public static BehaviorsService getInstance() {
@@ -49,23 +40,7 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 	
 	public void init() {
 		random = com.st.nicobot.utils.Random.getInstance();
-		behaviors = new ArrayList<NiConduct>();
-		
-		Reflections reflex = new Reflections(new ConfigurationBuilder()
-	        .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(behaviorsPackage)))
-	        .setUrls(ClasspathHelper.forPackage(behaviorsPackage))
-	        .setScanners(new SubTypesScanner(), new ResourcesScanner()));
-		
-		Set<Class<? extends NiConduct>> classes = reflex.getSubTypesOf(NiConduct.class);
-		
-		for(Class<? extends NiConduct> clazz : classes) {
-			try {
-				NiConduct c = (NiConduct)clazz.newInstance();
-				behaviors.add(c);
-			} catch (Exception e) {
-				System.out.println("Impossibler d'instancier la classe "+clazz+", exception : "+e.getMessage());
-			}
-		}
+		behaviors = ClassLoader.getInstance().getInstancesOfClass(NiConduct.class);
 	}
 	
 	@Override

@@ -5,15 +5,9 @@ package com.st.nicobot.internal.services;
 
 import java.util.Set;
 
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
-
 import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.services.Commands;
+import com.st.nicobot.utils.ClassLoader;
 
 /**
  * @author Julien
@@ -24,8 +18,6 @@ public class CommandsImpl implements Commands {
 	private NiCommand firstLink;
 
 	private static CommandsImpl instance;
-	
-	private static String commandsPackage = "com.st.nicobot.cmd";
 	
 	private CommandsImpl() {	}
 	
@@ -41,12 +33,7 @@ public class CommandsImpl implements Commands {
 	public void init() {
 		NiCommand previous = null;
 		
-		Reflections reflex = new Reflections(new ConfigurationBuilder()
-	        .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(commandsPackage)))
-	        .setUrls(ClasspathHelper.forPackage(commandsPackage))
-	        .setScanners(new SubTypesScanner(), new ResourcesScanner()));
-		
-		Set<Class<? extends NiCommand>> classes = reflex.getSubTypesOf(NiCommand.class);
+		Set<Class<? extends NiCommand>> classes = ClassLoader.getInstance().getSubTypesOf(NiCommand.class);
 		
 		for(Class<? extends NiCommand> clazz : classes) {
 			try {

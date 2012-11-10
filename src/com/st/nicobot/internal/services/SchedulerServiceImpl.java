@@ -3,12 +3,11 @@
  */
 package com.st.nicobot.internal.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.st.nicobot.job.HeartBeatJob;
 import com.st.nicobot.job.Job;
 import com.st.nicobot.services.SchedulerService;
+import com.st.nicobot.utils.ClassLoader;
 
 /**
  * @author Julien
@@ -30,9 +29,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	}
 	
 	public void init() {
-		 jobs = new ArrayList<Job>();
-		 
-		 jobs.add(new HeartBeatJob());
+		 jobs = ClassLoader.getInstance().getInstancesOfClass(Job.class);
 	}
 	
 	@Override
