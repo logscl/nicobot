@@ -32,6 +32,7 @@ public class NicoBot extends AbstractPircBot {
 	
 	public NicoBot(String nick) {
 		this.setName(nick);
+		this.setAutoNickChange(true);
 	}
 	
 	@Override
