@@ -13,7 +13,7 @@ import java.net.URLConnection;
  */
 public class HeartBeatTask extends Task {
 
-	private static final String URL = "http://testapp.jlamby.cloudbees.net/";
+	private static final String URL = "http://nicobot.jlamby.cloudbees.net/";
 	
 	@Override
 	public void run() {
