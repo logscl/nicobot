@@ -6,9 +6,11 @@
 	
 	<groupId>com.st</groupId>
 	<artifactId>nicobot</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	
 	<build>
+		<finalName>${project.groupId}.${project.artifactId}</finalName>
+		
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
