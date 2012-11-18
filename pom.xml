@@ -8,6 +8,30 @@
     <artifactId>nicobot</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
+    </properties>
+    
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profile.name>dev</profile.name>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        
+        <profile>
+            <id>master</id>
+            <properties>
+                <profile.name>master</profile.name>
+            </properties>
+        </profile>
+    </profiles>
+    
     <build>
         <finalName>${project.groupId}.${project.artifactId}</finalName>
         
@@ -21,6 +45,17 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <filters>
+            <filter>src/main/filter/nicobot_${profile.name}.properties</filter>
+        </filters>        
+        
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>
@@ -58,4 +93,3 @@
            
     </dependencies>
 </project>
-

@@ -1,5 +1,7 @@
 package com.st.nicobot;
 
+import java.util.regex.Pattern;
+
 import org.jibble.pircbot.Colors;
 
 import com.st.nicobot.bot.AbstractPircBot;
@@ -7,10 +9,13 @@ import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.internal.services.BehaviorsServiceImpl;
 import com.st.nicobot.internal.services.CommandsImpl;
 import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.internal.services.PropertiesServiceImpl;
 import com.st.nicobot.internal.services.SchedulerServiceImpl;
+import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.services.Commands;
 import com.st.nicobot.services.Messages;
+import com.st.nicobot.services.PropertiesService;
 import com.st.nicobot.services.SchedulerService;
 import com.st.nicobot.utils.Option;
 
@@ -30,13 +35,16 @@ public class NicoBot extends AbstractPircBot {
 	
 	private SchedulerService schedulerService = SchedulerServiceImpl.getInstance();
 	
+	private PropertiesService props = PropertiesServiceImpl.getInstance();
+	
 	public NicoBot() {
 		this("nicobot");
 	}
 	
 	public NicoBot(String nick) {
 		this.setName(nick);
-		this.setAutoNickChange(true);
+		this.setAutoNickChange(props.getBoolean(NicobotProperty.BOT_AUTO_NICK_CHANGE));
+		this.setMessageDelay(props.getLong(NicobotProperty.BOT_MESSAGE_DELAY));
 	}
 	
 	@Override
@@ -46,8 +54,8 @@ public class NicoBot extends AbstractPircBot {
 		message = Colors.removeFormattingAndColors(message);
 		String response = null;
 
-		for(String pattern: messages.getSentences()) {
-			if(message.matches(pattern)) {
+		for(Pattern pattern: messages.getSentences()) {
+			if(pattern.matcher(message).matches()) {
 				response = messages.getSentence(pattern);
 				break;
 			}
@@ -78,7 +86,7 @@ public class NicoBot extends AbstractPircBot {
 		String[] strings = channel.split(" ");
 		channel = strings[3];
 		
-		if (channel.startsWith("#zqsd")){
+		if (channel.startsWith(props.get(NicobotProperty.BOT_CHAN))){
 			joinChannel(channel);
 			String msg = messages.getOtherMessage("onInvite");
 			sendAction(channel, formatMessage(msg, sourceNick, null));
