@@ -8,6 +8,11 @@
     <artifactId>nicobot</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
+    </properties>
+    
     <profiles>
         <profile>
             <id>dev</id>
