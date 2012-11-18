@@ -25,8 +25,7 @@ public class PropertiesServiceImpl implements PropertiesService {
 	public void init() {
 		properties = new Properties();
 		try {
-			//properties.load(new FileInputStream("nicobot.properties"));
-			properties.load(PropertiesServiceImpl.class.getClassLoader().getResourceAsStream("nicobot.properties"));
+			properties.load(ClassLoader.getSystemResourceAsStream("nicobot.properties"));
 		} catch (IOException e) {
 			System.out.println("Impossible de charger le fichier de properties :( ");
 			e.printStackTrace();
