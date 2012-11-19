@@ -61,8 +61,9 @@ public abstract class AbstractJob implements Job {
 		if (timer == null) {
 			timer = new Timer();
 			timer.scheduleAtFixedRate(getTask(), getStartDelay(), getDelay());
-			
-			System.out.println("Job " + name + " started !");
+
+			System.out.println("Job " + name + " started, task's first execution in " + 
+					(getStartDelay()/1000) + "seconds.");
 		}
 	}
 	
