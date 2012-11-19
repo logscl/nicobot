@@ -83,14 +83,14 @@ public class MessagesImpl implements Messages {
 		reactions.put(Pattern.compile(".*amis de (m|t|s)es amis.*", Pattern.CASE_INSENSITIVE),	"Si tu as un ami, en fait tu en as deux. Puisque les amis de tes amis sont tes amis, et que tu es l'ami de ton ami, tu es donc ton propre ami !");
 		reactions.put(Pattern.compile(".*garagiste.*", Pattern.CASE_INSENSITIVE), 				"PUTAIN QU'ELLE EST BONNE LA GARAGIIIIISTE ! :D");
 		reactions.put(Pattern.compile(".*choper.*", Pattern.CASE_INSENSITIVE), 					"Tout le monde sait très bien que je choppe plus rien depuis P2, merci de remuer le couteau. :(");
-		reactions.put(Pattern.compile(".*nico( .*|$)"),												"\"Nico\" avec un N majuscule putain !  Tu es né idiot, tu vas mourir idiot !");
-		reactions.put(Pattern.compile(".*ocin.*"),												"Tain mais pas à l'envers !  Ca m'énèèèèrve çaaaa !!", Pattern.CASE_INSENSITIVE);
-		reactions.put(Pattern.compile(".*tracteur.*"),											"On va au Quick ?  Il est où mon saucisson ?", Pattern.CASE_INSENSITIVE);
+		reactions.put(Pattern.compile(".*nico( .*|$)"),											"\"Nico\" avec un N majuscule putain !  Tu es né idiot, tu vas mourir idiot !");
+		reactions.put(Pattern.compile(".*ocin.*", Pattern.CASE_INSENSITIVE),					"Tain mais pas à l'envers !  Ca m'énèèèèrve çaaaa !!");
+		reactions.put(Pattern.compile(".*tracteur.*", Pattern.CASE_INSENSITIVE),				"On va au Quick ?  Il est où mon saucisson ?");
 
 		// girls
 		reactions.put(Pattern.compile(".*sarah?.*", Pattern.CASE_INSENSITIVE),						"Mhmmm...  \"Avec tes deux obus, j'crois que tu te sens plus. Du quatre-vingt dix D, il en faut plus pour me faire trembler !\"");
 		reactions.put(Pattern.compile(".*(julie|hercot).*", Pattern.CASE_INSENSITIVE),				"On en reparle quand elle aura arrêté avec son équipe de meeeerde celle là.  Iiiimmmmbécile.");
-		reactions.put(Pattern.compile(".*pauline.*", Pattern.CASE_INSENSITIVE),					"Ah ben si tu veux, moi j'en connais un rayon sur les Paulines !  P1, P2, P3 et même P4: j'ai fait toute la famille !");
+		reactions.put(Pattern.compile(".*pauline.*", Pattern.CASE_INSENSITIVE),						"Ah ben si tu veux, moi j'en connais un rayon sur les Paulines !  P1, P2, P3 et même P4: j'ai fait toute la famille !");
 		reactions.put(Pattern.compile(".*alice.*", Pattern.CASE_INSENSITIVE),						"T'as qu'à me dire dans quel auditoire elle a cours; j'ai un plan pour ça.");
 		reactions.put(Pattern.compile(".*(ga(e|ë)lle).*", Pattern.CASE_INSENSITIVE),				"Moi, quand une meuf un peu bourrée me propose de dormir chez elle après une bonne grosse guindaille, je préfère encore dire non tu vois.  Genre gentleman.  Où est le challenge sinon ?!");
 		reactions.put(Pattern.compile(".*(fairy|aur(e|é)lie|hanut).*", Pattern.CASE_INSENSITIVE),	"Heuuu, ouais, salut...  T'aurais pas de_cbble stp ?  En fait j'l'ai pas et on a war dans 4 minutes :(");
