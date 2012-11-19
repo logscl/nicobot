@@ -17,14 +17,16 @@ public class HeartBeatTask extends Task {
 	
 	@Override
 	public void run() {
+		System.out.println("HeartBeatTask running ...");
 		try {
 			URL url = new URL(URL);
 			URLConnection connection = url.openConnection();
 			InputStream is = connection.getInputStream();
 			
 			while(is.read() != -1) {
-				System.out.println("Reading ...");
+				//do nothing
 			}
+			System.out.println("End of stream.");
 		}
 		catch(Exception ex) {
 			System.err.println(ex.getMessage());
