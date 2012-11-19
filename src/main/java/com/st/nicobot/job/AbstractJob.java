@@ -40,6 +40,12 @@ public abstract class AbstractJob implements Job {
 		return task;
 	}
 	
+	/**
+	 * Retourne le delai avant le demarrage du job.<br/>
+	 * Si {@code startAtCreation} est true, alors 0 est retourné.<br/>
+	 * Sinon, c'est {@link AbstractJob#getDelay()}
+	 * @return
+	 */
 	protected long getStartDelay() {
 		long startDelay = 0;
 		
