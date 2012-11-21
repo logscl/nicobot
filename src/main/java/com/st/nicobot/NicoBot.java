@@ -1,20 +1,22 @@
 package com.st.nicobot;
 
-import java.util.regex.Pattern;
-
-import org.jibble.pircbot.Colors;
+import java.util.List;
 
 import com.st.nicobot.bot.AbstractPircBot;
-import com.st.nicobot.cmd.NiCommand;
+import com.st.nicobot.event.AbstractEvent;
+import com.st.nicobot.event.InviteEvent;
+import com.st.nicobot.event.JoinEvent;
+import com.st.nicobot.event.KickEvent;
+import com.st.nicobot.event.MessageEvent;
+import com.st.nicobot.event.PartEvent;
+import com.st.nicobot.event.PrivateMessageEvent;
 import com.st.nicobot.internal.services.BehaviorsServiceImpl;
-import com.st.nicobot.internal.services.CommandsImpl;
-import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.internal.services.HandlingServiceImpl;
 import com.st.nicobot.internal.services.PropertiesServiceImpl;
 import com.st.nicobot.internal.services.SchedulerServiceImpl;
 import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.services.BehaviorsService;
-import com.st.nicobot.services.Commands;
-import com.st.nicobot.services.Messages;
+import com.st.nicobot.services.HandlingService;
 import com.st.nicobot.services.PropertiesService;
 import com.st.nicobot.services.SchedulerService;
 import com.st.nicobot.utils.Option;
@@ -27,15 +29,15 @@ import com.st.nicobot.utils.Option;
  */
 public class NicoBot extends AbstractPircBot {
 	
-	private Messages messages = MessagesImpl.getInstance(); //bon je triche un peu, il faut dans l'ideal
-															//un service/whatever qui gere tt les autres services
-	private Commands commands = CommandsImpl.getInstance();
-	
+	//bon je triche un peu, il faut dans l'ideal          
+	//un service/whatever qui gere tt les autres services 
 	private BehaviorsService behaviors = BehaviorsServiceImpl.getInstance();
 	
 	private SchedulerService schedulerService = SchedulerServiceImpl.getInstance();
 	
 	private PropertiesService props = PropertiesServiceImpl.getInstance();
+	
+	private HandlingService handling = HandlingServiceImpl.getInstance();
 	
 	public NicoBot() {
 		this("nicobot");
@@ -51,60 +53,42 @@ public class NicoBot extends AbstractPircBot {
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		super.onMessage(channel, sender, login, hostname, message);
 		
-		message = Colors.removeFormattingAndColors(message);
-		String response = null;
-
-		for(Pattern pattern: messages.getSentences()) {
-			if(pattern.matcher(message).matches()) {
-				response = messages.getSentence(pattern);
-				break;
-			}
+		List<AbstractEvent> events = handling.getEvents(MessageEvent.class);
+		
+		for(AbstractEvent event : events) {
+			((MessageEvent)event).onMessage(channel, sender, login, hostname, message, this);
 		}
-			
-		if (response != null) {
-			response = formatMessage(response, sender, channel);
-			sendMessage(channel, response);
-		}
-		else {
-			behaviors.randomBehave(this, new Option(channel, sender, message));
-		}
+		
+		behaviors.randomBehave(this, new Option(channel, sender, message));
 	}
 	
 	@Override
 	protected void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname, 
 			String recipientNick, String reason) {
 		
-		if(recipientNick.equals(this.getNick())) {
-			joinChannel(channel);
-			String msg = messages.getOtherMessage("onKick");
-			sendMessage(channel, formatMessage(msg, kickerNick, null));
+		List<AbstractEvent> events = handling.getEvents(KickEvent.class);
+		
+		for(AbstractEvent event : events) {
+			((KickEvent)event).onKick(channel, kickerNick, kickerLogin, kickerHostname, recipientNick, reason, this);
 		}
 	}
 	
 	@Override
 	protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel) {
-		String[] strings = channel.split(" ");
-		channel = strings[3];
+		List<AbstractEvent> events = handling.getEvents(InviteEvent.class);
 		
-		if (channel.startsWith(props.get(NicobotProperty.BOT_CHAN))){
-			joinChannel(channel);
-			String msg = messages.getOtherMessage("onInvite");
-			sendAction(channel, formatMessage(msg, sourceNick, null));
-		}
-		else {
-			sendNotice(sourceNick, messages.getOtherMessage("inviteNo"));
+		for(AbstractEvent event : events) {
+			((InviteEvent)event).onInvite(targetNick, sourceNick, sourceLogin, sourceHostname, channel, this);
 		}
 	}
 	
 	@Override
 	protected void onJoin(String channel, String sender, String login, String hostname) {
-		String msg = messages.getOtherMessage("onJoin");
+		List<AbstractEvent> events = handling.getEvents(JoinEvent.class);
 		
-		if (sender.equals(this.getNick())) {
-			msg = messages.getOtherMessage("onSelfJoin");
+		for(AbstractEvent event : events) {
+			((JoinEvent)event).onJoin(channel, sender, login, hostname, this);
 		}
-		
-		sendMessage(channel, formatMessage(msg, sender, null));
 	}
 	
 	/**
@@ -114,7 +98,7 @@ public class NicoBot extends AbstractPircBot {
 	 * @param channel
 	 * @return
 	 */
-	private String formatMessage(String message, String sender, String channel) {
+	public String formatMessage(String message, String sender, String channel) {
 		message = message.replaceAll("%p", sender);
 		message = message.replaceAll("%c", channel);
 		
@@ -125,23 +109,10 @@ public class NicoBot extends AbstractPircBot {
 	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
 		super.onPrivateMessage(sender, login, hostname, message);
 		
-		//on extrait <cmd> <reste>
-		String[] arguments = message.split(" ");		
+		List<AbstractEvent> events = handling.getEvents(PrivateMessageEvent.class);
 		
-		if(arguments.length >= 1) {
-			String[] commandArgs = null;
-			
-			if(arguments.length > 1) {
-				// on extrait de la chaine uniquement la partie contenant les arguments
-				String commandsString = message.substring(message.indexOf(arguments[1]));	
-				commandArgs = NiCommand.getArgs(commandsString);
-			}
-			
-			commands.getFirstLink().handle(
-					this, Colors.removeFormattingAndColors(arguments[0]), 
-					commandArgs, new Option(null, sender, message));
-		} else {
-			sendNotice(sender, "T'es con ou quoi ? Une commande, c'est \"<commande> [params]\"");
+		for(AbstractEvent event : events) {
+			((PrivateMessageEvent)event).onPrivateMessage(sender, login, hostname, message, this);
 		}
 	}
 	
@@ -149,8 +120,10 @@ public class NicoBot extends AbstractPircBot {
 	protected void onPart(String channel, String sender, String login, String hostname) {
 		super.onPart(channel, sender, login, hostname);
 		
-		if (! sender.equals(this.getNick())) {
-			sendMessage(channel, messages.getOtherMessage("onPart"));
+		List<AbstractEvent> events = handling.getEvents(PartEvent.class);
+		
+		for(AbstractEvent event : events) {
+			((PartEvent)event).onPart(channel, sender, login, hostname, this);
 		}
 	}
 	
