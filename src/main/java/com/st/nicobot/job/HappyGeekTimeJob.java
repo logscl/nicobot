@@ -32,6 +32,7 @@ public class HappyGeekTimeJob extends AbstractJob {
 			Calendar nextUpdate = Calendar.getInstance(TimeZone.getTimeZone("CET"));
 			nextUpdate.set(Calendar.HOUR_OF_DAY, 13);
 			nextUpdate.set(Calendar.MINUTE, 37);
+			nextUpdate.set(Calendar.SECOND, 00);
 			Date nextUpdateDate = nextUpdate.getTime();
 			
 			Calendar currentCalendar = Calendar.getInstance(TimeZone.getTimeZone("CET"));
@@ -44,7 +45,8 @@ public class HappyGeekTimeJob extends AbstractJob {
 			
 			timer.scheduleAtFixedRate(getTask(), nextUpdateDate, getDelay());
 			
-			System.out.println("Job " + name + " started !");
+			System.out.println("Job " + name + " started, task's first execution in " + 
+					((nextUpdateDate.getTime() - currentDate.getTime())/1000) + "seconds.");	
 		}
 	}
 	
