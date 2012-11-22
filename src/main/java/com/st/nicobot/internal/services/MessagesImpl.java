@@ -4,12 +4,12 @@
 package com.st.nicobot.internal.services;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import com.st.nicobot.property.NicobotProperty;
+import com.st.nicobot.reaction.Reaction;
 import com.st.nicobot.services.Messages;
 import com.st.nicobot.services.PropertiesService;
 
@@ -23,7 +23,7 @@ import com.st.nicobot.services.PropertiesService;
 public class MessagesImpl implements Messages {
 
 	/** Les réactions de nicobot sous forme de regex */
-    private Map<Pattern, String> reactions;
+    private Set<Reaction> reactions = new LinkedHashSet<Reaction>();
 
 	/** Les messages de service de nicobot */
 	private Map<String, String> otherMessages;
@@ -55,45 +55,44 @@ public class MessagesImpl implements Messages {
 		 *
 		 * TODO : valider les regex à l'init pour les rejeter si elles sont pourrites
 		 */
-		reactions = new LinkedHashMap<Pattern, String>();
 		String botName = props.get(NicobotProperty.BOT_NAME);
-
+		
 		// messages complets
-		reactions.put(Pattern.compile("^"+botName+"( \\?)??$", Pattern.CASE_INSENSITIVE),		"Quoi ?");
-		reactions.put(Pattern.compile("^(sisi|13)$", Pattern.CASE_INSENSITIVE), 				"la famille");
-		reactions.put(Pattern.compile("^tf2$", Pattern.CASE_INSENSITIVE), 						"Bande de casus...");
-		reactions.put(Pattern.compile("^(pour )??rien( \\!)??$", Pattern.CASE_INSENSITIVE),		"Baaam ! Bien joué %p !");
-		reactions.put(Pattern.compile("^chut( !)??$", Pattern.CASE_INSENSITIVE),				"Oh, tu m'dis pas chut %p, déjà");
-		reactions.put(Pattern.compile("^propre sur toi$", Pattern.CASE_INSENSITIVE),			"De dingue !");
-		reactions.put(Pattern.compile("^\\(=\\^;\\^=\\) pika pi$", Pattern.CASE_INSENSITIVE),	"Toi aussi tu joues à Pokemon ?");
-		reactions.put(Pattern.compile("^psp$", Pattern.CASE_INSENSITIVE),						"Enkuler de rire !");
-		reactions.put(Pattern.compile("^pic$", Pattern.CASE_INSENSITIVE),						"...or it didn't happen");
-		reactions.put(Pattern.compile("^secret$", Pattern.CASE_INSENSITIVE),					"J'ai un terrible secret aussi...");
+		reactions.add(new Reaction("^"+botName+"( \\?)??$", 		"Quoi ?"));
+		reactions.add(new Reaction("^(sisi|13)$", 					"la famille"));
+		reactions.add(new Reaction("^tf2$", 						"Bande de casus..."));
+		reactions.add(new Reaction("^(pour )??rien( \\!)??$", 		"Baaam ! Bien joué %p !"));
+		reactions.add(new Reaction("^chut( !)??$", 					"Oh, tu m'dis pas chut %p, déjà"));
+		reactions.add(new Reaction("^propre sur toi$", 				"De dingue !"));
+		reactions.add(new Reaction("^\\(=\\^;\\^=\\) pika pi$", 	"Toi aussi tu joues à Pokemon ?"));
+		reactions.add(new Reaction("^psp$", 						"Enkuler de rire !"));
+		reactions.add(new Reaction("^pic$", 						"...or it didn't happen"));
+		reactions.add(new Reaction("^secret$", 						"J'ai un terrible secret aussi..."));
 
 		// fragments
-		reactions.put(Pattern.compile("^salut "+botName+".*", Pattern.CASE_INSENSITIVE), 		"Salut %p !");
-		reactions.put(Pattern.compile(".*gamin.*", Pattern.CASE_INSENSITIVE),					"Hein fieu");
-		reactions.put(Pattern.compile(".*hey.*", Pattern.CASE_INSENSITIVE),						"Hey Hey !");
-		reactions.put(Pattern.compile(".*grand.*", Pattern.CASE_INSENSITIVE),					"CMB !");
-		reactions.put(Pattern.compile(".*long.*", Pattern.CASE_INSENSITIVE),					"CMB !");
-		reactions.put(Pattern.compile(".*petit.*", Pattern.CASE_INSENSITIVE),					"CMB ! ... euh ... merde.");
-		reactions.put(Pattern.compile(".*court.*", Pattern.CASE_INSENSITIVE),					"CTB ! Hahahaha... J'me marre.");
-		reactions.put(Pattern.compile(".*cham.*", Pattern.CASE_INSENSITIVE),					"Y'a de ces CHA-MELLES ici ! :D");
-		reactions.put(Pattern.compile(".*ha(i|ï)ku.*", Pattern.CASE_INSENSITIVE),				"Mais lol, y a pas plus débile que la formulation d'un haïku: 5-7-5.  \"Trente trois jours de pluie, Toi tu n'as que des soucis, Bite sur le gateau.\"");
-		reactions.put(Pattern.compile(".*amis de (m|t|s)es amis.*", Pattern.CASE_INSENSITIVE),	"Si tu as un ami, en fait tu en as deux. Puisque les amis de tes amis sont tes amis, et que tu es l'ami de ton ami, tu es donc ton propre ami !");
-		reactions.put(Pattern.compile(".*garagiste.*", Pattern.CASE_INSENSITIVE), 				"PUTAIN QU'ELLE EST BONNE LA GARAGIIIIISTE ! :D");
-		reactions.put(Pattern.compile(".*choper.*", Pattern.CASE_INSENSITIVE), 					"Tout le monde sait très bien que je choppe plus rien depuis P2, merci de remuer le couteau. :(");
-		reactions.put(Pattern.compile(".*nico( .*|$)"),											"\"Nico\" avec un N majuscule putain !  Tu es né idiot, tu vas mourir idiot !");
-		reactions.put(Pattern.compile(".*ocin.*", Pattern.CASE_INSENSITIVE),					"Tain mais pas à l'envers !  Ca m'énèèèèrve çaaaa !!");
-		reactions.put(Pattern.compile(".*tracteur.*", Pattern.CASE_INSENSITIVE),				"On va au Quick ?  Il est où mon saucisson ?");
+		reactions.add(new Reaction("^salut "+botName+".*", 			"Salut %p !"));
+		reactions.add(new Reaction(".*gamin.*",						"Hein fieu"));
+		reactions.add(new Reaction(".*hey.*",						"Hey Hey !"));
+		reactions.add(new Reaction(".*grand.*",						"CMB !"));
+		reactions.add(new Reaction(".*long.*",						"CMB !"));
+		reactions.add(new Reaction(".*petit.*",						"CMB ! ... euh ... merde."));
+		reactions.add(new Reaction(".*court.*",						"CTB ! Hahahaha... J'me marre."));
+		reactions.add(new Reaction(".*cham.*",						"Y'a de ces CHA-MELLES ici ! :D"));
+		reactions.add(new Reaction(".*ha(i|ï)ku.*",					"Mais lol, y a pas plus débile que la formulation d'un haïku: 5-7-5.  \"Trente trois jours de pluie, Toi tu n'as que des soucis, Bite sur le gateau.\""));
+		reactions.add(new Reaction(".*amis de (m|t|s)es amis.*",	"Si tu as un ami, en fait tu en as deux. Puisque les amis de tes amis sont tes amis, et que tu es l'ami de ton ami, tu es donc ton propre ami !"));
+		reactions.add(new Reaction(".*garagiste.*", 				"PUTAIN QU'ELLE EST BONNE LA GARAGIIIIISTE ! :D"));
+		reactions.add(new Reaction(".*choper.*", 					"Tout le monde sait très bien que je choppe plus rien depuis P2, merci de remuer le couteau. :("));
+		reactions.add(new Reaction(".*nico( .*|$)",					"\"Nico\" avec un N majuscule putain !  Tu es né idiot, tu vas mourir idiot !", false, 20));
+		reactions.add(new Reaction(".*ocin.*",						"Tain mais pas à l'envers !  Ca m'énèèèèrve çaaaa !!"));
+		reactions.add(new Reaction(".*tracteur.*",					"On va au Quick ?  Il est où mon saucisson ?"));
 
 		// girls
-		reactions.put(Pattern.compile(".*sarah?.*", Pattern.CASE_INSENSITIVE),						"Mhmmm...  \"Avec tes deux obus, j'crois que tu te sens plus. Du quatre-vingt dix D, il en faut plus pour me faire trembler !\"");
-		reactions.put(Pattern.compile(".*(julie|hercot).*", Pattern.CASE_INSENSITIVE),				"On en reparle quand elle aura arrêté avec son équipe de meeeerde celle là.  Iiiimmmmbécile.");
-		reactions.put(Pattern.compile(".*pauline.*", Pattern.CASE_INSENSITIVE),						"Ah ben si tu veux, moi j'en connais un rayon sur les Paulines !  P1, P2, P3 et même P4: j'ai fait toute la famille !");
-		reactions.put(Pattern.compile(".*alice.*", Pattern.CASE_INSENSITIVE),						"T'as qu'à me dire dans quel auditoire elle a cours; j'ai un plan pour ça.");
-		reactions.put(Pattern.compile(".*(ga(e|ë)lle).*", Pattern.CASE_INSENSITIVE),				"Moi, quand une meuf un peu bourrée me propose de dormir chez elle après une bonne grosse guindaille, je préfère encore dire non tu vois.  Genre gentleman.  Où est le challenge sinon ?!");
-		reactions.put(Pattern.compile(".*(fairy|aur(e|é)lie|hanut).*", Pattern.CASE_INSENSITIVE),	"Heuuu, ouais, salut...  T'aurais pas de_cbble stp ?  En fait j'l'ai pas et on a war dans 4 minutes :(");
+		reactions.add(new Reaction(".*sarah?.*",					"Mhmmm...  \"Avec tes deux obus, j'crois que tu te sens plus. Du quatre-vingt dix D, il en faut plus pour me faire trembler !\"", false, 30));
+		reactions.add(new Reaction(".*(julie|hercot).*",			"On en reparle quand elle aura arrêté avec son équipe de meeeerde celle là.  Iiiimmmmbécile.", false, 30));
+		reactions.add(new Reaction(".*pauline.*",					"Ah ben si tu veux, moi j'en connais un rayon sur les Paulines !  P1, P2, P3 et même P4: j'ai fait toute la famille !", false, 30));
+		reactions.add(new Reaction(".*alice.*",						"T'as qu'à me dire dans quel auditoire elle a cours; j'ai un plan pour ça.", false, 30));
+		reactions.add(new Reaction(".*(ga(e|ë)lle).*",				"Moi, quand une meuf un peu bourrée me propose de dormir chez elle après une bonne grosse guindaille, je préfère encore dire non tu vois.  Genre gentleman.  Où est le challenge sinon ?!", false, 30));
+		reactions.add(new Reaction(".*(fairy|aur(e|é)lie|hanut).*",	"Heuuu, ouais, salut...  T'aurais pas de_cbble stp ?  En fait j'l'ai pas et on a war dans 4 minutes :(", false, 30));
 
 		otherMessages = new HashMap<String, String>();
 		otherMessages.put("onKick", 		"Merci pour le kick, %p...");
@@ -117,13 +116,8 @@ public class MessagesImpl implements Messages {
 	}
 
 	@Override
-	public Set<Pattern> getSentences() {
-		return reactions.keySet();
-	}
-
-	@Override
-	public String getSentence(Pattern key){
-		return reactions.get(key);
+	public Set<Reaction> getSentences() {
+		return reactions;
 	}
 
 	@Override

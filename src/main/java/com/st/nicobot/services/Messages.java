@@ -4,7 +4,8 @@
 package com.st.nicobot.services;
 
 import java.util.Set;
-import java.util.regex.Pattern;
+
+import com.st.nicobot.reaction.Reaction;
 
 /**
  * @author Julien
@@ -16,8 +17,7 @@ public interface Messages {
 	 * Retourne l'ensemble des messages auxquels nicobot va reagir
 	 * @return
 	 */
-	public Set<Pattern> getSentences();
-	public String getSentence(Pattern key);
+	public Set<Reaction> getSentences();
 	
 	public String getOtherMessage(String key);
 }

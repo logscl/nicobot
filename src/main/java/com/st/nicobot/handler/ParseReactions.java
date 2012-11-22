@@ -1,12 +1,13 @@
 package com.st.nicobot.handler;
 
-import java.util.regex.Pattern;
+import java.util.Date;
 
 import org.jibble.pircbot.Colors;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.event.MessageEvent;
 import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.reaction.Reaction;
 import com.st.nicobot.services.Messages;
 
 public class ParseReactions implements MessageEvent {
@@ -18,14 +19,19 @@ public class ParseReactions implements MessageEvent {
 
 		message = Colors.removeFormattingAndColors(message);
 		String response = null;
-
-		for(Pattern pattern: messages.getSentences()) {
-			if(pattern.matcher(message).matches()) {
-				response = messages.getSentence(pattern);
+		
+		for(Reaction reac : messages.getSentences()) {
+			// reaction ok
+			if(reac.match(message)) {
+				// déjà dit ?
+				if(reac.canSaySentence(channel)) {
+					reac.addSpokenTime(channel, new Date());
+					response = reac.getResponse();
+				}
 				break;
 			}
 		}
-			
+		
 		if (response != null) {
 			response = nicobot.formatMessage(response, sender, channel);
 			nicobot.sendMessage(channel, response);
