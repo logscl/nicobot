@@ -18,9 +18,6 @@ public class BotMain {
 		
 		bot = new NicoBot(props.get(NicobotProperty.BOT_NAME));
 		
-		//moar logs
-		bot.setVerbose(props.getBoolean(NicobotProperty.BOT_VERBOSE));
-		
 		bot.connect(props.get(NicobotProperty.BOT_SERVER));
 		bot.joinChannel(props.get(NicobotProperty.BOT_CHAN));
 	}
