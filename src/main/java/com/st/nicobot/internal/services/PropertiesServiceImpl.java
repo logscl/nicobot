@@ -3,11 +3,16 @@ package com.st.nicobot.internal.services;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.services.PropertiesService;
 
 public class PropertiesServiceImpl implements PropertiesService {
 
+	private static Logger logger = LoggerFactory.getLogger(PropertiesServiceImpl.class);
+	
 	private static PropertiesService instance;
 	
 	private Properties properties;
@@ -27,7 +32,7 @@ public class PropertiesServiceImpl implements PropertiesService {
 		try {
 			properties.load(ClassLoader.getSystemResourceAsStream("nicobot.properties"));
 		} catch (IOException e) {
-			System.out.println("Impossible de charger le fichier de properties :( ");
+			logger.error("Impossible de charger le fichier de properties :( ");
 			e.printStackTrace();
 		}
 	}

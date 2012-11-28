@@ -5,6 +5,9 @@ package com.st.nicobot.internal.services;
 
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.services.Commands;
 import com.st.nicobot.utils.ClassLoader;
@@ -15,6 +18,8 @@ import com.st.nicobot.utils.ClassLoader;
  */
 public class CommandsImpl implements Commands {
 
+	private static Logger logger = LoggerFactory.getLogger(CommandsImpl.class);
+	
 	private NiCommand firstLink;
 
 	private static CommandsImpl instance;
@@ -48,7 +53,7 @@ public class CommandsImpl implements Commands {
 					previous = c;
 				}
 			} catch (Exception e) {
-				System.out.println("Impossibler d'instancier la classe "+clazz+", exception : "+e.getMessage());
+				logger.error("Impossibler d'instancier la classe {}, exception : {}", clazz, e.getMessage());
 			}
 		}
 	}

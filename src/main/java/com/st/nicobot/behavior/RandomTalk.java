@@ -62,9 +62,4 @@ public class RandomTalk implements NiConduct {
 		NICONTROLEUR
 	}
 	
-	public static void main(String[] args) {
-		RandomTalk t = new RandomTalk();
-		
-		System.out.println(t.getRandomTalk());
-	}
 }

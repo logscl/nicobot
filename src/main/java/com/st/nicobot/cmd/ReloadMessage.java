@@ -3,6 +3,9 @@
  */
 package com.st.nicobot.cmd;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.internal.services.MessagesImpl;
 import com.st.nicobot.utils.Option;
@@ -13,6 +16,8 @@ import com.st.nicobot.utils.Option;
  */
 public class ReloadMessage extends NiCommand {
 
+	private static Logger logger = LoggerFactory.getLogger(ReloadMessage.class);
+	
 	private static final String COMMAND = "refresh";
 	private static final String FORMAT = "refresh";
 	private static final String DESC = "Redémarre les différents messages de nicobot.";
@@ -37,7 +42,8 @@ public class ReloadMessage extends NiCommand {
 	
 	@Override
 	public void doCommand(NicoBot nicobot, String message, String[] args, Option opts) {
-		System.out.println("Start reloading messages");
+		logger.info("Start reloading messages");
+		
 		MessagesImpl.getInstance().init();
 	}
 	

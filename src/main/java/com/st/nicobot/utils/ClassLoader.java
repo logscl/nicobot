@@ -11,6 +11,8 @@ import org.reflections.scanners.SubTypesScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Permet de charger toutes les classes d'un certain type
@@ -21,6 +23,8 @@ import org.reflections.util.FilterBuilder;
  */
 public class ClassLoader {
 
+	private static Logger logger = LoggerFactory.getLogger(ClassLoader.class);
+	
 	private static String DEFAULT_PACKAGE = "com.st.nicobot";
 	
 	private static ClassLoader instance;
@@ -72,7 +76,7 @@ public class ClassLoader {
 					instances.add(instance);
 				}
 			} catch (Exception e) {
-				System.out.println("Impossibler d'instancier la classe "+clazz+", exception : "+e.getMessage());
+				logger.error("Impossibler d'instancier la classe {}, exception : {}", clazz, e.getMessage());
 			}
 		}
 		

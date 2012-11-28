@@ -5,6 +5,9 @@ package com.st.nicobot.internal.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.st.nicobot.job.Job;
 import com.st.nicobot.services.SchedulerService;
 import com.st.nicobot.utils.ClassLoader;
@@ -15,6 +18,8 @@ import com.st.nicobot.utils.ClassLoader;
  */
 public class SchedulerServiceImpl implements SchedulerService {
 
+	private static Logger logger = LoggerFactory.getLogger(SchedulerServiceImpl.class);
+	
 	private List<Job> jobs;
 	
 	private static SchedulerService instance;
@@ -34,7 +39,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 	
 	@Override
 	public void startScheduler() {
-		System.out.println("Starting all jobs ...");
+		logger.info("Starting all jobs ...");
 		
 		for(Job j : jobs) {
 			j.start();
@@ -43,7 +48,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
 	@Override
 	public void stopScheduler() {
-		System.out.println("Stopping all jobs ...");
+		logger.info("Stopping all jobs ...");
 	
 		for(Job j : jobs) {
 			j.stop();
