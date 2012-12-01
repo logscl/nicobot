@@ -1,18 +1,19 @@
-package com.st.nicobot.handler;
+package com.st.nicobot.event.handler;
 
 import java.util.Date;
 
 import org.jibble.pircbot.Colors;
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.event.MessageEvent;
-import com.st.nicobot.internal.services.MessagesImpl;
 import com.st.nicobot.reaction.Reaction;
 import com.st.nicobot.services.Messages;
 
 public class ParseReactions implements MessageEvent {
 
-	private Messages messages = MessagesImpl.getInstance();
+	@Inject
+	private Messages messages;
 	
 	@Override
 	public void onMessage(String channel, String sender, String login, String hostname, String message, NicoBot nicobot) {

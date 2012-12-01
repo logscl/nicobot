@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.bot;
 
 import org.jibble.pircbot.PircBot;
@@ -19,5 +16,5 @@ public abstract class AbstractPircBot extends PircBot {
 	public void log(String line) {
 		logger.trace(line);
 	}
-	
+
 }

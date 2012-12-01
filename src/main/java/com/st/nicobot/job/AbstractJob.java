@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.job;
 
 import java.util.Timer;
@@ -62,7 +59,7 @@ public abstract class AbstractJob implements Job {
 	}
 
 	@Override
-	public void start() {
+	public void launch() {
 		if (timer == null) {
 			timer = new Timer();
 			timer.scheduleAtFixedRate(getTask(), getStartDelay(), getDelay());
@@ -72,7 +69,7 @@ public abstract class AbstractJob implements Job {
 	}
 	
 	@Override
-	public void stop() {
+	public void terminate() {
 		if (timer != null) {
 			timer.cancel();
 			

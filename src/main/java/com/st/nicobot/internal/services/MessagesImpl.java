@@ -1,12 +1,11 @@
-/**
- *
- */
 package com.st.nicobot.internal.services;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.reaction.Reaction;
@@ -22,29 +21,18 @@ import com.st.nicobot.services.PropertiesService;
  */
 public class MessagesImpl implements Messages {
 
+	@Inject
+	private PropertiesService props;
+	
 	/** Les réactions de nicobot sous forme de regex */
-    private Set<Reaction> reactions = new LinkedHashSet<Reaction>();
+    private Set<Reaction> reactions;
 
 	/** Les messages de service de nicobot */
 	private Map<String, String> otherMessages;
 
-	private static MessagesImpl instance;
-
-	private PropertiesService props = PropertiesServiceImpl.getInstance();
-
-	private MessagesImpl() { }
-
-	public static MessagesImpl getInstance() {
-		if (instance == null) {
-			instance = new MessagesImpl();
-			instance.init();
-		}
-
-		return instance;
-	}
-
-	public void init() {
-
+	public MessagesImpl() {	}
+	
+	public void start() {
 		/**
 		 * Init des réactions.
 		 *
@@ -56,6 +44,8 @@ public class MessagesImpl implements Messages {
 		 * TODO : valider les regex à l'init pour les rejeter si elles sont pourrites
 		 */
 		String botName = props.get(NicobotProperty.BOT_NAME);
+		
+		reactions = new LinkedHashSet<Reaction>();
 		
 		// messages complets
 		reactions.add(new Reaction("^"+botName+"( \\?)??$", 		"Quoi ?"));

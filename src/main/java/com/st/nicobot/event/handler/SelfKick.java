@@ -1,13 +1,15 @@
-package com.st.nicobot.handler;
+package com.st.nicobot.event.handler;
+
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.event.KickEvent;
-import com.st.nicobot.internal.services.MessagesImpl;
 import com.st.nicobot.services.Messages;
 
 public class SelfKick implements KickEvent {
 
-	private Messages messages = MessagesImpl.getInstance();
+	@Inject
+	private Messages messages;
 	
 	@Override
 	public void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname, String recipientNick, String reason, NicoBot nicobot) {

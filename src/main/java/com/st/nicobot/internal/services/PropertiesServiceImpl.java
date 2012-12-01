@@ -13,21 +13,12 @@ public class PropertiesServiceImpl implements PropertiesService {
 
 	private static Logger logger = LoggerFactory.getLogger(PropertiesServiceImpl.class);
 	
-	private static PropertiesService instance;
-	
 	private Properties properties;
 	
-	private PropertiesServiceImpl(){}
-	
-	public static PropertiesService getInstance() {
-		if(instance == null) {
-			instance = new PropertiesServiceImpl();
-			((PropertiesServiceImpl)instance).init();
-		}
-		return instance;
+	public PropertiesServiceImpl(){
 	}
 	
-	public void init() {
+	public void start() {
 		properties = new Properties();
 		try {
 			properties.load(ClassLoader.getSystemResourceAsStream("nicobot.properties"));

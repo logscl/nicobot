@@ -1,17 +1,18 @@
-package com.st.nicobot.handler;
+package com.st.nicobot.event.handler;
 
 import org.jibble.pircbot.Colors;
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.cmd.NiCommand;
 import com.st.nicobot.event.PrivateMessageEvent;
-import com.st.nicobot.internal.services.CommandsImpl;
 import com.st.nicobot.services.Commands;
 import com.st.nicobot.utils.Option;
 
 public class PrivateCommands implements PrivateMessageEvent {
 
-	private Commands commands = CommandsImpl.getInstance();
+	@Inject
+	private Commands commands;
 	
 	@Override
 	public void onPrivateMessage(String sender, String login, String hostname, String message, NicoBot nicobot) {

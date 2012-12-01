@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.behavior;
 
 import org.apache.commons.lang3.CharUtils;

@@ -1,13 +1,12 @@
-/**
- * 
- */
 package com.st.nicobot.cmd;
 
+import org.picocontainer.annotations.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.services.Messages;
 import com.st.nicobot.utils.Option;
 
 /**
@@ -22,6 +21,8 @@ public class ReloadMessage extends NiCommand {
 	private static final String FORMAT = "refresh";
 	private static final String DESC = "Redémarre les différents messages de nicobot.";
 	
+	@Inject
+	private Messages messages;
 	
 	public ReloadMessage() {	}
 	
@@ -44,7 +45,7 @@ public class ReloadMessage extends NiCommand {
 	public void doCommand(NicoBot nicobot, String message, String[] args, Option opts) {
 		logger.info("Start reloading messages");
 		
-		MessagesImpl.getInstance().init();
+		((MessagesImpl)messages).start();
 	}
 	
 }

@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
         <slf4j.version>[1.7,)</slf4j.version>
+        <picocontainer.version>2.13.6</picocontainer.version>
     </properties>
     
     <profiles>
@@ -65,6 +66,18 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
+        </dependency>
+
+        <dependency>  
+            <groupId>org.picocontainer</groupId>  
+            <artifactId>picocontainer</artifactId>  
+            <version>${picocontainer.version}</version>  
+        </dependency>
+        
+        <dependency>  
+            <groupId>org.picocontainer</groupId>  
+            <artifactId>picocontainer-gems</artifactId>  
+            <version>${picocontainer.version}</version>  
         </dependency>
 
         <dependency>

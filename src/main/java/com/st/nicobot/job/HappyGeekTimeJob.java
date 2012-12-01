@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.job;
 
 import java.util.Calendar;
@@ -9,6 +6,7 @@ import java.util.TimeZone;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
+import org.picocontainer.annotations.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,15 +20,21 @@ public class HappyGeekTimeJob extends AbstractJob {
 
 	private static Logger logger = LoggerFactory.getLogger(HappyGeekTimeJob.class);
 	
-	public HappyGeekTimeJob() {
+	@Inject
+	private HappyGeekTimeTask task;
+	
+	public HappyGeekTimeJob() {}
+	
+	public void start() {
 		delay = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS);
-		task = new HappyGeekTimeTask();
 		startAtCreation = true;
 		name = "HappyGeekTimeJob";		
+		
+		super.task = task;
 	}
 	
 	@Override
-	public void start() {
+	public void launch() {
 		if (timer == null) {
 			timer = new Timer();
 			

@@ -1,12 +1,10 @@
-/**
- * 
- */
 package com.st.nicobot.cmd;
 
+import org.picocontainer.annotations.Inject;
+
 import com.st.nicobot.NicoBot;
-import com.st.nicobot.internal.services.CommandsImpl;
-import com.st.nicobot.internal.services.MessagesImpl;
 import com.st.nicobot.services.Commands;
+import com.st.nicobot.services.Messages;
 import com.st.nicobot.utils.Option;
 
 /**
@@ -19,7 +17,13 @@ public class Help extends NiCommand {
 	private static final String FORMAT = "help [commandName]";
 	private static final String DESC = "Retourne la liste des commandes disponibles OU " +
 			"une aide detaillé pour la commande passsée en paramètre.";
-			
+
+	@Inject
+	private Messages messages;
+	
+	@Inject
+	private Commands commandsChain;
+	
 	@Override
 	public String getCommandName() {
 		return COMMAND;
@@ -54,10 +58,9 @@ public class Help extends NiCommand {
 	 * @param opts
 	 */
 	private void sendCommandList(NicoBot nicobot, Option opts) {
-		Commands commandsChain = CommandsImpl.getInstance();
 		NiCommand cmd = commandsChain.getFirstLink();
 		
-		nicobot.sendNotice(opts.sender, MessagesImpl.getInstance().getOtherMessage("helpHeader"));
+		nicobot.sendNotice(opts.sender, messages.getOtherMessage("helpHeader"));
 		
 		while (cmd != null) {
 			nicobot.sendNotice(opts.sender, "    - " + cmd.getCommandName() + " : " + cmd.getDescription());
@@ -72,7 +75,6 @@ public class Help extends NiCommand {
 	 * @param commandName
 	 */
 	private void sendCommandHelp(NicoBot nicobot, Option opts, String commandName) {
-		Commands commandsChain = CommandsImpl.getInstance();
 		NiCommand cmd = commandsChain.getFirstLink();
 		
 		while(cmd != null && !cmd.getCommandName().equals(commandName)) {

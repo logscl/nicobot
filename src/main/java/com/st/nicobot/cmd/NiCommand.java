@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.cmd;
 
 import java.util.regex.Matcher;

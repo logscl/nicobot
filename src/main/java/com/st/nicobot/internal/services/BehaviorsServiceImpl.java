@@ -1,14 +1,14 @@
-/**
- * 
- */
 package com.st.nicobot.internal.services;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.behavior.NiConduct;
+import com.st.nicobot.context.ApplicationContext;
+import com.st.nicobot.context.ApplicationContextAware;
 import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.utils.ClassLoader;
 import com.st.nicobot.utils.Option;
@@ -17,35 +17,20 @@ import com.st.nicobot.utils.Option;
  * @author Julien
  *
  */
-public class BehaviorsServiceImpl implements BehaviorsService {
+public class BehaviorsServiceImpl implements BehaviorsService, ApplicationContextAware {
 
 	private static final int MAX_CHANCE = 1001;
+	
+	private ApplicationContext appCtx;
 	
 	private List<NiConduct> behaviors;
 	
 	private Random random;
 	
-	private static BehaviorsService instance;
+	public BehaviorsServiceImpl() {	}
 	
-	private BehaviorsServiceImpl() { }
-	
-	public static BehaviorsService getInstance() {
-		if (instance == null) {
-			instance = new BehaviorsServiceImpl();
-			((BehaviorsServiceImpl)instance).init();
-		}
-		
-		return instance;
-	}
-	
-	public void init() {
+	public void start() {
 		random = com.st.nicobot.utils.Random.getInstance();
-		behaviors = ClassLoader.getInstance().getInstancesOfClass(NiConduct.class);
-	}
-	
-	@Override
-	public List<NiConduct> getBehaviors() {
-		return behaviors;
 	}
 	
 	@Override
@@ -55,7 +40,7 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 		int chance = MAX_CHANCE - random.nextInt(MAX_CHANCE);
 
 		// On construit une liste des differents NiConduct qui sont accessibles pour cette proba
-		for (NiConduct behavior : behaviors){
+		for (NiConduct behavior : getBehaviors()){
 			if (chance < behavior.getChance() ) {
 				chosenBehaviors.add(behavior);
 			}
@@ -69,4 +54,25 @@ public class BehaviorsServiceImpl implements BehaviorsService {
 			chosenOne.behave(nicobot, opts);
 		}
 	}
+	
+	@Override
+	public void setApplicationContext(ApplicationContext appCtx) {
+		this.appCtx = appCtx;
+	}
+	
+	public List<NiConduct> getBehaviors() {
+		if (behaviors == null) {
+			behaviors = new ArrayList<NiConduct>();
+			
+			Set<Class<? extends NiConduct>> niConductClasses = ClassLoader.getSubTypesOf(NiConduct.class);
+			
+			for(Class<? extends NiConduct> c : niConductClasses) {
+				NiConduct niConduct = appCtx.getPicoContainer().getComponent(c);
+				behaviors.add(niConduct);
+			}
+		}
+		
+		return behaviors;
+	}
+
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.job.task;
 
 import java.io.InputStream;
@@ -10,10 +7,13 @@ import java.net.URLConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.st.nicobot.context.annotations.Component;
+
 /**
  * @author Julien
  *
  */
+@Component
 public class HeartBeatTask extends Task {
 
 	private static Logger logger = LoggerFactory.getLogger(HeartBeatTask.class);

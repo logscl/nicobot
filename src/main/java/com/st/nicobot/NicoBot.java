@@ -2,18 +2,16 @@ package com.st.nicobot;
 
 import java.util.List;
 
+import org.picocontainer.annotations.Inject;
+
 import com.st.nicobot.bot.AbstractPircBot;
-import com.st.nicobot.event.AbstractEvent;
+import com.st.nicobot.context.annotations.Component;
 import com.st.nicobot.event.InviteEvent;
 import com.st.nicobot.event.JoinEvent;
 import com.st.nicobot.event.KickEvent;
 import com.st.nicobot.event.MessageEvent;
 import com.st.nicobot.event.PartEvent;
 import com.st.nicobot.event.PrivateMessageEvent;
-import com.st.nicobot.internal.services.BehaviorsServiceImpl;
-import com.st.nicobot.internal.services.HandlingServiceImpl;
-import com.st.nicobot.internal.services.PropertiesServiceImpl;
-import com.st.nicobot.internal.services.SchedulerServiceImpl;
 import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.services.HandlingService;
@@ -27,24 +25,25 @@ import com.st.nicobot.utils.Option;
  * @author Logan
  *
  */
+@Component
 public class NicoBot extends AbstractPircBot {
 	
-	//bon je triche un peu, il faut dans l'ideal          
-	//un service/whatever qui gere tt les autres services 
-	private BehaviorsService behaviors = BehaviorsServiceImpl.getInstance();
+	@Inject
+	private BehaviorsService behaviors;
 	
-	private SchedulerService schedulerService = SchedulerServiceImpl.getInstance();
+	@Inject
+	private HandlingService handling;
 	
-	private PropertiesService props = PropertiesServiceImpl.getInstance();
+	@Inject
+	private SchedulerService schedulerService;
 	
-	private HandlingService handling = HandlingServiceImpl.getInstance();
+	@Inject
+	private PropertiesService props;
 	
-	public NicoBot() {
-		this("nicobot");
-	}
+	public NicoBot() {	}
 	
-	public NicoBot(String nick) {
-		this.setName(nick);
+	public void start() {
+		this.setName(props.get(NicobotProperty.BOT_NAME));
 		this.setAutoNickChange(props.getBoolean(NicobotProperty.BOT_AUTO_NICK_CHANGE));
 		this.setMessageDelay(props.getLong(NicobotProperty.BOT_MESSAGE_DELAY));
 	}
@@ -53,10 +52,10 @@ public class NicoBot extends AbstractPircBot {
 	protected void onMessage(String channel, String sender, String login, String hostname, String message) {
 		super.onMessage(channel, sender, login, hostname, message);
 		
-		List<AbstractEvent> events = handling.getEvents(MessageEvent.class);
+		List<MessageEvent> events = handling.getEvents(MessageEvent.class);
 		
-		for(AbstractEvent event : events) {
-			((MessageEvent)event).onMessage(channel, sender, login, hostname, message, this);
+		for(MessageEvent event : events) {
+			event.onMessage(channel, sender, login, hostname, message, this);
 		}
 		
 		behaviors.randomBehave(this, new Option(channel, sender, message));
@@ -66,28 +65,28 @@ public class NicoBot extends AbstractPircBot {
 	protected void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname, 
 			String recipientNick, String reason) {
 		
-		List<AbstractEvent> events = handling.getEvents(KickEvent.class);
+		List<KickEvent> events = handling.getEvents(KickEvent.class);
 		
-		for(AbstractEvent event : events) {
-			((KickEvent)event).onKick(channel, kickerNick, kickerLogin, kickerHostname, recipientNick, reason, this);
+		for(KickEvent event : events) {
+			event.onKick(channel, kickerNick, kickerLogin, kickerHostname, recipientNick, reason, this);
 		}
 	}
 	
 	@Override
 	protected void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel) {
-		List<AbstractEvent> events = handling.getEvents(InviteEvent.class);
+		List<InviteEvent> events = handling.getEvents(InviteEvent.class);
 		
-		for(AbstractEvent event : events) {
-			((InviteEvent)event).onInvite(targetNick, sourceNick, sourceLogin, sourceHostname, channel, this);
+		for(InviteEvent event : events) {
+			event.onInvite(targetNick, sourceNick, sourceLogin, sourceHostname, channel, this);
 		}
 	}
 	
 	@Override
 	protected void onJoin(String channel, String sender, String login, String hostname) {
-		List<AbstractEvent> events = handling.getEvents(JoinEvent.class);
+		List<JoinEvent> events = handling.getEvents(JoinEvent.class);
 		
-		for(AbstractEvent event : events) {
-			((JoinEvent)event).onJoin(channel, sender, login, hostname, this);
+		for(JoinEvent event : events) {
+			event.onJoin(channel, sender, login, hostname, this);
 		}
 	}
 	
@@ -109,10 +108,10 @@ public class NicoBot extends AbstractPircBot {
 	protected void onPrivateMessage(String sender, String login, String hostname, String message) {
 		super.onPrivateMessage(sender, login, hostname, message);
 		
-		List<AbstractEvent> events = handling.getEvents(PrivateMessageEvent.class);
+		List<PrivateMessageEvent> events = handling.getEvents(PrivateMessageEvent.class);
 		
-		for(AbstractEvent event : events) {
-			((PrivateMessageEvent)event).onPrivateMessage(sender, login, hostname, message, this);
+		for(PrivateMessageEvent event : events) {
+			event.onPrivateMessage(sender, login, hostname, message, this);
 		}
 	}
 	
@@ -120,10 +119,10 @@ public class NicoBot extends AbstractPircBot {
 	protected void onPart(String channel, String sender, String login, String hostname) {
 		super.onPart(channel, sender, login, hostname);
 		
-		List<AbstractEvent> events = handling.getEvents(PartEvent.class);
+		List<PartEvent> events = handling.getEvents(PartEvent.class);
 		
-		for(AbstractEvent event : events) {
-			((PartEvent)event).onPart(channel, sender, login, hostname, this);
+		for(PartEvent event : events) {
+			event.onPart(channel, sender, login, hostname, this);
 		}
 	}
 	

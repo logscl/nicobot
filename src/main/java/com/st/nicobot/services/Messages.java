@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.services;
 
 import java.util.Set;

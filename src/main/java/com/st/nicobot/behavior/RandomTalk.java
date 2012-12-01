@@ -1,10 +1,9 @@
-/**
- * 
- */
 package com.st.nicobot.behavior;
 
+import org.picocontainer.annotations.Inject;
+
 import com.st.nicobot.NicoBot;
-import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.services.Messages;
 import com.st.nicobot.utils.Option;
 import com.st.nicobot.utils.Random;
 
@@ -14,6 +13,11 @@ import com.st.nicobot.utils.Random;
  */
 public class RandomTalk implements NiConduct {
 
+	@Inject
+	private Messages messages;
+	
+	public RandomTalk() {	}
+	
 	@Override
 	public int getChance() {
 		return 50;
@@ -31,22 +35,22 @@ public class RandomTalk implements NiConduct {
 		
 		switch(rndIdx) {
 			case 0 :  	
-				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.RIVERSIDE.name().toLowerCase());
+				msg = messages.getOtherMessage(RandomTalkName.RIVERSIDE.name().toLowerCase());
 				break;
 			case 1 : 
-				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.VELO.name().toLowerCase());
+				msg = messages.getOtherMessage(RandomTalkName.VELO.name().toLowerCase());
 				break;
 			case 2 :
-				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.TOPSIDE.name().toLowerCase());
+				msg = messages.getOtherMessage(RandomTalkName.TOPSIDE.name().toLowerCase());
 				break;
 			case 3 :
-				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.BIATCH.name().toLowerCase());
+				msg = messages.getOtherMessage(RandomTalkName.BIATCH.name().toLowerCase());
 				break;
 			case 4 :
-				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.ENSOMME.name().toLowerCase());
+				msg = messages.getOtherMessage(RandomTalkName.ENSOMME.name().toLowerCase());
 				break;
 			case 5 :
-				msg = MessagesImpl.getInstance().getOtherMessage(RandomTalkName.NICONTROLEUR.name().toLowerCase());
+				msg = messages.getOtherMessage(RandomTalkName.NICONTROLEUR.name().toLowerCase());
 				break;
 		}
 		

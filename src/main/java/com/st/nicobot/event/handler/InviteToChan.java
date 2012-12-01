@@ -1,18 +1,20 @@
-package com.st.nicobot.handler;
+package com.st.nicobot.event.handler;
+
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.event.InviteEvent;
-import com.st.nicobot.internal.services.MessagesImpl;
-import com.st.nicobot.internal.services.PropertiesServiceImpl;
 import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.services.Messages;
 import com.st.nicobot.services.PropertiesService;
 
 public class InviteToChan implements InviteEvent {
 
-	private PropertiesService props = PropertiesServiceImpl.getInstance();
+	@Inject
+	private PropertiesService props;
 	
-	private Messages messages = MessagesImpl.getInstance();
+	@Inject
+	private Messages messages;
 	
 	@Override
 	public void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel, NicoBot nicobot) {

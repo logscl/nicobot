@@ -6,5 +6,5 @@ import com.st.nicobot.event.AbstractEvent;
 
 public interface HandlingService {
 
-	List<AbstractEvent> getEvents(Class<? extends AbstractEvent> type);
+	<T extends AbstractEvent> List<T> getEvents(Class<T> type);
 }

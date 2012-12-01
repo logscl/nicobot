@@ -1,13 +1,15 @@
-package com.st.nicobot.handler;
+package com.st.nicobot.event.handler;
+
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.event.JoinEvent;
-import com.st.nicobot.internal.services.MessagesImpl;
 import com.st.nicobot.services.Messages;
 
 public class WelcomeUsers implements JoinEvent {
 
-	private Messages messages = MessagesImpl.getInstance();
+	@Inject
+	private Messages messages;
 	
 	@Override
 	public void onJoin(String channel, String sender, String login,	String hostname, NicoBot nicobot) {
