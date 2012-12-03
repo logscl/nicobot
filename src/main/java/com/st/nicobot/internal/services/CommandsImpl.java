@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.picocontainer.MutablePicoContainer;
+
 import com.st.nicobot.cmd.NiCommand;
-import com.st.nicobot.context.ApplicationContext;
 import com.st.nicobot.context.ApplicationContextAware;
 import com.st.nicobot.services.Commands;
 import com.st.nicobot.utils.ClassLoader;
@@ -16,7 +17,7 @@ import com.st.nicobot.utils.ClassLoader;
  */
 public class CommandsImpl implements Commands, ApplicationContextAware {
 
-	private ApplicationContext appCtx;
+	private MutablePicoContainer appCtx;
 	
 	private NiCommand firstLink;
 
@@ -40,7 +41,7 @@ public class CommandsImpl implements Commands, ApplicationContextAware {
 		List<NiCommand> cmds = new ArrayList<NiCommand>();
 		
 		for(Class<? extends NiCommand> clazz : classes) {
-			cmds.add(appCtx.getPicoContainer().getComponent(clazz));
+			cmds.add(appCtx.getComponent(clazz));
 		}
 		
 		for (int i = 1; i < cmds.size(); i++) {
@@ -56,7 +57,7 @@ public class CommandsImpl implements Commands, ApplicationContextAware {
 	}
 	
 	@Override
-	public void setApplicationContext(ApplicationContext appCtx) {
+	public void setApplicationContext(MutablePicoContainer appCtx) {
 		this.appCtx = appCtx;
 	}
 	

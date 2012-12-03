@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import com.st.nicobot.context.ApplicationContext;
+import org.picocontainer.MutablePicoContainer;
+
 import com.st.nicobot.context.ApplicationContextAware;
 import com.st.nicobot.event.AbstractEvent;
 import com.st.nicobot.services.HandlingService;
@@ -12,7 +13,7 @@ import com.st.nicobot.utils.ClassLoader;
 
 public class HandlingServiceImpl implements HandlingService, ApplicationContextAware {
 	
-	private ApplicationContext appCtx;
+	private MutablePicoContainer appCtx;
 	
 	private List<AbstractEvent> events;
 	
@@ -33,7 +34,7 @@ public class HandlingServiceImpl implements HandlingService, ApplicationContextA
 	}
 	
 	@Override
-	public void setApplicationContext(ApplicationContext appCtx) {
+	public void setApplicationContext(MutablePicoContainer appCtx) {
 		this.appCtx = appCtx;
 	}
 
@@ -45,7 +46,7 @@ public class HandlingServiceImpl implements HandlingService, ApplicationContextA
 			
 			for (Class<? extends AbstractEvent> clazz : abstractEvents) {
 				if (!clazz.isInterface()) {
-					AbstractEvent evt = appCtx.getPicoContainer().getComponent(clazz);
+					AbstractEvent evt = appCtx.getComponent(clazz);
 					events.add(evt);
 				}
 			}

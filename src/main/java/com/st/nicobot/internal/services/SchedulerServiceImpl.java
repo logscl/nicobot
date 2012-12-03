@@ -6,10 +6,10 @@ import java.util.Set;
 
 import javassist.Modifier;
 
+import org.picocontainer.MutablePicoContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.st.nicobot.context.ApplicationContext;
 import com.st.nicobot.context.ApplicationContextAware;
 import com.st.nicobot.job.Job;
 import com.st.nicobot.services.SchedulerService;
@@ -23,7 +23,7 @@ public class SchedulerServiceImpl implements SchedulerService, ApplicationContex
 
 	private static Logger logger = LoggerFactory.getLogger(SchedulerServiceImpl.class);
 	
-	private ApplicationContext appCtx;
+	private MutablePicoContainer appCtx;
 	
 	private List<Job> jobs;
 	
@@ -48,7 +48,7 @@ public class SchedulerServiceImpl implements SchedulerService, ApplicationContex
 	}
 	
 	@Override
-	public void setApplicationContext(ApplicationContext appCtx) {
+	public void setApplicationContext(MutablePicoContainer appCtx) {
 		this.appCtx = appCtx;
 	}
 	
@@ -60,7 +60,7 @@ public class SchedulerServiceImpl implements SchedulerService, ApplicationContex
 			
 			for(Class<? extends Job> clazz : classes) {
 				if (!Modifier.isAbstract(clazz.getModifiers())) {
-					jobs.add(appCtx.getPicoContainer().getComponent(clazz));
+					jobs.add(appCtx.getComponent(clazz));
 				}
 			}
 		}

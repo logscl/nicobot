@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.picocontainer.MutablePicoContainer;
+
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.behavior.NiConduct;
-import com.st.nicobot.context.ApplicationContext;
 import com.st.nicobot.context.ApplicationContextAware;
 import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.utils.ClassLoader;
@@ -21,7 +22,7 @@ public class BehaviorsServiceImpl implements BehaviorsService, ApplicationContex
 
 	private static final int MAX_CHANCE = 1001;
 	
-	private ApplicationContext appCtx;
+	private MutablePicoContainer appCtx;
 	
 	private List<NiConduct> behaviors;
 	
@@ -56,7 +57,7 @@ public class BehaviorsServiceImpl implements BehaviorsService, ApplicationContex
 	}
 	
 	@Override
-	public void setApplicationContext(ApplicationContext appCtx) {
+	public void setApplicationContext(MutablePicoContainer appCtx) {
 		this.appCtx = appCtx;
 	}
 	
@@ -67,7 +68,7 @@ public class BehaviorsServiceImpl implements BehaviorsService, ApplicationContex
 			Set<Class<? extends NiConduct>> niConductClasses = ClassLoader.getSubTypesOf(NiConduct.class);
 			
 			for(Class<? extends NiConduct> c : niConductClasses) {
-				NiConduct niConduct = appCtx.getPicoContainer().getComponent(c);
+				NiConduct niConduct = appCtx.getComponent(c);
 				behaviors.add(niConduct);
 			}
 		}

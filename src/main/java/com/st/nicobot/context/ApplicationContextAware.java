@@ -1,11 +1,17 @@
 package com.st.nicobot.context;
 
+import org.picocontainer.MutablePicoContainer;
+
 /**
  * @author Julien
  *
  */
 public interface ApplicationContextAware {
 
-	public void setApplicationContext(ApplicationContext appCtx);
+	/**
+	 * Défini le contexte d'application
+	 * @param appCtx
+	 */
+	public void setApplicationContext(MutablePicoContainer appCtx);
 	
 }
