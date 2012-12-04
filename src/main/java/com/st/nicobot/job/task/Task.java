@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.job.task;
 
 import java.util.TimerTask;

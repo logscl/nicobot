@@ -1,12 +1,6 @@
-/**
- * 
- */
 package com.st.nicobot.services;
 
-import java.util.List;
-
 import com.st.nicobot.NicoBot;
-import com.st.nicobot.behavior.NiConduct;
 import com.st.nicobot.utils.Option;
 
 /**
@@ -24,9 +18,4 @@ public interface BehaviorsService {
 	 */
 	public void randomBehave(NicoBot nicobot, Option opts);
 
-	/**
-	 * Retourne la liste des {@code NiConduct} supportés
-	 * @return
-	 */
-	public List<NiConduct> getBehaviors();
 }

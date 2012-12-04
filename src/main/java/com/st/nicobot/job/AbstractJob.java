@@ -1,9 +1,9 @@
-/**
- * 
- */
 package com.st.nicobot.job;
 
 import java.util.Timer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.st.nicobot.job.task.Task;
 
@@ -13,6 +13,8 @@ import com.st.nicobot.job.task.Task;
  */
 public abstract class AbstractJob implements Job {
 
+	private static Logger logger = LoggerFactory.getLogger(AbstractJob.class);
+	
 	protected boolean startAtCreation;
 	protected long delay;
 	protected Timer timer;
@@ -57,22 +59,21 @@ public abstract class AbstractJob implements Job {
 	}
 
 	@Override
-	public void start() {
+	public void launch() {
 		if (timer == null) {
 			timer = new Timer();
 			timer.scheduleAtFixedRate(getTask(), getStartDelay(), getDelay());
 
-			System.out.println("Job " + name + " started, task's first execution in " + 
-					(getStartDelay()/1000) + "seconds.");
+			logger.info("Job {} started, task's first execution in {} seconds.", name, (getStartDelay()/1000));
 		}
 	}
 	
 	@Override
-	public void stop() {
+	public void terminate() {
 		if (timer != null) {
 			timer.cancel();
 			
-			System.out.println("Job " + name + " stopped !");
+			logger.info("Job {} stopped !", name);
 		}
 	}
 

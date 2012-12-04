@@ -1,28 +1,36 @@
-/**
- * 
- */
 package com.st.nicobot.job.task;
 
-import com.st.nicobot.BotMain;
+import org.picocontainer.annotations.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.st.nicobot.NicoBot;
-import com.st.nicobot.internal.services.MessagesImpl;
+import com.st.nicobot.context.annotations.Component;
+import com.st.nicobot.services.Messages;
 
 /**
  * @author Julien
  *
  */
+@Component
 public class HappyGeekTimeTask extends Task {
 
+	private static Logger logger = LoggerFactory.getLogger(HappyGeekTimeTask.class);
+	
+	@Inject
+	private Messages messages;
+	
+	@Inject
+	private NicoBot bot;
+	
 	@Override
 	public void run() {
-		System.out.println("HappyGeekTimeTask running ...");
-		
-		
-		NicoBot bot = BotMain.getBot();
+		logger.info("HappyGeekTimeTask running ...");
 		
 		for(String channel : bot.getChannels()) {
-			System.out.println("Sending message to " + channel);
-			bot.sendMessage(channel, MessagesImpl.getInstance().getOtherMessage("hgt"));
+			logger.debug("Sending message to {}" , channel);
+			
+			bot.sendMessage(channel, messages.getOtherMessage("hgt"));
 		}
 	}
 }

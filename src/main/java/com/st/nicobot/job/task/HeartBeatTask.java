@@ -1,23 +1,28 @@
-/**
- * 
- */
 package com.st.nicobot.job.task;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.st.nicobot.context.annotations.Component;
+
 /**
  * @author Julien
  *
  */
+@Component
 public class HeartBeatTask extends Task {
 
+	private static Logger logger = LoggerFactory.getLogger(HeartBeatTask.class);
+	
 	private static final String URL = "http://nicobot.jlamby.cloudbees.net/";
 	
 	@Override
 	public void run() {
-		System.out.println("HeartBeatTask running ...");
+		logger.info("HeartBeatTask running ...");
 		try {
 			URL url = new URL(URL);
 			URLConnection connection = url.openConnection();
@@ -26,10 +31,11 @@ public class HeartBeatTask extends Task {
 			while(is.read() != -1) {
 				//do nothing
 			}
-			System.out.println("End of stream.");
+			
+			logger.debug("End of stream.");
 		}
 		catch(Exception ex) {
-			System.err.println(ex.getMessage());
+			logger.error(ex.getMessage());
 		}
 	}
 

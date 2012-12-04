@@ -1,9 +1,8 @@
-/**
- * 
- */
 package com.st.nicobot.job;
 
 import java.util.concurrent.TimeUnit;
+
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.job.task.HeartBeatTask;
 
@@ -13,11 +12,17 @@ import com.st.nicobot.job.task.HeartBeatTask;
  */
 public class HeartBeatJob extends AbstractJob {
 
-	public HeartBeatJob() {
+	@Inject
+	private HeartBeatTask task;
+	
+	public HeartBeatJob() {}
+	
+	public void start() {
 		delay = TimeUnit.MILLISECONDS.convert(5, TimeUnit.MINUTES);
-		task = new HeartBeatTask();
 		startAtCreation = true;
 		name = "HeartBeatJob";
+
+		super.task = task;
 	}
 
 }

@@ -1,16 +1,20 @@
 package com.st.nicobot.utils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 import org.reflections.util.FilterBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Permet de charger toutes les classes d'un certain type
@@ -21,23 +25,41 @@ import org.reflections.util.FilterBuilder;
  */
 public class ClassLoader {
 
-	private static String DEFAULT_PACKAGE = "com.st.nicobot";
+	private static Logger logger = LoggerFactory.getLogger(ClassLoader.class);
 	
-	private static ClassLoader instance;
+	private static String DEFAULT_PACKAGE = "com.st.nicobot";
 	
 	private static Reflections reflex;
 	
+	static {
+		reflex = new Reflections(
+			new ConfigurationBuilder()
+				.filterInputsBy(
+						new FilterBuilder().include(FilterBuilder.prefix(DEFAULT_PACKAGE))
+				)
+				.setUrls(ClasspathHelper.forPackage(DEFAULT_PACKAGE))
+				.setScanners(
+						new SubTypesScanner(), 
+						new TypeAnnotationsScanner()
+				)
+			);
+	}
+	
 	private ClassLoader() {}
 	
-	public static ClassLoader getInstance() {
-		if(instance == null) {
-			reflex = new Reflections(new ConfigurationBuilder()
-		        .filterInputsBy(new FilterBuilder().include(FilterBuilder.prefix(DEFAULT_PACKAGE)))
-		        .setUrls(ClasspathHelper.forPackage(DEFAULT_PACKAGE))
-		        .setScanners(new SubTypesScanner(), new ResourcesScanner()));
-			instance = new ClassLoader();
+	public static Set<Class<?>> getAllInstantiableClasses() {
+		Reflections r = new Reflections(DEFAULT_PACKAGE, new SubTypesScanner(false));
+		Set<Class<?>> classes = r.getSubTypesOf(Object.class);
+		
+		Set<Class<?>> instantiableClasses = new HashSet<Class<?>>();
+		
+		for(Class<?> c : classes) {
+			if ( !Modifier.isAbstract(c.getModifiers()) ) {
+				instantiableClasses.add(c);
+			}
 		}
-		return instance;
+		
+		return instantiableClasses;
 	}
 	
 	/**
@@ -48,7 +70,7 @@ public class ClassLoader {
 	 * @return
 	 * 		La liste des classes trouvées
 	 */
-	public <T> Set<Class< ? extends T>> getSubTypesOf(Class<T> type) {
+	public static <T> Set<Class< ? extends T>> getSubTypesOf(Class<T> type) {
 		return reflex.getSubTypesOf(type);
 	}
 	
@@ -61,7 +83,7 @@ public class ClassLoader {
 	 * @return
 	 * 		La liste des instances
 	 */
-	public <T> List<T> getInstancesOfClass(Class<T> type) {
+	public static <T> List<T> getInstancesOfClass(Class<T> type) {
 		Set<Class<? extends T>> classes = getSubTypesOf(type);
 		List<T> instances = new ArrayList<T>();
 		
@@ -70,12 +92,18 @@ public class ClassLoader {
 				if(!Modifier.isAbstract(clazz.getModifiers())) {
 					T instance = (T)clazz.newInstance();
 					instances.add(instance);
+					
 				}
 			} catch (Exception e) {
-				System.out.println("Impossibler d'instancier la classe "+clazz+", exception : "+e.getMessage());
+				logger.error("Impossible d'instancier la classe {}, exception : {}", clazz, e.getMessage());
 			}
 		}
 		
 		return instances;
 	}
+	
+	public static Set<Class<?>> getClassAnnotedWith(Class<? extends Annotation> annot){
+		return reflex.getTypesAnnotatedWith(annot);
+	}
+	
 }

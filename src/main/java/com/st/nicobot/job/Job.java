@@ -17,11 +17,11 @@ public interface Job {
 	/**
 	 * Demarre le job
 	 */
-	public void start();
+	public void launch();
 	
 	/**
 	 * Interrompt le job
 	 */
-	public void stop();
+	public void terminate();
 	
 }

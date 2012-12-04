@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.st.nicobot.job;
 
 import java.util.Calendar;
@@ -8,6 +5,10 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.concurrent.TimeUnit;
+
+import org.picocontainer.annotations.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.st.nicobot.job.task.HappyGeekTimeTask;
 
@@ -17,15 +18,23 @@ import com.st.nicobot.job.task.HappyGeekTimeTask;
  */
 public class HappyGeekTimeJob extends AbstractJob {
 
-	public HappyGeekTimeJob() {
+	private static Logger logger = LoggerFactory.getLogger(HappyGeekTimeJob.class);
+	
+	@Inject
+	private HappyGeekTimeTask task;
+	
+	public HappyGeekTimeJob() {}
+	
+	public void start() {
 		delay = TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS);
-		task = new HappyGeekTimeTask();
 		startAtCreation = true;
 		name = "HappyGeekTimeJob";		
+		
+		super.task = task;
 	}
 	
 	@Override
-	public void start() {
+	public void launch() {
 		if (timer == null) {
 			timer = new Timer();
 			
@@ -45,8 +54,8 @@ public class HappyGeekTimeJob extends AbstractJob {
 			
 			timer.scheduleAtFixedRate(getTask(), nextUpdateDate, getDelay());
 			
-			System.out.println("Job " + name + " started, task's first execution in " + 
-					((nextUpdateDate.getTime() - currentDate.getTime())/1000) + "seconds.");	
+			logger.info("Job {} started, task's first execution in {} seconds.", 
+					name, ((nextUpdateDate.getTime() - currentDate.getTime())/1000));	
 		}
 	}
 	

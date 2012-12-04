@@ -11,6 +11,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
+        <slf4j.version>[1.7,)</slf4j.version>
+        <picocontainer.version>2.14.1</picocontainer.version>
     </properties>
     
     <profiles>
@@ -66,6 +68,18 @@
             <version>3.1</version>
         </dependency>
 
+        <dependency>  
+            <groupId>org.picocontainer</groupId>  
+            <artifactId>picocontainer</artifactId>  
+            <version>${picocontainer.version}</version>  
+        </dependency>
+        
+        <dependency>  
+            <groupId>org.picocontainer</groupId>  
+            <artifactId>picocontainer-gems</artifactId>  
+            <version>${picocontainer.version}</version>  
+        </dependency>
+
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
@@ -81,7 +95,13 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.2</version>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <dependency>
