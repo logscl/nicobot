@@ -27,6 +27,11 @@ public class Say extends NiCommand {
 	public String getFormat() {
 		return FORMAT;
 	}
+	
+	@Override
+	public boolean isAdminRequired() {
+		return false;
+	}
 
 	@Override
 	protected void doCommand(NicoBot nicobot, String command, String[] args, Option opts) {

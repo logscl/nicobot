@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import com.st.nicobot.NicoBot;
 import com.st.nicobot.internal.services.MessagesImpl;
 import com.st.nicobot.services.Messages;
+import com.st.nicobot.services.UsersService;
 import com.st.nicobot.utils.Option;
 
 /**
@@ -24,6 +25,9 @@ public class ReloadMessage extends NiCommand {
 	@Inject
 	private Messages messages;
 	
+	@Inject
+	private UsersService users;
+	
 	public ReloadMessage() {	}
 	
 	@Override
@@ -39,6 +43,11 @@ public class ReloadMessage extends NiCommand {
 	@Override
 	public String getFormat() {
 		return FORMAT;
+	}
+	
+	@Override
+	public boolean isAdminRequired() {
+		return true;
 	}
 	
 	@Override

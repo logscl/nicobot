@@ -16,7 +16,7 @@ public class Help extends NiCommand {
 	private static final String COMMAND = "help";
 	private static final String FORMAT = "help [commandName]";
 	private static final String DESC = "Retourne la liste des commandes disponibles OU " +
-			"une aide detaillé pour la commande passsée en paramètre.";
+			"une aide detaillée pour la commande passée en paramètre.";
 
 	@Inject
 	private Messages messages;
@@ -37,6 +37,11 @@ public class Help extends NiCommand {
 	@Override
 	public String getFormat() {
 		return FORMAT;
+	}
+	
+	@Override
+	public boolean isAdminRequired() {
+		return false;
 	}
 
 	@Override
@@ -63,7 +68,9 @@ public class Help extends NiCommand {
 		nicobot.sendNotice(opts.sender, messages.getOtherMessage("helpHeader"));
 		
 		while (cmd != null) {
-			nicobot.sendNotice(opts.sender, "    - " + cmd.getCommandName() + " : " + cmd.getDescription());
+			if(!cmd.isAdminRequired() || (cmd.isAdminRequired() && opts.senderIsAdmin)) {
+				nicobot.sendNotice(opts.sender, "    - " + cmd.getCommandName() + " : " + cmd.getDescription());
+			}
 			cmd = cmd.nextCommand;
 		}
 	}
@@ -82,8 +89,12 @@ public class Help extends NiCommand {
 		}
 		
 		if (cmd != null) {
-			nicobot.sendNotice(opts.sender, cmd.getDescription());
-			nicobot.sendNotice(opts.sender, cmd.getFormat());
+			if(!cmd.isAdminRequired() || (cmd.isAdminRequired() && opts.senderIsAdmin)) {
+				nicobot.sendNotice(opts.sender, cmd.getDescription());
+				nicobot.sendNotice(opts.sender, cmd.getFormat());
+			}
+		} else {
+			nicobot.sendNotice(opts.sender, messages.getOtherMessage("helpNotFound"));
 		}
 	}
 	
