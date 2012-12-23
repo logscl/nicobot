@@ -22,7 +22,7 @@ public class BackwardsSpeaking implements NiConduct {
 	
 	@Override
 	public int getChance() {
-		return 500;
+		return 50;
 	}
 
 	@Override
