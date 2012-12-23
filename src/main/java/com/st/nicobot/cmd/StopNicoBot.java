@@ -37,6 +37,11 @@ public class StopNicoBot extends NiCommand {
 	public String getFormat() {
 		return FORMAT;
 	}
+	
+	@Override
+	public boolean isAdminRequired() {
+		return true;
+	}
 
 	@Override
 	protected void doCommand(NicoBot nicobot, String message, String[] args, Option opts) {

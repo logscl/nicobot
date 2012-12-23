@@ -29,10 +29,16 @@ public abstract class NiCommand {
 	 */
 	public abstract String getDescription();
 	
-	/*
+	/**
 	 * Retourne le format de la commande
 	 */
 	public abstract String getFormat();
+	
+	/**
+	 * Indique si la commande ne peut être lancée que par des admins
+	 */
+	public abstract boolean isAdminRequired();
+	
 
 	/**
 	 * Code à executer par la commande
@@ -59,6 +65,7 @@ public abstract class NiCommand {
 	 * <p>Determine si l'implementation est capable de gérer la commande.</p>
 	 * <p>Si oui, alors {@link NiCommand#doCommand(NicoBot, String, String[], Option)} est appelé.</p>
 	 * <p>Si non, alors on passe le relais au maillon suivant ({@link NiCommand#nextCommand})</p>
+	 * <p>On vérifie également que l'utilisateur peut lancer la commande à l'aide d' {@link Option#senderIsAdmin}</p>
 	 * @param nicobot
 	 * 		TEH nicobot
 	 * @param command
@@ -71,7 +78,11 @@ public abstract class NiCommand {
 	public void handle(NicoBot nicobot, String command, String[] arguments, Option opts) {
 		
 		if (command.startsWith(getCommandName())){
-			this.doCommand(nicobot, command, removeFormattingAndColors(arguments), opts);
+			if(!this.isAdminRequired() ||(this.isAdminRequired() && opts.senderIsAdmin)) {
+				this.doCommand(nicobot, command, removeFormattingAndColors(arguments), opts);
+			}
+			// en dehors du if, car si on a trouvé mais pas admin, ca sert à rien de chercher plus loin
+			return; // Si on a trouvé, ca sert a rien de continuer à chainer, si ?
 		}
 
 		if (nextCommand != null) {

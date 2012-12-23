@@ -77,12 +77,12 @@ public class MessagesImpl implements Messages {
 		reactions.add(new Reaction(".*tracteur.*",					"On va au Quick ?  Il est où mon saucisson ?"));
 
 		// girls
-		reactions.add(new Reaction(".*sarah?.*",					"Mhmmm...  \"Avec tes deux obus, j'crois que tu te sens plus. Du quatre-vingt dix D, il en faut plus pour me faire trembler !\"", false, 30));
-		reactions.add(new Reaction(".*(julie|hercot).*",			"On en reparle quand elle aura arrêté avec son équipe de meeeerde celle là.  Iiiimmmmbécile.", false, 30));
-		reactions.add(new Reaction(".*pauline.*",					"Ah ben si tu veux, moi j'en connais un rayon sur les Paulines !  P1, P2, P3 et même P4: j'ai fait toute la famille !", false, 30));
-		reactions.add(new Reaction(".*alice.*",						"T'as qu'à me dire dans quel auditoire elle a cours; j'ai un plan pour ça.", false, 30));
-		reactions.add(new Reaction(".*(ga(e|ë)lle).*",				"Moi, quand une meuf un peu bourrée me propose de dormir chez elle après une bonne grosse guindaille, je préfère encore dire non tu vois.  Genre gentleman.  Où est le challenge sinon ?!", false, 30));
-		reactions.add(new Reaction(".*(fairy|aur(e|é)lie|hanut).*",	"Heuuu, ouais, salut...  T'aurais pas de_cbble stp ?  En fait j'l'ai pas et on a war dans 4 minutes :(", false, 30));
+		reactions.add(new Reaction(".*sarah?.*",					"Mhmmm...  \"Avec tes deux obus, j'crois que tu te sens plus. Du quatre-vingt dix D, il en faut plus pour me faire trembler !\"", true, 30));
+		reactions.add(new Reaction(".*(julie|hercot).*",			"On en reparle quand elle aura arrêté avec son équipe de meeeerde celle là.  Iiiimmmmbécile.", true, 30));
+		reactions.add(new Reaction(".*pauline.*",					"Ah ben si tu veux, moi j'en connais un rayon sur les Paulines !  P1, P2, P3 et même P4: j'ai fait toute la famille !", true, 30));
+		reactions.add(new Reaction(".*alice.*",						"T'as qu'à me dire dans quel auditoire elle a cours; j'ai un plan pour ça.", true, 30));
+		reactions.add(new Reaction(".*(ga(e|ë)lle).*",				"Moi, quand une meuf un peu bourrée me propose de dormir chez elle après une bonne grosse guindaille, je préfère encore dire non tu vois.  Genre gentleman.  Où est le challenge sinon ?!", true, 30));
+		reactions.add(new Reaction(".*(fairy|aur(e|é)lie|hanut).*",	"Heuuu, ouais, salut...  T'aurais pas de_cbble stp ?  En fait j'l'ai pas et on a war dans 4 minutes :(", true, 30));
 
 		otherMessages = new HashMap<String, String>();
 		otherMessages.put("onKick", 		"Merci pour le kick, %p...");
@@ -95,6 +95,7 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("leaveReason",	"rien.");
 		otherMessages.put("helpHeader",		"Liste des commandes que nicobot connait :");
 		otherMessages.put("inviteNo",		"LOL ? T'as cru ? Va t'faire refaire, ALIEN !");
+		otherMessages.put("helpNotFound", 	"J'veux bien t'aider, mais je vois pas bien ce que tu me veux la -_-");
 
 		otherMessages.put("riverside",		"Riverside mothefoker");
 		otherMessages.put("velo",			"On m'a volé mon vélooooo !!! Qui m'a volé mon vélooooo ???");

@@ -2,16 +2,21 @@ package com.st.nicobot;
 
 import java.util.List;
 
+import org.jibble.pircbot.User;
 import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.bot.AbstractPircBot;
 import com.st.nicobot.context.annotations.Component;
+import com.st.nicobot.event.DeopEvent;
 import com.st.nicobot.event.InviteEvent;
 import com.st.nicobot.event.JoinEvent;
 import com.st.nicobot.event.KickEvent;
 import com.st.nicobot.event.MessageEvent;
+import com.st.nicobot.event.NickChangeEvent;
+import com.st.nicobot.event.OpEvent;
 import com.st.nicobot.event.PartEvent;
 import com.st.nicobot.event.PrivateMessageEvent;
+import com.st.nicobot.event.UserListEvent;
 import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.services.BehaviorsService;
 import com.st.nicobot.services.HandlingService;
@@ -58,7 +63,7 @@ public class NicoBot extends AbstractPircBot {
 			event.onMessage(channel, sender, login, hostname, message, this);
 		}
 		
-		behaviors.randomBehave(this, new Option(channel, sender, message));
+		behaviors.randomBehave(this, new Option(channel, sender, message, false));
 	}
 	
 	@Override
@@ -123,6 +128,50 @@ public class NicoBot extends AbstractPircBot {
 		
 		for(PartEvent event : events) {
 			event.onPart(channel, sender, login, hostname, this);
+		}
+	}
+	
+	@Override
+	protected void onNickChange(String oldNick, String login, String hostname, String newNick) {
+		super.onNickChange(oldNick, login, hostname, newNick);
+		
+		List<NickChangeEvent> events = handling.getEvents(NickChangeEvent.class);
+		
+		for(NickChangeEvent event : events) {
+			event.onNickChange(oldNick, login, hostname, newNick);
+		}
+	}
+	
+	@Override
+	protected void onOp(String channel, String sourceNick, String sourceLogin, String sourceHostname, String recipient) {
+		super.onOp(channel, sourceNick, sourceLogin, sourceHostname, recipient);
+		
+		List<OpEvent> events = handling.getEvents(OpEvent.class);
+		
+		for(OpEvent event : events) {
+			event.onOp(channel, sourceNick, sourceLogin, sourceHostname, recipient);
+		}
+	}
+	
+	@Override
+	protected void onUserList(String channel, User[] users) {
+		super.onUserList(channel, users);
+		
+		List<UserListEvent> events = handling.getEvents(UserListEvent.class);
+		
+		for(UserListEvent event : events) {
+			event.onUserList(channel, users);
+		}
+	}
+	
+	@Override
+	protected void onDeop(String channel, String sourceNick, String sourceLogin, String sourceHostname, String recipient) {
+		super.onDeop(channel, sourceNick, sourceLogin, sourceHostname, recipient);
+		
+		List<DeopEvent> events = handling.getEvents(DeopEvent.class);
+		
+		for(DeopEvent event : events) {
+			event.onDeop(channel, sourceNick, sourceLogin, sourceHostname, recipient);
 		}
 	}
 	
