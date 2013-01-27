@@ -6,7 +6,9 @@ public enum NicobotProperty {
 	BOT_SERVER("bot.server","nl.quakenet.org"),
 	BOT_CHAN("bot.chan","#zqsd"),
 	BOT_AUTO_NICK_CHANGE("bot.autoNickChange","true"),
-	BOT_MESSAGE_DELAY("bot.messageDelay","1000");
+	BOT_MESSAGE_DELAY("bot.messageDelay","1000"),
+	BOT_Q_AUTHNAME("bot.qAuth", ""),
+	BOT_Q_PASSWORD("bot.qPassword", "");
 	
 	private String key;
 	private String defaultValue;

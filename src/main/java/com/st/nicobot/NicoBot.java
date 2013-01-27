@@ -51,6 +51,7 @@ public class NicoBot extends AbstractPircBot {
 		this.setName(props.get(NicobotProperty.BOT_NAME));
 		this.setAutoNickChange(props.getBoolean(NicobotProperty.BOT_AUTO_NICK_CHANGE));
 		this.setMessageDelay(props.getLong(NicobotProperty.BOT_MESSAGE_DELAY));
+		this.setVersion("Comme le vrai, mais en plus bot.");
 	}
 	
 	@Override
