@@ -11,6 +11,7 @@ import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.reaction.Reaction;
 import com.st.nicobot.services.Messages;
 import com.st.nicobot.services.PropertiesService;
+import com.st.nicobot.utils.Random;
 
 /**
  * Une classe qui va contenir les differents messages / commandes auxquels notre cher
@@ -29,6 +30,11 @@ public class MessagesImpl implements Messages {
 
 	/** Les messages de service de nicobot */
 	private Map<String, String> otherMessages;
+	
+	/** Les messages de bienvenue de nicobot */
+	private Map<String, String> welcomeMessages;
+	
+	private java.util.Random random = Random.getInstance();
 
 	public MessagesImpl() {	}
 	
@@ -78,7 +84,7 @@ public class MessagesImpl implements Messages {
 
 		// girls
 		reactions.add(new Reaction(".*sarah?.*",					"Mhmmm...  \"Avec tes deux obus, j'crois que tu te sens plus. Du quatre-vingt dix D, il en faut plus pour me faire trembler !\"", true, 30));
-		reactions.add(new Reaction(".*(julie|hercot).*",			"On en reparle quand elle aura arrêté avec son équipe de meeeerde celle là.  Iiiimmmmbécile.", true, 30));
+		reactions.add(new Reaction(".*(julie|hercot) .*",			"On en reparle quand elle aura arrêté avec son équipe de meeeerde celle là.  Iiiimmmmbécile.", true, 30));
 		reactions.add(new Reaction(".*pauline.*",					"Ah ben si tu veux, moi j'en connais un rayon sur les Paulines !  P1, P2, P3 et même P4: j'ai fait toute la famille !", true, 30));
 		reactions.add(new Reaction(".*alice.*",						"T'as qu'à me dire dans quel auditoire elle a cours; j'ai un plan pour ça.", true, 30));
 		reactions.add(new Reaction(".*(ga(e|ë)lle).*",				"Moi, quand une meuf un peu bourrée me propose de dormir chez elle après une bonne grosse guindaille, je préfère encore dire non tu vois.  Genre gentleman.  Où est le challenge sinon ?!", true, 30));
@@ -86,7 +92,6 @@ public class MessagesImpl implements Messages {
 
 		otherMessages = new HashMap<String, String>();
 		otherMessages.put("onKick", 		"Merci pour le kick, %p...");
-		otherMessages.put("onJoin", 		"Yo les gars! Saluez %p !");
 		otherMessages.put("onSelfJoin",		"Yo les gars! Ovation pour %p ! Woup Woup !!");
 		otherMessages.put("onInvite", 		"remercie %p");
 		otherMessages.put("onLeave", 		"A plus les nb's !");
@@ -104,6 +109,23 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("ensomme",		"En somme.");
 		otherMessages.put("nicontroleur",	"ONE THIRTY TWO ONE THIRTY TWO.... REPONDEZ ONE THIRTY TWO !!! Papaaaaaaaaa~");
 		otherMessages.put("hgt",			"!!§!!§§!!§ Happy Geek Time !!§!!§§!!§");
+		
+		otherMessages.put("kickError",		"randomkick <#channel>. BIATCH !");
+		otherMessages.put("kickInit",		"Y'a %s qui m'a demandé de kicker quelqu'un, alors...");
+		otherMessages.put("kickReason",		"Le prends pas mal hein... on reste amis ?");
+		otherMessages.put("kickLose",		"BIEN FAIT HAHA !");
+		otherMessages.put("kickWin",		"Gamin !! Allez viens ! C'était pour rire !");
+		
+		welcomeMessages = new HashMap<String, String>();
+		welcomeMessages.put("newJoin0",		"Yo les gars! Saluez %p !");
+		welcomeMessages.put("newJoin1",		"Coucou %p ! Ca va bien ?");
+		welcomeMessages.put("newJoin2",		"BOOM ! %p est dans la place !");
+		
+		welcomeMessages.put("join1", 		"Hé ! Encore toi %p !");
+		welcomeMessages.put("join2", 		"OMG T'es revenu %p !");
+		welcomeMessages.put("join3",		"Euh Ca fait 3 fois aujourd'hui %p, T'en as pas marre ?");
+		welcomeMessages.put("join4",		"T'es branché sur une guirlande de Noël %p ?");
+		welcomeMessages.put("join5",		"CA SUFFIT %p ! Maintenant, tu t'achètes une connexion !!");
 	}
 
 	@Override
@@ -114,5 +136,14 @@ public class MessagesImpl implements Messages {
 	@Override
 	public String getOtherMessage(String key) {
 		return otherMessages.get(key);
+	}
+	
+	@Override
+	public String getWelcomeMessage(Integer nbr) {
+		if(nbr.equals(0)) {
+			return welcomeMessages.get("newJoin"+random.nextInt(3));
+		} else {
+			return welcomeMessages.get("join"+nbr.toString());
+		}
 	}
 }
