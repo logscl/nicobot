@@ -181,6 +181,10 @@ public class NicoBot extends AbstractPircBot {
 		super.onConnect();
 		
 		schedulerService.startScheduler();
+		
+		//TODO : Trouver un moyen de simplifier ca en dev (params auth/pass remplacés au save - ou alors désactiver en dev
+		this.sendRawLine("AUTH "+props.get(NicobotProperty.BOT_Q_AUTHNAME)+" "+props.get(NicobotProperty.BOT_Q_PASSWORD));
+		this.sendRawLine("MODE "+props.get(NicobotProperty.BOT_NAME)+ " +x");
 	}
-	
+
 }
