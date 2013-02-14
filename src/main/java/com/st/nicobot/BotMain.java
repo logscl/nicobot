@@ -31,10 +31,6 @@ public class BotMain {
 
 		bot.connect(props.get(NicobotProperty.BOT_SERVER));
 		bot.joinChannel(props.get(NicobotProperty.BOT_CHAN));
-		
-		//TODO : Trouver un moyen de simplifier ca en dev (params auth/pass remplacés au save - ou alors désactiver en dev
-		bot.sendRawLine("AUTH "+props.get(NicobotProperty.BOT_Q_AUTHNAME)+" "+props.get(NicobotProperty.BOT_Q_PASSWORD));
-		bot.sendRawLine("MODE "+props.get(NicobotProperty.BOT_NAME)+ " +x");
 	}
 
 	@SuppressWarnings("serial")
