@@ -32,6 +32,11 @@ public class PropertiesServiceImpl implements PropertiesService {
 	public String get(NicobotProperty key) {
 		return properties.getProperty(key.getKey(), key.getDefaultValue());
 	}
+	
+	@Override
+	public void set(NicobotProperty key, String value) {
+		properties.put(key, value);
+	}
 
 	@Override
 	public Boolean getBoolean(NicobotProperty key) {
