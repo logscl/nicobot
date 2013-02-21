@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javassist.Modifier;
+
 import org.picocontainer.MutablePicoContainer;
 
 import com.st.nicobot.context.ApplicationContextAware;
@@ -45,7 +47,7 @@ public class HandlingServiceImpl implements HandlingService, ApplicationContextA
 			Set<Class<? extends AbstractEvent>> abstractEvents = ClassLoader.getSubTypesOf(AbstractEvent.class);
 			
 			for (Class<? extends AbstractEvent> clazz : abstractEvents) {
-				if (!clazz.isInterface()) {
+				if (!Modifier.isAbstract(clazz.getModifiers())) {
 					AbstractEvent evt = appCtx.getComponent(clazz);
 					events.add(evt);
 				}

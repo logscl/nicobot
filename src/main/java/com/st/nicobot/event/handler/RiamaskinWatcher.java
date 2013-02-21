@@ -1,8 +1,9 @@
 package com.st.nicobot.event.handler;
 
-import org.apache.commons.lang3.StringUtils;
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.NicoBot;
+import com.st.nicobot.services.Messages;
 import com.st.nicobot.utils.Option;
 
 /**
@@ -13,6 +14,9 @@ public class RiamaskinWatcher extends ConditionalMessageEvent {
 
     private static final String RIAMASKIN_STRING = "riamaskin";
 
+    @Inject
+    private Messages messages;
+    
     @Override
     public int getChance() {
         return 250;
@@ -28,7 +32,7 @@ public class RiamaskinWatcher extends ConditionalMessageEvent {
     	Option o = new Option(channel, sender, message, false);
     	
     	if (testCondition(o)) {
-    		nicobot.sendMessage(channel, StringUtils.reverse(RIAMASKIN_STRING));
+    		nicobot.sendMessage(channel, messages.getOtherMessage(RIAMASKIN_STRING));
     	}
     }
 
