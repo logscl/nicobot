@@ -7,11 +7,11 @@ import java.util.Set;
 
 import org.picocontainer.annotations.Inject;
 
-import com.st.nicobot.property.NicobotProperty;
-import com.st.nicobot.reaction.Reaction;
+import com.st.nicobot.bot.utils.NicobotProperty;
+import com.st.nicobot.bot.utils.Random;
+import com.st.nicobot.bot.utils.Reaction;
 import com.st.nicobot.services.Messages;
 import com.st.nicobot.services.PropertiesService;
-import com.st.nicobot.utils.Random;
 
 /**
  * Une classe qui va contenir les differents messages / commandes auxquels notre cher
@@ -33,8 +33,6 @@ public class MessagesImpl implements Messages {
 	
 	/** Les messages de bienvenue de nicobot */
 	private Map<String, String> welcomeMessages;
-	
-	private java.util.Random random = Random.getInstance();
 
 	public MessagesImpl() {	}
 	
@@ -115,6 +113,7 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("kickReason",		"Le prends pas mal hein... on reste amis ?");
 		otherMessages.put("kickLose",		"BIEN FAIT HAHA !");
 		otherMessages.put("kickWin",		"Gamin !! Allez viens ! C'était pour rire !");
+		otherMessages.put("riamaskin",		"Ca suffit maintenant ! C’est excessivement énervant !");
 		
 		welcomeMessages = new HashMap<String, String>();
 		welcomeMessages.put("newJoin0",		"Yo les gars! Saluez %p !");
@@ -141,7 +140,7 @@ public class MessagesImpl implements Messages {
 	@Override
 	public String getWelcomeMessage(Integer nbr) {
 		if(nbr.equals(0)) {
-			return welcomeMessages.get("newJoin"+random.nextInt(3));
+			return welcomeMessages.get("newJoin" + Random.nextInt(3));
 		} else {
 			return welcomeMessages.get("join"+nbr.toString());
 		}

@@ -2,7 +2,7 @@ package com.st.nicobot.services;
 
 import java.util.List;
 
-import com.st.nicobot.event.AbstractEvent;
+import com.st.nicobot.bot.event.AbstractEvent;
 
 public interface HandlingService {
 

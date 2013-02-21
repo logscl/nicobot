@@ -10,9 +10,10 @@ import org.picocontainer.injectors.AnnotatedFieldInjection;
 import org.picocontainer.lifecycle.ReflectionLifecycleStrategy;
 import org.picocontainer.monitors.NullComponentMonitor;
 
+import com.st.nicobot.bot.NicoBot;
+import com.st.nicobot.bot.utils.NicobotProperty;
 import com.st.nicobot.context.ComponentUtils;
 import com.st.nicobot.context.annotations.Component;
-import com.st.nicobot.property.NicobotProperty;
 import com.st.nicobot.services.PropertiesService;
 
 public class BotMain {
@@ -48,8 +49,8 @@ public class BotMain {
 		);
 		
 		
-		ComponentUtils.loadComponents(container, com.st.nicobot.utils.ClassLoader.getAllInstantiableClasses());
-		ComponentUtils.loadComponents(container, com.st.nicobot.utils.ClassLoader.getClassAnnotedWith(Component.class));
+		ComponentUtils.loadComponents(container, com.st.nicobot.context.ClassLoader.getAllInstantiableClasses());
+		ComponentUtils.loadComponents(container, com.st.nicobot.context.ClassLoader.getClassAnnotedWith(Component.class));
 		
 		ComponentUtils.publishApplicationContext(container);
 	

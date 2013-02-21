@@ -1,6 +1,6 @@
 package com.st.nicobot.services;
 
-import com.st.nicobot.cmd.NiCommand;
+import com.st.nicobot.bot.cmd.NiCommand;
 
 /**
  * @author Julien

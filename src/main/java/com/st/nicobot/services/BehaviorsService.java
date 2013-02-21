@@ -1,7 +1,7 @@
 package com.st.nicobot.services;
 
-import com.st.nicobot.NicoBot;
-import com.st.nicobot.utils.Option;
+import com.st.nicobot.bot.NicoBot;
+import com.st.nicobot.bot.utils.Option;
 
 /**
  * @author Julien
