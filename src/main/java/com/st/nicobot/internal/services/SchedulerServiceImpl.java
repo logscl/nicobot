@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.st.nicobot.context.ApplicationContextAware;
+import com.st.nicobot.context.ClassLoader;
 import com.st.nicobot.job.Job;
 import com.st.nicobot.services.SchedulerService;
-import com.st.nicobot.utils.ClassLoader;
 
 /**
  * @author Julien

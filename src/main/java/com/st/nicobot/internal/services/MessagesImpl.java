@@ -7,11 +7,11 @@ import java.util.Set;
 
 import org.picocontainer.annotations.Inject;
 
-import com.st.nicobot.property.NicobotProperty;
-import com.st.nicobot.reaction.Reaction;
+import com.st.nicobot.bot.utils.NicobotProperty;
+import com.st.nicobot.bot.utils.Random;
+import com.st.nicobot.bot.utils.Reaction;
 import com.st.nicobot.services.Messages;
 import com.st.nicobot.services.PropertiesService;
-import com.st.nicobot.utils.Random;
 
 /**
  * Une classe qui va contenir les differents messages / commandes auxquels notre cher

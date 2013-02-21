@@ -1,6 +1,6 @@
 package com.st.nicobot.services;
 
-import com.st.nicobot.property.NicobotProperty;
+import com.st.nicobot.bot.utils.NicobotProperty;
 
 public interface PropertiesService {
 

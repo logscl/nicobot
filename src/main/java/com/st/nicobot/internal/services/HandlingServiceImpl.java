@@ -8,10 +8,10 @@ import javassist.Modifier;
 
 import org.picocontainer.MutablePicoContainer;
 
+import com.st.nicobot.bot.event.AbstractEvent;
 import com.st.nicobot.context.ApplicationContextAware;
-import com.st.nicobot.event.AbstractEvent;
+import com.st.nicobot.context.ClassLoader;
 import com.st.nicobot.services.HandlingService;
-import com.st.nicobot.utils.ClassLoader;
 
 public class HandlingServiceImpl implements HandlingService, ApplicationContextAware {
 	

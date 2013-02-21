@@ -6,10 +6,10 @@ import java.util.Set;
 
 import org.picocontainer.MutablePicoContainer;
 
-import com.st.nicobot.cmd.NiCommand;
+import com.st.nicobot.bot.cmd.NiCommand;
 import com.st.nicobot.context.ApplicationContextAware;
+import com.st.nicobot.context.ClassLoader;
 import com.st.nicobot.services.Commands;
-import com.st.nicobot.utils.ClassLoader;
 
 /**
  * @author Julien

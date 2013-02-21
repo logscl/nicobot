@@ -6,7 +6,7 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.st.nicobot.property.NicobotProperty;
+import com.st.nicobot.bot.utils.NicobotProperty;
 import com.st.nicobot.services.PropertiesService;
 
 public class PropertiesServiceImpl implements PropertiesService {

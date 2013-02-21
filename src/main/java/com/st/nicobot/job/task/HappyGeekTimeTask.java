@@ -4,7 +4,7 @@ import org.picocontainer.annotations.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.st.nicobot.NicoBot;
+import com.st.nicobot.bot.NicoBot;
 import com.st.nicobot.context.annotations.Component;
 import com.st.nicobot.services.Messages;
 

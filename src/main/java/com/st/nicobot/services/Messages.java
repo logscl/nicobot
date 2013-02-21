@@ -2,7 +2,7 @@ package com.st.nicobot.services;
 
 import java.util.Set;
 
-import com.st.nicobot.reaction.Reaction;
+import com.st.nicobot.bot.utils.Reaction;
 
 /**
  * @author Julien

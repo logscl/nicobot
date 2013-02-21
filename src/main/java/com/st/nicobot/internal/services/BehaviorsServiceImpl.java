@@ -6,13 +6,13 @@ import java.util.Set;
 
 import org.picocontainer.MutablePicoContainer;
 
-import com.st.nicobot.NicoBot;
-import com.st.nicobot.behavior.NiConduct;
+import com.st.nicobot.bot.NicoBot;
+import com.st.nicobot.bot.behavior.NiConduct;
+import com.st.nicobot.bot.utils.Option;
+import com.st.nicobot.bot.utils.Random;
 import com.st.nicobot.context.ApplicationContextAware;
+import com.st.nicobot.context.ClassLoader;
 import com.st.nicobot.services.BehaviorsService;
-import com.st.nicobot.utils.ClassLoader;
-import com.st.nicobot.utils.Option;
-import com.st.nicobot.utils.Random;
 
 /**
  * @author Julien
