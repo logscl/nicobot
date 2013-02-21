@@ -15,7 +15,7 @@ public class RiamaskinWatcher extends ConditionalMessageEvent {
 
     @Override
     public int getChance() {
-        return 900;
+        return 250;
     }
 
     @Override
