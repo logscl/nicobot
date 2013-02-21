@@ -33,8 +33,6 @@ public class MessagesImpl implements Messages {
 	
 	/** Les messages de bienvenue de nicobot */
 	private Map<String, String> welcomeMessages;
-	
-	private java.util.Random random = Random.getInstance();
 
 	public MessagesImpl() {	}
 	
@@ -141,7 +139,7 @@ public class MessagesImpl implements Messages {
 	@Override
 	public String getWelcomeMessage(Integer nbr) {
 		if(nbr.equals(0)) {
-			return welcomeMessages.get("newJoin"+random.nextInt(3));
+			return welcomeMessages.get("newJoin" + Random.nextInt(3));
 		} else {
 			return welcomeMessages.get("join"+nbr.toString());
 		}

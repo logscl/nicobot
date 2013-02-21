@@ -29,7 +29,7 @@ public class RandomTalk implements NiConduct {
 	}
 	
 	protected String getRandomTalk() {
-		int rndIdx = Random.getInstance().nextInt(RandomTalkName.values().length);
+		int rndIdx = Random.nextInt(RandomTalkName.values().length);
 		
 		String msg = "";
 		

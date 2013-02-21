@@ -17,8 +17,6 @@ public class RandomKick extends NiCommand {
 	private static final String FORMAT = "randomkick <#channel>";
 	private static final String DESC = "Kick quelqu'un du chan spécifié aléatoirement (Sauf Q et lui-même !)";
 	
-	private java.util.Random random = Random.getInstance();
-	
 	@Inject
 	private Messages messages;
 	
@@ -48,9 +46,12 @@ public class RandomKick extends NiCommand {
 			nicobot.sendNotice(opts.sender, messages.getOtherMessage("kickError"));
 			return;
 		}
-		nicobot.sendMessage(args[0], String.format(messages.getOtherMessage("kickInit"), opts.sender));
+		
 		String victim = selectRandomUser(nicobot, args[0]).getNick();
+
+		nicobot.sendMessage(args[0], String.format(messages.getOtherMessage("kickInit"), opts.sender));
 		nicobot.kick(args[0], victim, messages.getOtherMessage("kickReason"));
+		
 		if(victim.equals(opts.sender)) {
 			nicobot.sendMessage(args[0], messages.getOtherMessage("kickLose"));
 		} else {
@@ -69,10 +70,12 @@ public class RandomKick extends NiCommand {
 	private User selectRandomUser(NicoBot bot, String channel) {
 		List<String> protectedUsers = Arrays.asList("Q", bot.getName());
 		User[] usrs = bot.getUsers(channel);
-		int rdmUser = random.nextInt(usrs.length);
+		int rdmUser = Random.nextInt(usrs.length);
+		
 		while(protectedUsers.contains(usrs[rdmUser].getNick())) {
-			rdmUser = random.nextInt(usrs.length);
+			rdmUser = Random.nextInt(usrs.length);
 		}
+		
 		return usrs[rdmUser];
 	}
 }
