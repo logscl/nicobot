@@ -7,8 +7,11 @@ public enum NicobotProperty {
 	BOT_CHAN("bot.chan","#zqsd"),
 	BOT_AUTO_NICK_CHANGE("bot.autoNickChange","true"),
 	BOT_MESSAGE_DELAY("bot.messageDelay","1000"),
+	
 	BOT_Q_AUTHNAME("bot.qAuth", ""),
-	BOT_Q_PASSWORD("bot.qPassword", "");
+	BOT_Q_PASSWORD("bot.qPassword", ""),
+	
+	API_URI("api.uri", "http://api.nicobot.cloudbees.net");
 	
 	private String key;
 	private String defaultValue;

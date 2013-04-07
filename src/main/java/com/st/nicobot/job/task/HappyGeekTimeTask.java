@@ -30,7 +30,7 @@ public class HappyGeekTimeTask extends Task {
 		for(String channel : bot.getChannels()) {
 			logger.debug("Sending message to {}" , channel);
 			
-			bot.sendMessage(channel, messages.getOtherMessage("hgt"));
+			bot.sendChannelMessage(channel, messages.getOtherMessage("hgt"));
 		}
 	}
 }

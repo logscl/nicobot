@@ -15,8 +15,11 @@ public class ParseReactions implements MessageEvent {
 	@Inject
 	private Messages messages;
 	
+	@Inject
+	private NicoBot nicobot;
+	
 	@Override
-	public void onMessage(String channel, String sender, String login, String hostname, String message, NicoBot nicobot) {
+	public void onMessage(String channel, String sender, String login, String hostname, String message) {
 
 		message = Colors.removeFormattingAndColors(message);
 		String response = null;
@@ -35,7 +38,7 @@ public class ParseReactions implements MessageEvent {
 		
 		if (response != null) {
 			response = nicobot.formatMessage(response, sender, channel);
-			nicobot.sendMessage(channel, response);
+			nicobot.sendChannelMessage(channel, response);
 		}
 
 	}

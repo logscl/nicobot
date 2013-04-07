@@ -1,6 +1,5 @@
 package com.st.nicobot.bot.event;
 
-import com.st.nicobot.bot.NicoBot;
 
 public interface InviteEvent extends AbstractEvent {
 
@@ -17,7 +16,6 @@ public interface InviteEvent extends AbstractEvent {
      * @param sourceLogin The login of the user that sent the invitation.
      * @param sourceHostname The hostname of the user that sent the invitation.
      * @param channel The channel that we're being invited to.
-     * @param nicobot the famous nicobot
      */
-    void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel, NicoBot nicobot); 
+    void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel); 
 }

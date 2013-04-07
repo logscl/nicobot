@@ -25,7 +25,7 @@ public class RandomTalk implements NiConduct {
 
 	@Override
 	public void behave(NicoBot nicobot, Option opts) {
-		nicobot.sendMessage(opts.channel, getRandomTalk());
+		nicobot.sendChannelMessage(opts.channel, getRandomTalk());
 	}
 	
 	protected String getRandomTalk() {

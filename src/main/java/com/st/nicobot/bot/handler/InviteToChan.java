@@ -16,8 +16,11 @@ public class InviteToChan implements InviteEvent {
 	@Inject
 	private Messages messages;
 	
+	@Inject
+	private NicoBot nicobot;
+	
 	@Override
-	public void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel, NicoBot nicobot) {
+	public void onInvite(String targetNick, String sourceNick, String sourceLogin, String sourceHostname, String channel) {
 		String[] strings = channel.split(" ");
 		channel = strings[3];
 		

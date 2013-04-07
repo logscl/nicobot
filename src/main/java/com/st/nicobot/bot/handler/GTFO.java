@@ -11,10 +11,13 @@ public class GTFO implements PartEvent {
 	@Inject
 	private Messages messages;
 	
+	@Inject
+	private NicoBot nicobot;
+	
 	@Override
-	public void onPart(String channel, String sender, String login,	String hostname, NicoBot nicobot) {
+	public void onPart(String channel, String sender, String login,	String hostname) {
 		if (!sender.equals(nicobot.getNick())) {
-			nicobot.sendMessage(channel, messages.getOtherMessage("onPart"));
+			nicobot.sendChannelMessage(channel, messages.getOtherMessage("onPart"));
 		}
 	}
 

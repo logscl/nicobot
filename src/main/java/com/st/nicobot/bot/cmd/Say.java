@@ -43,7 +43,7 @@ public class Say extends NiCommand {
 				message = Colors.removeFormattingAndColors(arguments.message);
 			}
 			
-			nicobot.sendMessage(arguments.channel, message);
+			nicobot.sendChannelMessage(arguments.channel, message);
 		}
 		catch (IllegalArgumentException ex) {
 			nicobot.sendNotice(opts.sender, "Malformed command, format : " + getFormat());

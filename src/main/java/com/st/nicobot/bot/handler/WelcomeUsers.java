@@ -14,10 +14,13 @@ public class WelcomeUsers implements JoinEvent {
 	@Inject
 	private Messages messages;
 	
+	@Inject
+	private NicoBot nicobot;
+	
 	private Map<String, Map<String, Integer>> userJoins = new HashMap<String, Map<String, Integer>>();
 	
 	@Override
-	public void onJoin(String channel, String sender, String login,	String hostname, NicoBot nicobot) {
+	public void onJoin(String channel, String sender, String login,	String hostname) {
 		
 		String msg;
 		
@@ -33,7 +36,7 @@ public class WelcomeUsers implements JoinEvent {
 		}
 		
 		if(msg != null) {
-			nicobot.sendMessage(channel, nicobot.formatMessage(msg, sender, null));
+			nicobot.sendChannelMessage(channel, nicobot.formatMessage(msg, sender, null));
 		}
 
 	}

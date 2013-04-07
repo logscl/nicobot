@@ -1,6 +1,7 @@
 package com.st.nicobot.bot.handler;
 
 import org.apache.commons.lang3.StringUtils;
+import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.bot.NicoBot;
 import com.st.nicobot.bot.behavior.BackwardsSpeaking;
@@ -15,17 +16,20 @@ import com.st.nicobot.bot.utils.Option;
  */
 public class TrollBackwardsSpeaking extends ConditionalMessageEvent {
 
+	@Inject
+	private NicoBot nicobot;
+	
     @Override
     public int getChance() {
         return 250;
     }
 
     @Override
-    public void onMessage(String channel, String sender, String login, String hostname, String message, NicoBot nicobot) {
+    public void onMessage(String channel, String sender, String login, String hostname, String message) {
     	Option opt = new Option(channel, sender, message, false);
     	
     	if (testCondition(opt)) {
-        	nicobot.sendMessage(channel, message);
+        	nicobot.sendChannelMessage(channel, message);
         }
     }
     

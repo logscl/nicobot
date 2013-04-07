@@ -18,13 +18,19 @@ public class HeartBeatTask extends Task {
 
 	private static Logger logger = LoggerFactory.getLogger(HeartBeatTask.class);
 	
-	private static final String URL = "http://nicobot.jlamby.cloudbees.net/";
+	private static final String WEB_URL = "http://nicobot.jlamby.cloudbees.net/";
+	private static final String API_URL = "http://api.nicobot.jlamby.cloudbees.net/messages";
 	
 	@Override
 	public void run() {
 		logger.info("HeartBeatTask running ...");
+		requestUrl(WEB_URL);
+		requestUrl(API_URL);
+	}
+	
+	void requestUrl(String requestUrl) {
 		try {
-			URL url = new URL(URL);
+			URL url = new URL(requestUrl);
 			URLConnection connection = url.openConnection();
 			InputStream is = connection.getInputStream();
 			
@@ -38,5 +44,4 @@ public class HeartBeatTask extends Task {
 			logger.error(ex.getMessage());
 		}
 	}
-
 }
