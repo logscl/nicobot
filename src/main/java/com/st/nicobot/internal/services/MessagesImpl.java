@@ -114,6 +114,8 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("kickLose",		"BIEN FAIT HAHA !");
 		otherMessages.put("kickWin",		"Gamin !! Allez viens ! C'était pour rire !");
 		otherMessages.put("riamaskin",		"Ca suffit maintenant ! C’est excessivement énervant !");
+		otherMessages.put("noLastMsg",		"Aucun message n'a été échangé lors des 5 dernieres minutes");
+		otherMessages.put("lastMsgHeader",	"Derniers messages échangés :");
 		
 		welcomeMessages = new HashMap<String, String>();
 		welcomeMessages.put("newJoin0",		"Yo les gars! Saluez %p !");

@@ -11,6 +11,7 @@ import com.st.nicobot.api.domain.model.Message;
 import com.st.nicobot.api.services.APIMessageService;
 import com.st.nicobot.bot.NicoBot;
 import com.st.nicobot.bot.event.JoinEvent;
+import com.st.nicobot.services.Messages;
 
 /**
  * @author Julien
@@ -24,6 +25,9 @@ public class SendLastMessages implements JoinEvent {
 	private APIMessageService apiMessageService;
 	
 	@Inject
+	private Messages messages;
+	
+	@Inject
 	private NicoBot nicobot;
 	
 	@Override
@@ -31,17 +35,17 @@ public class SendLastMessages implements JoinEvent {
 		if (!sender.equals(nicobot.getNick())) {
 			Thread t = new Thread() {
 				public void run() {
-					List<Message> messages = apiMessageService.getLastMessages(null, null);
+					List<Message> lastMessages = apiMessageService.getLastMessages(null, null);
 					
-					if (messages.size() == 0) {
-						nicobot.sendNotice(sender, "Aucun message n'a été échangé lors des 5 dernieres minutes");
+					if (lastMessages.size() == 0) {
+						nicobot.sendNotice(sender, messages.getOtherMessage("noLastMsg"));
 					} 
 					else {
-						Collections.reverse(messages);
+						Collections.reverse(lastMessages);
 						
-						nicobot.sendNotice(sender, "Derniers messages échangés :");
+						nicobot.sendNotice(sender, messages.getOtherMessage("lastMsgHeader"));
 						
-						for(Message msg : messages) {
+						for(Message msg : lastMessages) {
 							nicobot.sendNotice(sender, formatMessage(msg));
 						}
 					}
