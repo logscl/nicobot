@@ -1,6 +1,5 @@
 package com.st.nicobot.bot.event;
 
-import com.st.nicobot.bot.NicoBot;
 
 
 public interface MessageEvent extends AbstractEvent {
@@ -16,7 +15,6 @@ public interface MessageEvent extends AbstractEvent {
 	 * @param login The login of the person who sent the message.
 	 * @param hostname The hostname of the person who sent the message.
 	 * @param message The actual message sent to the channel.
-	 * @param the famous nicobot.
 	 */
-	void onMessage(String channel, String sender, String login, String hostname, String message, NicoBot nicobot);
+	void onMessage(String channel, String sender, String login, String hostname, String message);
 }

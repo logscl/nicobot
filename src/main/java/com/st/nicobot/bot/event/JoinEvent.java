@@ -1,6 +1,5 @@
 package com.st.nicobot.bot.event;
 
-import com.st.nicobot.bot.NicoBot;
 
 public interface JoinEvent extends AbstractEvent {
 
@@ -15,7 +14,6 @@ public interface JoinEvent extends AbstractEvent {
      * @param sender The nick of the user who joined the channel.
      * @param login The login of the user who joined the channel.
      * @param hostname The hostname of the user who joined the channel.
-     * @param nicobot The famous nicobot.
      */
-    void onJoin(String channel, String sender, String login, String hostname, NicoBot nicobot);
+    void onJoin(String channel, String sender, String login, String hostname);
 }

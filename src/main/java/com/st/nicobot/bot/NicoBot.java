@@ -1,13 +1,17 @@
 package com.st.nicobot.bot;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;
+import org.joda.time.DateTime;
 import org.picocontainer.annotations.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.st.nicobot.api.domain.model.Message;
+import com.st.nicobot.api.services.APIMessageService;
 import com.st.nicobot.bot.event.DeopEvent;
 import com.st.nicobot.bot.event.InviteEvent;
 import com.st.nicobot.bot.event.JoinEvent;
@@ -49,6 +53,9 @@ public class NicoBot extends PircBot {
 	@Inject
 	private PropertiesService props;
 	
+	@Inject
+	private APIMessageService apiMessageService;
+	
 	public NicoBot() {	}
 	
 	public void start() {
@@ -65,7 +72,7 @@ public class NicoBot extends PircBot {
 		List<MessageEvent> events = handling.getEvents(MessageEvent.class);
 		
 		for(MessageEvent event : events) {
-			event.onMessage(channel, sender, login, hostname, message, this);
+			event.onMessage(channel, sender, login, hostname, message);
 		}
 		
 		behaviors.randomBehave(this, new Option(channel, sender, message, false));
@@ -78,7 +85,7 @@ public class NicoBot extends PircBot {
 		List<KickEvent> events = handling.getEvents(KickEvent.class);
 		
 		for(KickEvent event : events) {
-			event.onKick(channel, kickerNick, kickerLogin, kickerHostname, recipientNick, reason, this);
+			event.onKick(channel, kickerNick, kickerLogin, kickerHostname, recipientNick, reason);
 		}
 	}
 	
@@ -87,7 +94,7 @@ public class NicoBot extends PircBot {
 		List<InviteEvent> events = handling.getEvents(InviteEvent.class);
 		
 		for(InviteEvent event : events) {
-			event.onInvite(targetNick, sourceNick, sourceLogin, sourceHostname, channel, this);
+			event.onInvite(targetNick, sourceNick, sourceLogin, sourceHostname, channel);
 		}
 	}
 	
@@ -96,7 +103,7 @@ public class NicoBot extends PircBot {
 		List<JoinEvent> events = handling.getEvents(JoinEvent.class);
 		
 		for(JoinEvent event : events) {
-			event.onJoin(channel, sender, login, hostname, this);
+			event.onJoin(channel, sender, login, hostname);
 		}
 	}
 	
@@ -121,7 +128,7 @@ public class NicoBot extends PircBot {
 		List<PrivateMessageEvent> events = handling.getEvents(PrivateMessageEvent.class);
 		
 		for(PrivateMessageEvent event : events) {
-			event.onPrivateMessage(sender, login, hostname, message, this);
+			event.onPrivateMessage(sender, login, hostname, message);
 		}
 	}
 	
@@ -132,7 +139,7 @@ public class NicoBot extends PircBot {
 		List<PartEvent> events = handling.getEvents(PartEvent.class);
 		
 		for(PartEvent event : events) {
-			event.onPart(channel, sender, login, hostname, this);
+			event.onPart(channel, sender, login, hostname);
 		}
 	}
 	
@@ -196,6 +203,13 @@ public class NicoBot extends PircBot {
 	@Override
 	public void log(String line) {
 		logger.trace(line);
+	}
+	
+	public void sendChannelMessage(String target, String msg) {
+		Message message = new Message(new DateTime(), this.getNick(), msg);
+		apiMessageService.saveMessages(Arrays.asList(message));
+		
+		sendMessage(target, msg);
 	}
 	
 }

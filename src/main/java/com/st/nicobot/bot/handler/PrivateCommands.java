@@ -18,8 +18,11 @@ public class PrivateCommands implements PrivateMessageEvent {
 	@Inject
 	private UsersService users;
 	
+	@Inject
+	private NicoBot nicobot;
+	
 	@Override
-	public void onPrivateMessage(String sender, String login, String hostname, String message, NicoBot nicobot) {
+	public void onPrivateMessage(String sender, String login, String hostname, String message) {
 		//on extrait <cmd> <reste>
 		String[] arguments = message.split(" ");		
 		

@@ -29,7 +29,7 @@ public class BackwardsSpeaking implements NiConduct {
 	public void behave(NicoBot nicobot, Option opts) {
 		final String reversedMessage = reverseString(opts.message);
 		if(reversedMessage != null) {
-			nicobot.sendMessage(opts.channel, reversedMessage);
+			nicobot.sendChannelMessage(opts.channel, reversedMessage);
 		}
 	}
 	

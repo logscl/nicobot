@@ -1,6 +1,5 @@
 package com.st.nicobot.bot.event;
 
-import com.st.nicobot.bot.NicoBot;
 
 public interface PrivateMessageEvent extends AbstractEvent {
 
@@ -14,7 +13,6 @@ public interface PrivateMessageEvent extends AbstractEvent {
      * @param login The login of the person who sent the private message.
      * @param hostname The hostname of the person who sent the private message.
      * @param message The actual message.
-     * @param nicobot The famous bot.
      */
-    void onPrivateMessage(String sender, String login, String hostname, String message, NicoBot nicobot);
+    void onPrivateMessage(String sender, String login, String hostname, String message);
 }

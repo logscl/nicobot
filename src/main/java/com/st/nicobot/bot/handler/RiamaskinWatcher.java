@@ -17,6 +17,9 @@ public class RiamaskinWatcher extends ConditionalMessageEvent {
     @Inject
     private Messages messages;
     
+    @Inject
+    private NicoBot nicobot;
+    
     @Override
     public int getChance() {
         return 250;
@@ -28,11 +31,11 @@ public class RiamaskinWatcher extends ConditionalMessageEvent {
     }
     
     @Override
-    public void onMessage(String channel, String sender, String login, String hostname, String message, NicoBot nicobot) {
+    public void onMessage(String channel, String sender, String login, String hostname, String message) {
     	Option o = new Option(channel, sender, message, false);
     	
     	if (testCondition(o)) {
-    		nicobot.sendMessage(channel, messages.getOtherMessage(RIAMASKIN_STRING));
+    		nicobot.sendChannelMessage(channel, messages.getOtherMessage(RIAMASKIN_STRING));
     	}
     }
 

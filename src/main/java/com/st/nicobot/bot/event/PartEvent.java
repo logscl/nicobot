@@ -1,6 +1,5 @@
 package com.st.nicobot.bot.event;
 
-import com.st.nicobot.bot.NicoBot;
 
 public interface PartEvent extends AbstractEvent {
 
@@ -15,7 +14,6 @@ public interface PartEvent extends AbstractEvent {
      * @param sender The nick of the user who parted from the channel.
      * @param login The login of the user who parted from the channel.
      * @param hostname The hostname of the user who parted from the channel.
-     * @param nicobot The famous nicobot.
      */
-    void onPart(String channel, String sender, String login, String hostname, NicoBot nicobot);
+    void onPart(String channel, String sender, String login, String hostname);
 }

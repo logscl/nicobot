@@ -1,6 +1,5 @@
 package com.st.nicobot.bot.event;
 
-import com.st.nicobot.bot.NicoBot;
 
 public interface KickEvent extends AbstractEvent {
 
@@ -17,7 +16,6 @@ public interface KickEvent extends AbstractEvent {
      * @param kickerHostname The hostname of the user who performed the kick.
      * @param recipientNick The unfortunate recipient of the kick.
      * @param reason The reason given by the user who performed the kick.
-     * @param nicobot the famous bot.
      */
-    void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname, String recipientNick, String reason, NicoBot nicobot); 
+    void onKick(String channel, String kickerNick, String kickerLogin, String kickerHostname, String recipientNick, String reason); 
 }
