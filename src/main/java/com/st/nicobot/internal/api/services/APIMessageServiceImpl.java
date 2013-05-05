@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import com.st.nicobot.api.domain.model.Message;
 import com.st.nicobot.api.domain.model.request.MessageRequest;
@@ -36,12 +37,15 @@ public class APIMessageServiceImpl extends APIBaseService<MessageResponse> imple
 		MultivaluedMap<String, String> queryParams = new MultivaluedMapImpl();
 		
 		if (maxMessages != null) {
-			queryParams.add("max_messages", maxMessages.toString());
+			queryParams.add("limit", maxMessages.toString());
 		}
 		
-		if (startDate != null) {
-			queryParams.add("start_date", startDate.toString());
+		if (startDate == null) {
+			DateTime now = new DateTime();
+			startDate = now.minusMinutes(5).toDateTime(DateTimeZone.UTC);
 		}
+		
+		queryParams.add("start_date", startDate.toString());
 		
 		MessageResponse response = sendGetRequest(queryParams);
 		
@@ -53,7 +57,7 @@ public class APIMessageServiceImpl extends APIBaseService<MessageResponse> imple
 		MessageRequest request = new MessageRequest();
 		request.setMessages(messages);
 
-		sendPostRequest(request);
+		//sendPostRequest(request);
 	}
 
 }
