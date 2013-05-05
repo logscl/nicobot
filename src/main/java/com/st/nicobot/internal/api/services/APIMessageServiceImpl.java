@@ -57,7 +57,7 @@ public class APIMessageServiceImpl extends APIBaseService<MessageResponse> imple
 		MessageRequest request = new MessageRequest();
 		request.setMessages(messages);
 
-		//sendPostRequest(request);
+		sendPostRequest(request);
 	}
 
 }
