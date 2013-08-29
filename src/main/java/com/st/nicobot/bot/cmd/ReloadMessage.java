@@ -14,6 +14,7 @@ import com.st.nicobot.services.UsersService;
  * @author Julien
  *
  */
+@Deprecated
 public class ReloadMessage extends NiCommand {
 
 	private static Logger logger = LoggerFactory.getLogger(ReloadMessage.class);

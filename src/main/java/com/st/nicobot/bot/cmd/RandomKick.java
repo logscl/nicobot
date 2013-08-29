@@ -59,7 +59,7 @@ public class RandomKick extends NiCommand {
 				
 				nicobot.sendMessage(args[0], String.format(messages.getOtherMessage("kickInit"), opts.sender));
 				try {
-					Thread.sleep(1337);
+					this.wait(1337);
 				} catch (InterruptedException e) {
 					logger.error("Ohlol",e);
 				}
@@ -70,8 +70,6 @@ public class RandomKick extends NiCommand {
 				} else {
 					nicobot.sendMessage(args[0], messages.getOtherMessage("kickWin"));
 				}
-				
-				this.interrupt();
 			}
 		};
 		

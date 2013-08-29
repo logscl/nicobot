@@ -7,6 +7,7 @@ import com.st.nicobot.bot.utils.Option;
 import com.st.nicobot.services.Messages;
 import com.st.nicobot.services.UsersService;
 
+@Deprecated
 public class ShowAdmins extends NiCommand {
 	
 	private static final String COMMAND = "showadmins";
