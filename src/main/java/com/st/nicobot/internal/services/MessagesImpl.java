@@ -106,6 +106,7 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("biatch",			"Ouais BIATCH !");
 		otherMessages.put("ensomme",		"En somme.");
 		otherMessages.put("nicontroleur",	"ONE THIRTY TWO ONE THIRTY TWO.... REPONDEZ ONE THIRTY TWO !!! Papaaaaaaaaa~");
+		otherMessages.put("durmaisjuste",	"C'est dur, mais c'est juste.");
 		otherMessages.put("hgt",			"!!§!!§§!!§ Happy Geek Time !!§!!§§!!§");
 		
 		otherMessages.put("kickError",		"randomkick <#channel>. BIATCH !");
