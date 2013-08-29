@@ -70,8 +70,6 @@ public class RandomKick extends NiCommand {
 				} else {
 					nicobot.sendMessage(args[0], messages.getOtherMessage("kickWin"));
 				}
-				
-				this.interrupt();
 			}
 		};
 		
