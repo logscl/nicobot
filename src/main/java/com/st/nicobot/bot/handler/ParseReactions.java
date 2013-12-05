@@ -8,6 +8,7 @@ import org.picocontainer.annotations.Inject;
 import com.st.nicobot.bot.NicoBot;
 import com.st.nicobot.bot.event.MessageEvent;
 import com.st.nicobot.bot.utils.Reaction;
+import com.st.nicobot.services.LeetGreetingService;
 import com.st.nicobot.services.Messages;
 
 public class ParseReactions implements MessageEvent {
@@ -17,6 +18,9 @@ public class ParseReactions implements MessageEvent {
 	
 	@Inject
 	private NicoBot nicobot;
+	
+	@Inject
+    private LeetGreetingService greetingService;
 	
 	@Override
 	public void onMessage(String channel, String sender, String login, String hostname, String message) {
@@ -40,6 +44,11 @@ public class ParseReactions implements MessageEvent {
 			response = nicobot.formatMessage(response, sender, channel);
 			nicobot.sendChannelMessage(channel, response);
 		}
+		
+		// Happy Hour handling
+		if(greetingService.isLeetHourActive()) {
+            greetingService.addGreeter(channel,sender,message);
+        }
 
 	}
 

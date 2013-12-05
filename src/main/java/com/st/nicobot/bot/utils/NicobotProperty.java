@@ -11,6 +11,8 @@ public enum NicobotProperty {
 	BOT_Q_AUTHNAME("bot.qAuth", ""),
 	BOT_Q_PASSWORD("bot.qPassword", ""),
 	
+	BOT_DEV_MODE("bot.devmode", "true"),
+	
 	API_URI("api.uri", "http://api.nicobot.cloudbees.net");
 	
 	private String key;

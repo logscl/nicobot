@@ -193,10 +193,10 @@ public class NicoBot extends PircBot {
 		
 		schedulerService.startScheduler();
 		
-		//TODO : Trouver un moyen de simplifier ca en dev (params auth/pass remplacés au save - ou alors désactiver en dev
-		this.sendRawLine("AUTH "+props.get(NicobotProperty.BOT_Q_AUTHNAME)+" "+props.get(NicobotProperty.BOT_Q_PASSWORD));
-		this.sendRawLine("MODE "+props.get(NicobotProperty.BOT_NAME)+ " +x");
-		
+		if(!props.getBoolean(NicobotProperty.BOT_DEV_MODE)) {
+	        this.sendRawLine("AUTH "+props.get(NicobotProperty.BOT_Q_AUTHNAME)+" "+props.get(NicobotProperty.BOT_Q_PASSWORD));
+	        this.sendRawLine("MODE "+props.get(NicobotProperty.BOT_NAME)+ " +x");
+		}
 		props.set(NicobotProperty.BOT_NAME, this.getName());
 	}
 	
