@@ -106,6 +106,7 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("biatch",			"Ouais BIATCH !");
 		otherMessages.put("ensomme",		"En somme.");
 		otherMessages.put("nicontroleur",	"ONE THIRTY TWO ONE THIRTY TWO.... REPONDEZ ONE THIRTY TWO !!! Papaaaaaaaaa~");
+		otherMessages.put("durmaisjuste",	"C'est dur, mais c'est juste.");
 		otherMessages.put("hgt",			"!!§!!§§!!§ Happy Geek Time !!§!!§§!!§");
 		
 		otherMessages.put("kickError",		"randomkick <#channel>. BIATCH !");
@@ -116,6 +117,9 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("riamaskin",		"Ca suffit maintenant ! C’est excessivement énervant !");
 		otherMessages.put("noLastMsg",		"Aucun message n'a été échangé lors des 5 dernieres minutes");
 		otherMessages.put("lastMsgHeader",	"Derniers messages échangés :");
+		otherMessages.put("noHGT", 			"Vous me souhaitez pas un Happy Geek Time à moi ? Ingrats ! :(");
+		otherMessages.put("congratHGT", 	"Félicitations à %s ! Propre sur vous !");
+		otherMessages.put("congratSoloHGT",	"Bravo %s ! Au moins toi tu y as pensé <3 !");
 		
 		welcomeMessages = new HashMap<String, String>();
 		welcomeMessages.put("newJoin0",		"Yo les gars! Saluez %p !");

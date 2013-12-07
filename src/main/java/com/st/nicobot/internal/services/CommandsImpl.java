@@ -41,7 +41,9 @@ public class CommandsImpl implements Commands, ApplicationContextAware {
 		List<NiCommand> cmds = new ArrayList<NiCommand>();
 		
 		for(Class<? extends NiCommand> clazz : classes) {
-			cmds.add(appCtx.getComponent(clazz));
+			if(!clazz.isAnnotationPresent(Deprecated.class)) {
+				cmds.add(appCtx.getComponent(clazz));
+			}
 		}
 		
 		for (int i = 1; i < cmds.size(); i++) {

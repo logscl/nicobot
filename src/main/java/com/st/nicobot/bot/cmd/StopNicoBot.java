@@ -12,6 +12,7 @@ import com.st.nicobot.services.Messages;
  * @author Julien
  *
  */
+@Deprecated
 public class StopNicoBot extends NiCommand {
 
 	private static Logger logger = LoggerFactory.getLogger(StopNicoBot.class);
