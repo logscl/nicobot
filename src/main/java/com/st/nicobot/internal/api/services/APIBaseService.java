@@ -1,6 +1,5 @@
 package com.st.nicobot.internal.api.services;
 
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -10,11 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.st.nicobot.api.domain.model.response.UnmarshalledResponse;
+import com.st.nicobot.api.services.PersistenceStrategy;
 import com.st.nicobot.bot.utils.NicobotProperty;
 import com.st.nicobot.services.PropertiesService;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 
 /**
  * @author Julien
@@ -26,104 +23,80 @@ public abstract class APIBaseService<T extends UnmarshalledResponse> {
 
 	@Inject
 	private PropertiesService propertiesService;
-	
+
+	private PersistenceStrategy persistenceStrategy;
+
 	private static ObjectMapper objectMapper;
 
 	public abstract T getResponseInstance();
-	
-	public abstract String getServiceName(); 
-	
+
+	public abstract String getServiceName();
+
 	ObjectMapper getObjectMapper() {
 		if (objectMapper == null) {
 			objectMapper = new ObjectMapper();
 			objectMapper.configure(SerializationConfig.Feature.WRITE_DATES_AS_TIMESTAMPS, false);
 		}
-		
+
 		return objectMapper;
 	}
-	
+
+	public PersistenceStrategy getPersistenceStrategy() {
+		if (persistenceStrategy == null) {
+			String strategyName = propertiesService.get(NicobotProperty.API_PERSISTENCE_STRATEGY);
+			try {
+				persistenceStrategy = (PersistenceStrategy) Class.forName(strategyName).newInstance();
+			} catch (Exception ex) {
+				logger.error("", ex);
+			}
+		}
+
+		return persistenceStrategy;
+	}
+
+
 	public String getServiceURI() {
 		return propertiesService.get(NicobotProperty.API_URI) + "/" + getServiceName();
 	}
-	
-	/**
-	 * Retourne un client pour effectuer une requete sur une url
-	 * @param url
-	 * @return
-	 */
-	WebResource getClient(String url){
-		Client client = Client.create();
-		WebResource webResource = client.resource(url);
-		
-		return webResource;
-	}
-	
-	T sendGetRequest(MultivaluedMap<String, String> queryParams) {
-		WebResource resource = getClient(getServiceURI());
-		resource = resource.queryParams(queryParams);
 
-		ClientResponse response = resource.type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-		
-		T msgResp = null;
-		
-		if (response.getStatus() == 200) {
-			msgResp = parseResponse(response);
+	T sendGetRequest(MultivaluedMap<String, String> queryParams) {
+		String responseString = getPersistenceStrategy().sendGetRequest(getServiceURI(), queryParams);
+
+		if (responseString != null) {
+			return unmarshalResponse(responseString);
 		}
-		else {
-			logger.error("Erreur lors de la sauvegarde à distance. Reponse de l'API : {}", getRemoteAPIError(response));
-		}
-		
-		return msgResp;
+
+		return null;
 	}
-	
+
 	T sendPostRequest(Object payload) {
 		try {
 			String json = getObjectMapper().writeValueAsString(payload);
-		
-			System.out.println(json);
-		
-			ClientResponse response = getClient(getServiceURI()).type(MediaType.APPLICATION_JSON).post(ClientResponse.class, json);
-	
-			T msgResp = null;
-			
-			if (response.getStatus() == 201) {
-				//msgResp = parseResponse(response); //faire evol l'api pour ameliorer le retour des POST
+			String responseString = getPersistenceStrategy().sendPostRequest(getServiceURI(), json);
+
+			if (responseString != null) {
+				return unmarshalResponse(responseString);
 			}
-			else {
-				logger.error("Erreur lors de la sauvegarde à distance. Reponse de l'API : {}", getRemoteAPIError(response));
-			}
-			
-			return msgResp;
+
+			return null;
 		}
-		catch(Exception ex) {
-			System.err.println(ex);
-		}
-		
-		return null;
-	}
-	
-	@SuppressWarnings("unchecked")
-	T parseResponse(ClientResponse clientResponse) {
-		try {
-			String content = clientResponse.getEntity(String.class);
-		
-			return (T) getObjectMapper().readValue(content, getResponseInstance().getClass());
-		}
-		catch(Exception ex) {
-			System.err.println(ex);
-		}
-		
-		return null;
-	}
-	
-	String getRemoteAPIError(ClientResponse clientResponse) {
-		try {
-			return clientResponse.getEntity(String.class);
-		} 
 		catch(Exception ex) {
 			logger.error("{}", ex);
 		}
-		
+
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	T unmarshalResponse(String responseString) {
+		try {
+			return (T) getObjectMapper().readValue(responseString, getResponseInstance().getClass());
+		} catch (Exception ex) {
+			logger.error("{}", ex);
+		}
+
+		return null;
+	}
+
+
 }
