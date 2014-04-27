@@ -71,7 +71,12 @@ public class RandomTalk implements NiConduct {
 		BIATCH,
 		ENSOMME,
 		NICONTROLEUR,
-		DURMAISJUSTE
+		DURMAISJUSTE,
+		CHEPATSE,
+		STANDARD,
+		WOUHOU,
+		TESQUI,
+		ANECDOTE
 	}
 	
 }
