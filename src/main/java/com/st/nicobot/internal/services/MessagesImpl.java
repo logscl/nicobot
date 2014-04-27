@@ -107,6 +107,12 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("ensomme",		"En somme.");
 		otherMessages.put("nicontroleur",	"ONE THIRTY TWO ONE THIRTY TWO.... REPONDEZ ONE THIRTY TWO !!! Papaaaaaaaaa~");
 		otherMessages.put("durmaisjuste",	"C'est dur, mais c'est juste.");
+		otherMessages.put("chepatse",		"Ché pa tsé...");
+		otherMessages.put("standard",		"Staaaannnndard de merde olé oléééééé");
+		otherMessages.put("wouhou",			"WOUUUH WOUUUUUUHHH WOUUUUUUUUUUHHH WOUUUUUUUUUUUUUHHHHH");
+		otherMessages.put("tesqui",			"T'es qui ?");
+		otherMessages.put("anecdote",		"C'est une anecdote de MALADE ça !");
+		
 		otherMessages.put("hgt",			"!!§!!§§!!§ Happy Geek Time !!§!!§§!!§");
 		
 		otherMessages.put("kickError",		"randomkick <#channel>. BIATCH !");
