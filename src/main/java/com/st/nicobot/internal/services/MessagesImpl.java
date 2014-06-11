@@ -100,7 +100,7 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("inviteNo",		"LOL ? T'as cru ? Va t'faire refaire, ALIEN !");
 		otherMessages.put("helpNotFound", 	"J'veux bien t'aider, mais je vois pas bien ce que tu me veux la -_-");
 
-		otherMessages.put("riverside",		"Riverside mothefoker");
+		otherMessages.put("riverside",		"Riverside motherfoker");
 		otherMessages.put("velo",			"On m'a volé mon vélooooo !!! Qui m'a volé mon vélooooo ???");
 		otherMessages.put("topside",		"TOPSIDE COMIC TROIS CENT QUATRE VING QUATORZE");
 		otherMessages.put("biatch",			"Ouais BIATCH !");
