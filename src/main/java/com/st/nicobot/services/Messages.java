@@ -25,4 +25,6 @@ public interface Messages {
 	 * @return un message
 	 */
 	public String getWelcomeMessage(Integer nbr);
+
+    public String getRandomSpeech();
 }

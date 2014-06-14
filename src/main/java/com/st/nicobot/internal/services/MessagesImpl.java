@@ -1,7 +1,9 @@
 package com.st.nicobot.internal.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import com.st.nicobot.bot.utils.Random;
 import com.st.nicobot.bot.utils.Reaction;
 import com.st.nicobot.services.Messages;
 import com.st.nicobot.services.PropertiesService;
+
 
 /**
  * Une classe qui va contenir les differents messages / commandes auxquels notre cher
@@ -33,6 +36,9 @@ public class MessagesImpl implements Messages {
 	
 	/** Les messages de bienvenue de nicobot */
 	private Map<String, String> welcomeMessages;
+
+    /** Les réactions aléatoires de nicobot */
+    private List<String> randomSpeeches;
 
 	public MessagesImpl() {	}
 	
@@ -99,19 +105,6 @@ public class MessagesImpl implements Messages {
 		otherMessages.put("helpHeader",		"Liste des commandes que nicobot connait :");
 		otherMessages.put("inviteNo",		"LOL ? T'as cru ? Va t'faire refaire, ALIEN !");
 		otherMessages.put("helpNotFound", 	"J'veux bien t'aider, mais je vois pas bien ce que tu me veux la -_-");
-
-		otherMessages.put("riverside",		"Riverside motherfoker");
-		otherMessages.put("velo",			"On m'a volé mon vélooooo !!! Qui m'a volé mon vélooooo ???");
-		otherMessages.put("topside",		"TOPSIDE COMIC TROIS CENT QUATRE VING QUATORZE");
-		otherMessages.put("biatch",			"Ouais BIATCH !");
-		otherMessages.put("ensomme",		"En somme.");
-		otherMessages.put("nicontroleur",	"ONE THIRTY TWO ONE THIRTY TWO.... REPONDEZ ONE THIRTY TWO !!! Papaaaaaaaaa~");
-		otherMessages.put("durmaisjuste",	"C'est dur, mais c'est juste.");
-		otherMessages.put("chepatse",		"Ché pa tsé...");
-		otherMessages.put("standard",		"Staaaannnndard de merde olé oléééééé");
-		otherMessages.put("wouhou",			"WOUUUH WOUUUUUUHHH WOUUUUUUUUUUHHH WOUUUUUUUUUUUUUHHHHH");
-		otherMessages.put("tesqui",			"T'es qui ?");
-		otherMessages.put("anecdote",		"C'est une anecdote de MALADE ça !");
 		
 		otherMessages.put("hgt",			"!!§!!§§!!§ Happy Geek Time !!§!!§§!!§");
 		
@@ -137,6 +130,20 @@ public class MessagesImpl implements Messages {
 		welcomeMessages.put("join3",		"Euh Ca fait 3 fois aujourd'hui %p, T'en as pas marre ?");
 		welcomeMessages.put("join4",		"T'es branché sur une guirlande de Noël %p ?");
 		welcomeMessages.put("join5",		"CA SUFFIT %p ! Maintenant, tu t'achètes une connexion !!");
+
+        randomSpeeches = new ArrayList<String>();
+        randomSpeeches.add("Riverside motherfoker");
+        randomSpeeches.add("On m'a volé mon vélooooo !!! Qui m'a volé mon vélooooo ???");
+        randomSpeeches.add("TOPSIDE COMIC TROIS CENT QUATRE VING QUATORZE");
+        randomSpeeches.add("Ouais BIATCH !");
+        randomSpeeches.add("En somme.");
+        randomSpeeches.add("ONE THIRTY TWO ONE THIRTY TWO.... REPONDEZ ONE THIRTY TWO !!! Papaaaaaaaaa~");
+        randomSpeeches.add("C'est dur, mais c'est juste.");
+        randomSpeeches.add("Chépatsé...");
+        randomSpeeches.add("Staaaannnndard de merde olé oléééééé");
+        randomSpeeches.add("WOUUUH WOUUUUUUHHH WOUUUUUUUUUUHHH WOUUUUUUUUUUUUUHHHHH");
+        randomSpeeches.add("T'es qui ?");
+        randomSpeeches.add("C'est une anecdote de MALADE ça !");
 	}
 
 	@Override
@@ -157,4 +164,9 @@ public class MessagesImpl implements Messages {
 			return welcomeMessages.get("join"+nbr.toString());
 		}
 	}
+
+    @Override
+    public String getRandomSpeech() {
+        return randomSpeeches.get(Random.nextInt(randomSpeeches.size()));
+    }
 }
