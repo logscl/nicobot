@@ -3,6 +3,7 @@ package com.st.nicobot.bot;
 import java.util.Arrays;
 import java.util.List;
 
+import com.st.nicobot.bot.utils.Random;
 import org.jibble.pircbot.PircBot;
 import org.jibble.pircbot.User;
 import org.joda.time.DateTime;
@@ -59,6 +60,9 @@ public class NicoBot extends PircBot {
 	public NicoBot() {	}
 
 	public void start() {
+		// Random login généré au démarrage du bot
+		this.setLogin("NB-" + Random.nextInt());
+
 		this.setName(props.get(NicobotProperty.BOT_NAME));
 		this.setAutoNickChange(props.getBoolean(NicobotProperty.BOT_AUTO_NICK_CHANGE));
 		this.setMessageDelay(props.getLong(NicobotProperty.BOT_MESSAGE_DELAY));

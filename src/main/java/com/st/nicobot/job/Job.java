@@ -23,5 +23,11 @@ public interface Job {
 	 * Interrompt le job
 	 */
 	public void terminate();
-	
+
+	/**
+	 * Indique si le job doit démarrer avec le bot ou non.
+	 * Permet également de désactiver un job.
+	 */
+	public boolean isAutoStartup();
+
 }

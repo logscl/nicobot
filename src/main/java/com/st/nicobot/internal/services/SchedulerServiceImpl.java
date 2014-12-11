@@ -31,10 +31,12 @@ public class SchedulerServiceImpl implements SchedulerService, ApplicationContex
 	
 	@Override
 	public void startScheduler() {
-		logger.info("Starting all jobs ...");
-		
+		logger.info("Starting all jobs with auto startup true ...");
+
 		for(Job j : getJobs()) {
-			j.launch();
+			if(j.isAutoStartup()) {
+				j.launch();
+			}
 		}
 	}
 
@@ -46,7 +48,7 @@ public class SchedulerServiceImpl implements SchedulerService, ApplicationContex
 			j.terminate();
 		}
 	}
-	
+
 	@Override
 	public void setApplicationContext(MutablePicoContainer appCtx) {
 		this.appCtx = appCtx;
@@ -57,7 +59,7 @@ public class SchedulerServiceImpl implements SchedulerService, ApplicationContex
 			jobs = new ArrayList<Job>();
 			
 			Set<Class<? extends Job>> classes = ClassLoader.getSubTypesOf(Job.class);
-			
+
 			for(Class<? extends Job> clazz : classes) {
 				if (!Modifier.isAbstract(clazz.getModifiers())) {
 					jobs.add(appCtx.getComponent(clazz));

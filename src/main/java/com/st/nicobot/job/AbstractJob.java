@@ -61,7 +61,7 @@ public abstract class AbstractJob implements Job {
 	@Override
 	public void launch() {
 		if (timer == null) {
-			timer = new Timer();
+			timer = new Timer("Task-"+name);
 			timer.scheduleAtFixedRate(getTask(), getStartDelay(), getDelay());
 
 			logger.info("Job {} started, task's first execution in {} seconds.", name, (getStartDelay()/1000));
@@ -72,9 +72,13 @@ public abstract class AbstractJob implements Job {
 	public void terminate() {
 		if (timer != null) {
 			timer.cancel();
-			
+
 			logger.info("Job {} stopped !", name);
 		}
 	}
 
+	@Override
+	public boolean isAutoStartup() {
+		return true;
+	}
 }

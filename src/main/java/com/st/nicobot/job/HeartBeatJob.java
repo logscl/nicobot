@@ -25,4 +25,8 @@ public class HeartBeatJob extends AbstractJob {
 		super.task = task;
 	}
 
+	@Override
+	public boolean isAutoStartup() {
+		return false;
+	}
 }
