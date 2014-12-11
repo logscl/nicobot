@@ -59,7 +59,7 @@ public class RandomKick extends NiCommand {
 				
 				nicobot.sendMessage(args[0], String.format(messages.getOtherMessage("kickInit"), opts.sender));
 				try {
-					this.wait(1337);
+					Thread.sleep(1337);
 				} catch (InterruptedException e) {
 					logger.error("Ohlol",e);
 				}
@@ -84,7 +84,7 @@ public class RandomKick extends NiCommand {
 	 * @return un utilisateur parmi la liste.
 	 */
 	private User selectRandomUser(NicoBot bot, String channel) {
-		List<String> protectedUsers = Arrays.asList("Q", bot.getName());
+		List<String> protectedUsers = Arrays.asList("Q", "D", "fishbot", "snailbot", bot.getName());
 		User[] usrs = bot.getUsers(channel);
 		int rdmUser = Random.nextInt(usrs.length);
 		

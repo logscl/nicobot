@@ -4,7 +4,6 @@ import org.picocontainer.annotations.Inject;
 
 import com.st.nicobot.bot.NicoBot;
 import com.st.nicobot.bot.utils.Option;
-import com.st.nicobot.bot.utils.Random;
 import com.st.nicobot.services.Messages;
 
 /**
